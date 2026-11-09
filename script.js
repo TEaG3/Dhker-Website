@@ -1,11 +1,10 @@
 (function () {
   "use strict";
 
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   const toggle = document.querySelector(".menu-toggle");
   const nav = document.getElementById("primary-nav");
 
+  // قائمة الجوال
   if (toggle && nav) {
     const closeMenu = () => {
       nav.classList.remove("is-open");
@@ -26,38 +25,15 @@
     document.addEventListener("click", (e) => {
       if (!nav.contains(e.target) && !toggle.contains(e.target)) closeMenu();
     });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMenu();
-    });
   }
 
-  const revealEls = document.querySelectorAll(".reveal");
-
-  if (!prefersReducedMotion && "IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-    );
-    revealEls.forEach((el) => io.observe(el));
-  } else {
-    revealEls.forEach((el) => el.classList.add("is-visible"));
-  }
-
+  // نموذج التواصل
   const form = document.getElementById("contactForm");
   const note = document.getElementById("formNote");
 
   if (form && note) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-
       const name = form.name.value.trim();
       const email = form.email.value.trim();
       const message = form.message.value.trim();
@@ -78,27 +54,5 @@
       note.style.color = "var(--color-primary)";
       form.reset();
     });
-  }
-
-  const navLinks = document.querySelectorAll('.primary-nav a[href^="#"]');
-  const sections = [...navLinks]
-    .map((a) => document.querySelector(a.getAttribute("href")))
-    .filter(Boolean);
-
-  if (sections.length && "IntersectionObserver" in window) {
-    const spy = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const id = "#" + entry.target.id;
-          navLinks.forEach((a) => {
-            const active = a.getAttribute("href") === id;
-            a.style.color = active ? "var(--color-primary)" : "";
-          });
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    sections.forEach((s) => spy.observe(s));
   }
 })();
