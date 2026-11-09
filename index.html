@@ -3,43 +3,58 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1724">
-  <meta name="description" content="ذِكر — رفيقك اليومي للذكر والطمأنينة.">
-  <title>ذِكر | رفيقك اليومي</title>
+  <meta name="theme-color" content="#081521">
+  <meta name="description" content="ذِكر — موقع وتطبيق إسلامي يهدف إلى تيسير الذكر اليومي ومتابعة مواقيت الصلاة، مع العمل على توفير تجربة موثوقة لقراءة القرآن الكريم.">
+  <meta property="og:title" content="ذِكر | طمأنينة في يومك وقرب من الله">
+  <meta property="og:description" content="رفيقك الرقمي للذكر ومواقيت الصلاة، والقرآن الكريم ضمن مراحل التطوير.">
+  <title>ذِكر | طمأنينة في يومك وقرب من الله</title>
   <style>
-    :root{color-scheme:dark;--bg:#081521;--panel:#102334;--mint:#70dfc0;--text:#f4f8f7;--muted:#b7c8c8}
-    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% 0%,#17483f 0,transparent 42%),linear-gradient(155deg,#081521,#0d2030 70%,#102b31);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.8;min-height:100vh}
+    :root{color-scheme:dark;--bg:#081521;--panel:#102334;--mint:#70dfc0;--gold:#d9b26a;--text:#f4f8f7;--muted:#b7c8c8}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 75% 0%,#17483f 0,transparent 42%),linear-gradient(155deg,#081521,#0d2030 70%,#102b31);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.9;min-height:100vh}
     a{color:inherit}.wrap{width:min(1080px,92%);margin:auto}.top{padding:26px 0;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px;font-size:1.35rem;font-weight:700}.mark{width:44px;height:44px;border-radius:15px;background:linear-gradient(145deg,#8df0ce,#23977d);display:grid;place-items:center;color:#06241e;font-size:1.5rem}.tag{border:1px solid #ffffff28;border-radius:30px;padding:6px 14px;color:var(--mint);font-size:.86rem}
-    main{padding:68px 0 84px}.hero{max-width:760px;margin:auto;text-align:center}.eyebrow{color:var(--mint);letter-spacing:.04em;font-size:.95rem}.hero h1{font-size:clamp(3rem,9vw,6rem);line-height:1.18;margin:12px 0 18px}.hero p{font-size:clamp(1.05rem,2.4vw,1.3rem);color:var(--muted);margin:0 auto;max-width:650px}.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:32px 0 18px}.btn{display:inline-block;text-decoration:none;border-radius:14px;padding:12px 24px;font-weight:700}.primary{background:var(--mint);color:#06241e}.secondary{border:1px solid #ffffff3d;color:var(--text)}.note{font-size:.88rem!important;color:#9eb2b4!important}
-    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:78px}.feature{background:linear-gradient(145deg,#ffffff0d,#ffffff05);border:1px solid #ffffff18;border-radius:20px;padding:22px}.feature .ico{font-size:1.7rem}.feature h2{font-size:1.1rem;margin:8px 0}.feature p{margin:0;color:var(--muted);font-size:.94rem}
+    main{padding:50px 0 84px}.hero{max-width:820px;margin:auto;text-align:center}.verse{font-family:serif;font-size:clamp(1.55rem,4vw,2.35rem);line-height:1.9;color:#f8e8bf;margin:0 auto 4px}.motto{font-size:clamp(1.05rem,2.6vw,1.35rem);color:var(--mint);margin:0 auto 28px}.eyebrow{color:var(--mint);letter-spacing:.04em;font-size:.95rem}.hero h1{font-size:clamp(3rem,9vw,6rem);line-height:1.18;margin:10px 0 18px}.hero p{font-size:clamp(1.05rem,2.4vw,1.22rem);color:var(--muted);margin:0 auto;max-width:700px}.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:30px 0 12px}.btn{display:inline-block;text-decoration:none;border-radius:14px;padding:12px 24px;font-weight:700;transition:transform .2s,filter .2s}.btn:hover{transform:translateY(-2px);filter:brightness(1.06)}.primary{background:var(--mint);color:#06241e}.secondary{border:1px solid #ffffff3d;color:var(--text)}.note{font-size:.86rem!important;color:#9eb2b4!important}
+    .section-title{text-align:center;font-size:1.8rem;margin:68px 0 10px}.section-intro{text-align:center;color:var(--muted);max-width:720px;margin:0 auto 24px}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}.feature{background:linear-gradient(145deg,#ffffff0d,#ffffff05);border:1px solid #ffffff18;border-radius:20px;padding:22px}.feature .ico{font-size:1.7rem}.feature h2{font-size:1.1rem;margin:8px 0}.feature p{margin:0;color:var(--muted);font-size:.94rem}.about{max-width:850px;margin:32px auto 0;padding:24px;border:1px solid #ffffff18;border-radius:20px;background:#ffffff08}.about h2{margin-top:0;color:var(--gold)}.about p{color:var(--muted);margin-bottom:0}
     footer{border-top:1px solid #ffffff18;padding:22px 0;color:#9eb2b4;font-size:.88rem}.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    @media(max-width:700px){main{padding:48px 0 64px}.features{grid-template-columns:1fr;margin-top:52px}.top{padding:18px 0}.tag{font-size:.75rem}}
+    @media(max-width:700px){main{padding:34px 0 60px}.features{grid-template-columns:1fr;margin-top:24px}.top{padding:18px 0}.tag{font-size:.75rem}.section-title{margin-top:48px}}
   </style>
 </head>
 <body>
   <div class="wrap">
     <header class="top">
       <div class="brand"><span class="mark" aria-hidden="true">ذ</span><span>ذِكر</span></div>
-      <span class="tag">قريباً على أندرويد</span>
+      <span class="tag">موقع وتطبيق ذِكر</span>
     </header>
     <main>
       <section class="hero">
-        <div class="eyebrow">سكينة تبدأ بذكر</div>
+        <p class="verse">﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾</p>
+        <p class="motto">طمأنينة في يومك وقرب من الله</p>
+        <div class="eyebrow">رفيقك الرقمي للعبادة اليومية</div>
         <h1>ذِكر</h1>
-        <p>رفيقك اليومي للذكر والطمأنينة، بتجربة عربية بسيطة تساعدك على جعل الذكر جزءاً من يومك.</p>
+        <p>منصة عربية تجمع أدوات تعينك على تنظيم عبادتك اليومية؛ تجربة هادئة لمتابعة مواقيت الصلاة، والسبحة الإلكترونية، واتجاه القبلة، مع العمل على استكمال مكتبة الأذكار والقرآن الكريم بمصادر موثوقة ومراجعة دقيقة.</p>
         <div class="actions">
-          <span class="btn primary" aria-disabled="true">التطبيق قيد التجهيز</span>
-          <a class="btn secondary" href="https://github.com/TEaG3/Dhker-Website" target="_blank" rel="noopener">مستودع الموقع</a>
+          <a class="btn primary" href="https://github.com/TEaG3/Dhker-Website/releases/latest/download/Dhker.apk">تحميل التطبيق لنظام Android</a>
+          <a class="btn secondary" href="#about">اكتشف ذِكر</a>
         </div>
-        <p class="note">سيُتاح رابط التنزيل بعد اكتمال البناء والتحقق من عمل التطبيق.</p>
+        <p class="note">ملف التنزيل سيُتاح عبر إصدار الموقع الرسمي فور إرفاق حزمة APK المعتمدة.</p>
       </section>
-      <section class="features" aria-label="مميزات ذِكر">
-        <article class="feature"><div class="ico" aria-hidden="true">◈</div><h2>تجربة عربية</h2><p>واجهة واضحة باللغة العربية واتجاه كتابة من اليمين إلى اليسار.</p></article>
-        <article class="feature"><div class="ico" aria-hidden="true">☼</div><h2>رفيق يومي</h2><p>تصميم هادئ يركز على سهولة الاستخدام والوضوح.</p></article>
-        <article class="feature"><div class="ico" aria-hidden="true">✦</div><h2>قيد التطوير</h2><p>نعمل على تجهيز التطبيق والتحقق من جودته قبل إتاحة التنزيل.</p></article>
+
+      <h2 class="section-title">ماذا يقدم تطبيق ذِكر؟</h2>
+      <p class="section-intro">أدوات عملية بواجهة عربية واضحة، مع توضيح ما هو متاح حالياً وما يزال قيد الاستكمال.</p>
+      <section class="features" aria-label="مميزات التطبيق">
+        <article class="feature"><div class="ico" aria-hidden="true">◷</div><h2>مواقيت الصلاة</h2><p>محرك لحساب المواقيت بعد إدخال إحداثيات الموقع، مع خيارات لطرق الحساب والمذهب. التنبيهات وتحديد الموقع التلقائي لم تكتمل بعد.</p></article>
+        <article class="feature"><div class="ico" aria-hidden="true">◎</div><h2>السبحة الإلكترونية</h2><p>عداد للتسبيح مع هدف قابل للتعديل وحفظ العدد على الجهاز.</p></article>
+        <article class="feature"><div class="ico" aria-hidden="true">⌖</div><h2>اتجاه القبلة</h2><p>حساب زاوية القبلة من خط العرض والطول المدخلين يدوياً؛ البوصلة الحية ليست متاحة بعد.</p></article>
+        <article class="feature"><div class="ico" aria-hidden="true">☾</div><h2>الأذكار</h2><p>قسم مخصص للأذكار، ويجري استكمال المحتوى بعد توثيق النصوص والمصادر ومراجعتها.</p></article>
+        <article class="feature"><div class="ico" aria-hidden="true">۞</div><h2>القرآن الكريم</h2><p>قسم القرآن ظاهر في التطبيق، لكن نص المصحف وخاصية القراءة لم يُدمجا بعد؛ يجري العمل على اعتمادهما من مصدر موثوق.</p></article>
+        <article class="feature"><div class="ico" aria-hidden="true">◈</div><h2>واجهة عربية</h2><p>تصميم عربي يدعم اتجاه الكتابة من اليمين إلى اليسار، مع الوضعين الفاتح والداكن.</p></article>
+      </section>
+
+      <section class="about" id="about">
+        <h2>عن موقع ذِكر</h2>
+        <p>هذا الموقع هو البوابة الرسمية للتعريف بمشروع ذِكر، وشرح أدواته ومراحل تطويره، وتوفير رابط تنزيل التطبيق وتحديثاته. هدفنا تقديم تجربة نافعة وبسيطة، مع عدم نشر نصوص دينية أو معلومات عن المواقيت قبل التحقق من مصادرها ودقتها.</p>
       </section>
     </main>
-    <footer><div class="foot"><span>© 2026 ذِكر. جميع الحقوق محفوظة.</span><span>اسم ذِكر وعناصره الأصلية محفوظة لأصحاب الحقوق. تُحترم تراخيص ومصادر المكونات الخارجية.</span></div></footer>
+    <footer><div class="foot"><span>© 2026 ذِكر. جميع الحقوق محفوظة.</span><span>موقع ذِكر الرسمي — معلومات التطبيق وروابط تنزيله وتحديثاته.</span></div></footer>
   </div>
 </body>
 </html>
