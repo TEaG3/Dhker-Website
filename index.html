@@ -3,78 +3,689 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ذِكر — سكينة ترافق يومك | مواقيت الصلاة والأذكار الموثّقة</title>
+  <title>ذِكر — سكينة ترافق يومك | ﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾</title>
   <meta name="description" content="تطبيق عربي هادئ يجمع مواقيت الصلاة والأذكار الموثّقة في مكان واحد، بواجهة واضحة من اليمين إلى اليسار تعمل دون إنترنت.">
   <meta name="theme-color" content="#081521">
-
-  <!-- الأيقونة الرسمية (Favicon & App Icon) -->
-  <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
-  <link rel="apple-touch-icon" href="assets/icon.svg">
 
   <!-- بيانات المشاركة الاجتماعية (OpenGraph) -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ar_AR">
-  <meta property="og:title" content="ذِكر — سكينة ترافق يومك">
+  <meta property="og:title" content="ذِكر — سكينة ترافق يومك | ﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾">
   <meta property="og:description" content="تطبيق عربي هادئ يجمع مواقيت الصلاة والأذكار الموثّقة في مكان واحد، يعمل دون إنترنت وبدون إعلانات.">
   <meta property="og:url" content="https://teag3.github.io/Dhker-Website/">
-  <meta property="og:image" content="https://teag3.github.io/Dhker-Website/assets/og-image.svg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
+  <!-- تم تحويل صورة المشاركة إلى صيغة Data URI حتى تظهر فوراً دون الحاجة لملف خارجي -->
+  <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%23081521'/%3E%3Ctext x='600' y='350' font-family='Amiri, serif' font-size='80' fill='%23C6A76A' text-anchor='middle'%3Eذِكر — سكينة ترافق يومك%3C/text%3E%3C/svg%3E">
   <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Google Fonts: Amiri (للهوية الإسلامية والآيات) + IBM Plex Sans Arabic (للواجهة العصرية) -->
+  <!-- الأيقونة الرسمية المدمجة (Favicon SVG) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23081521'/%3E%3Crect x='116' y='116' width='280' height='280' rx='20' fill='%23103B35' stroke='%23C6A76A' stroke-width='14'/%3E%3Crect x='116' y='116' width='280' height='280' rx='20' fill='%230D2E28' stroke='%23C6A76A' stroke-width='14' transform='rotate(45 256 256)'/%3E%3Cpath d='M256 125 C300 165 332 210 332 270 L332 355 L180 355 L180 270 C180 210 212 165 256 125 Z' fill='%23081521' stroke='%23C6A76A' stroke-width='10'/%3E%3Cpath d='M286 266 A42 42 0 1 1 232 216 A34 34 0 1 0 286 266 Z' fill='%23C6A76A'/%3E%3Cpath d='M266 208 L272 224 L288 230 L272 236 L266 252 L260 236 L244 230 L260 224 Z' fill='%2342C6A5'/%3E%3C/svg%3E">
+
+  <!-- الخطوط العربية: Amiri Quran + Amiri + IBM Plex Sans Arabic -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- ملف التنسيقات الرئيسي (مع رقم إصدار لكسر الكاش) -->
-  <link rel="stylesheet" href="styles.css?v=6">
+  <style>
+    /* ==========================================================================
+       1. المتغيرات اللونية والهوية الإسلامية
+       ========================================================================== */
+    :root {
+      --bg-deep: #050D15;
+      --bg-navy: #081521;
+      --bg-emerald: #103B35;
+      --bg-card: rgba(16, 59, 53, 0.38);
+      --bg-card-hover: rgba(16, 59, 53, 0.62);
+
+      --gold-primary: #C6A76A;
+      --gold-light: #F3DFB2;
+      --gold-border: rgba(198, 167, 106, 0.32);
+      --gold-glow: rgba(198, 167, 106, 0.16);
+
+      --turquoise: #42C6A5;
+      --mint: #A4E8D1;
+      --warm-white: #F7FAF8;
+      --text-muted: #B2C7C0;
+
+      --font-quran: 'Amiri Quran', 'Amiri', serif;
+      --font-serif: 'Amiri', serif;
+      --font-sans: 'IBM Plex Sans Arabic', sans-serif;
+
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-deep);
+      color: var(--warm-white);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+    }
+
+    body {
+      background-color: var(--bg-navy);
+      background-image: 
+        radial-gradient(circle at 85% 10%, rgba(16, 59, 53, 0.7) 0%, transparent 45%),
+        radial-gradient(circle at 12% 80%, rgba(198, 167, 106, 0.09) 0%, transparent 40%),
+        url("data:image/svg+xml,%3Csvg width='88' height='88' viewBox='0 0 88 88' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C6A76A' stroke-width='0.65' stroke-opacity='0.075'%3E%3Cpath d='M44 0L53 35L88 44L53 53L44 88L35 53L0 44L35 35Z'/%3E%3Cpath d='M44 0L75 13L88 44L75 75L44 88L13 75L0 44L13 13Z'/%3E%3Ccircle cx='44' cy='44' r='14'/%3E%3C/g%3E%3C/svg%3E");
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; transition: var(--transition); }
+    ul { list-style: none; }
+
+    .container {
+      width: min(1180px, 92%);
+      margin-inline: auto;
+    }
+
+    /* ==========================================================================
+       2. شريط الآية العلوي
+       ========================================================================== */
+    .ayah-ribbon {
+      background: linear-gradient(90deg, var(--bg-deep), rgba(16, 59, 53, 0.85), var(--bg-deep));
+      border-bottom: 1px solid var(--gold-border);
+      padding: 0.55rem 1rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .ayah-ribbon-inner {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+      font-family: var(--font-quran);
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
+      color: var(--gold-light);
+      letter-spacing: 0.3px;
+    }
+
+    .ayah-star {
+      color: var(--turquoise);
+      font-size: 0.9rem;
+    }
+
+    /* ==========================================================================
+       3. الهيدر والشعار
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(8, 21, 33, 0.86);
+      border-bottom: 1px solid var(--gold-border);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+    }
+
+    .brand-logo-svg {
+      height: 58px;
+      width: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .brand-logo-svg:hover {
+      transform: scale(1.02);
+    }
+
+    .nav-list {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    .nav-list a {
+      font-size: 0.96rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      position: relative;
+      padding-bottom: 5px;
+    }
+
+    .nav-list a:hover { color: var(--gold-light); }
+
+    .nav-list a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold-primary);
+      transition: var(--transition);
+    }
+
+    .nav-list a:hover::after { width: 100%; }
+
+    /* استكمال كود زر القائمة المقطوع في كودك */
+    .menu-toggle {
+      display: none;
+      background: rgba(16, 59, 53, 0.5);
+      border: 1px solid var(--gold-border);
+      color: var(--gold-light);
+      padding: 0.45rem 0.8rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    /* ==========================================================================
+       4. القسم الرئيسي (Hero)
+       ========================================================================== */
+    .hero {
+      padding: 5rem 0 4rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 1.15rem;
+      background: rgba(16, 59, 53, 0.6);
+      border: 1px solid var(--gold-border);
+      border-radius: 99px;
+      color: var(--gold-light);
+      font-size: 0.88rem;
+      font-weight: 500;
+      margin-bottom: 1.4rem;
+    }
+
+    .status-badge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--turquoise);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--turquoise);
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 4.6vw, 3.9rem);
+      line-height: 1.25;
+      color: var(--warm-white);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 span { color: var(--gold-primary); }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 58ch;
+      margin-bottom: 2.2rem;
+    }
+
+    .cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1.8rem;
+      border-radius: 99px;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+      color: var(--bg-deep);
+      box-shadow: 0 4px 15px rgba(198, 167, 106, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(198, 167, 106, 0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--gold-border);
+      color: var(--gold-light);
+    }
+
+    .btn-outline:hover {
+      background: rgba(198, 167, 106, 0.1);
+      border-color: var(--gold-primary);
+      transform: translateY(-2px);
+    }
+
+    .verse-card {
+      background: var(--bg-card);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .verse-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(66, 198, 165, 0.1), transparent 70%);
+      pointer-events: none;
+    }
+
+    .verse-text {
+      font-family: var(--font-quran);
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      color: var(--gold-light);
+      line-height: 1.8;
+      display: block;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .verse-subtext {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-sans);
+    }
+
+    /* ==========================================================================
+       5. الأقسام العامة (المميزات، الأسئلة)
+       ========================================================================== */
+    .section-title {
+      text-align: center;
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(198, 167, 106, 0.15);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--gold-border);
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(66, 198, 165, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+      color: var(--turquoise);
+      border: 1px solid rgba(66, 198, 165, 0.2);
+    }
+
+    .feature-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      color: var(--gold-light);
+      margin-bottom: 0.8rem;
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 4rem;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid rgba(198, 167, 106, 0.15);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .faq-item[open] {
+      border-color: var(--gold-border);
+      background: var(--bg-card-hover);
+    }
+
+    .faq-item summary {
+      padding: 1.2rem 1.5rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .faq-item summary::-webkit-details-marker { display: none; }
+
+    .faq-item summary::after {
+      content: "+";
+      font-size: 1.5rem;
+      color: var(--gold-primary);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-content {
+      padding: 0 1.5rem 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* ==========================================================================
+       6. التذييل (Footer)
+       ========================================================================== */
+    .site-footer {
+      border-top: 1px solid var(--gold-border);
+      background: var(--bg-deep);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand h3 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 300px;
+    }
+
+    .footer-links h4 {
+      color: var(--gold-light);
+      margin-bottom: 1.2rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-links ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold-primary);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(198, 167, 106, 0.1);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* ==========================================================================
+       7. التجاوب (Responsive)
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-desc { margin-inline: auto; }
+      .cta-group { justify-content: center; }
+      .verse-card { margin-top: 2rem; }
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      .nav-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-navy);
+        border-bottom: 1px solid var(--gold-border);
+        flex-direction: column;
+        padding: 2rem 0;
+        gap: 1.5rem;
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        transition: var(--transition);
+      }
+      .nav-list.active {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      }
+      .footer-grid { grid-template-columns: 1fr; text-align: center; }
+      .footer-brand p { margin-inline: auto; }
+      .ayah-ribbon-inner { font-size: 0.95rem; gap: 0.4rem; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- الشريط العلوي -->
+  <!-- شريط الآية الكريمة العلوي -->
+  <div class="ayah-ribbon">
+    <div class="ayah-ribbon-inner">
+      <span class="ayah-star">✦</span>
+      ﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾
+      <span class="ayah-star">✦</span>
+    </div>
+  </div>
+
+  <!-- الهيدر -->
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#top" class="brand" aria-label="ذِكر — الرئيسية">
-        <div class="brand-emblem" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
-            <path d="M32 6L39.5 24.5L58 32L39.5 39.5L32 58L24.5 39.5L6 32L24.5 24.5Z" stroke="#C6A76A" stroke-width="3"/>
-            <circle cx="32" cy="32" r="6" fill="#42C6A5"/>
-          </svg>
-        </div>
-        <span class="brand-text">
-          <strong>ذِكر</strong>
-          <small>Dhker</small>
-        </span>
+      <a href="#top" aria-label="الرئيسية">
+        <svg class="brand-logo-svg" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(10, 10)">
+            <rect x="0" y="0" width="100" height="100" rx="20" fill="#103B35" stroke="#C6A76A" stroke-width="4"/>
+            <rect x="0" y="0" width="100" height="100" rx="20" fill="#0D2E28" stroke="#C6A76A" stroke-width="4" transform="rotate(45 50 50)"/>
+            <path d="M50 25 C65 40 75 55 75 75 L75 85 L25 85 L25 75 C25 55 35 40 50 25 Z" fill="#050D15" stroke="#C6A76A" stroke-width="3"/>
+            <path d="M60 65 A15 15 0 1 1 42 45 A12 12 0 1 0 60 65 Z" fill="#C6A76A"/>
+            <path d="M53 42 L56 49 L63 51 L56 53 L53 60 L50 53 L43 51 L50 49 Z" fill="#42C6A5"/>
+          </g>
+          <text x="130" y="65" font-family="'Amiri', serif" font-size="52" font-weight="bold" fill="#F7FAF8">ذِكر</text>
+          <text x="132" y="95" font-family="'IBM Plex Sans Arabic', sans-serif" font-size="16" fill="#B2C6C0" letter-spacing="4">DHKER</text>
+        </svg>
       </a>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false">
-        ☰
-      </button>
-
-      <nav aria-label="التنقل الرئيسي">
+      
+      <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
+      
+      <nav>
         <ul class="nav-list" id="navList">
-          <li><a href="#home">الرئيسية</a></li>
+          <li><a href="#top">الرئيسية</a></li>
           <li><a href="#features">المميزات</a></li>
           <li><a href="#about">عن التطبيق</a></li>
-          <li><a href="#screens">المعاينة</a></li>
           <li><a href="#faq">الأسئلة الشائعة</a></li>
-          <li><a href="#contact">تواصل معنا</a></li>
+          <li><a href="https://github.com/TEaG3/Dhker" target="_blank" rel="noopener">تابع التطوير</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main>
-    <!-- القسم الرئيسي (Hero) -->
-    <section id="home" class="hero">
-      <div class="container hero-grid">
-        <div>
-          <span class="status-badge">قيد التجهيز — الإصدار الأول على أندرويد</span>
-          <h1>ذِكر… <span>سكينة</span> ترافق يومك</h1>
+    <!-- قسم الهيرو -->
+    <section class="hero container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="status-badge">قيد التجهيز — الإصدار الأول على أندرويد</div>
+          <h1>ذِكر... <span>سكينة ترافق يومك</span></h1>
           <p class="hero-desc">
-            تطبيق عربي هادئ يجمع مواقيت الصلاة والأذكار الموثّقة في مكان واحد،
-            بواجهة أصيلة من اليمين إلى اليسار تعمل دون إنترنت بعد التهيئة الأولى.
+            تطبيق عربي هادئ يجمع مواقيت الصلاة والأذكار الموثّقة في مكان واحد. 
+            واجهة أصيلة من اليمين إلى اليسار، تعمل دون إنترنت بعد التهيئة الأولى، 
+            وبلا إعلانات أو حسابات.
           </p>
           <div class="cta-group">
-            <a href="#features" class="btn btn-primary">اكتشف التطبيق
+            <a href="#features" class="btn btn-primary">اكتشف التطبيق</a>
+            <a href="https://github.com/TEaG3/Dhker" target="_blank" rel="noopener" class="btn btn-outline">مستودع التطوير</a>
+          </div>
+        </div>
+        
+        <div class="hero-art">
+          <div class="verse-card">
+            <span class="verse-text">﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾</span>
+            <span class="verse-subtext">طمأنينة في يومك، وقرب من الله</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم المميزات -->
+    <section id="features" class="container" style="margin-top: 2rem;">
+      <h2 class="section-title">مميزات مدروسة، بلا زحام</h2>
+      <p class="section-subtitle">كل ما يظهر هنا مبني على ما هو مؤكد في كود التطبيق، لا وعود تسويقية.</p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18" stroke-linecap="round"/><circle cx="12" cy="12" r="8"/></svg></div>
+          <h3>مواقيت صلاة محلية</h3>
+          <p>تُحسب المواقيت على جهازك مباشرة بعد اختيار المدينة، فتستمر بالعمل دون اتصال بالإنترنت.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 0-3 3V4z"/><path d="M8 8h7M8 12h7" stroke-linecap="round"/></svg></div>
+          <h3>أذكار موثّقة</h3>
+          <p>أذكار الصباح والمساء والنوم وأذكار الصلاة، مع مصدر كل ذكر ودرجته الشرعية.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+          <h3>خصوصية بالتصميم</h3>
+          <p>لا حسابات ولا تتبّع ولا إعلانات. موقعك وسجلّك يبقيان على جهازك ولا يُرسلان لأي خادم.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم الأسئلة الشائعة -->
+    <section id="faq" class="container" style="margin-top: 5rem;">
+      <h2 class="section-title">الأسئلة الشائعة</h2>
+      <p class="section-subtitle">إجابات مباشرة، بلا مبالغة.</p>
+      
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>ما هو تطبيق ذِكر؟</summary>
+          <div class="faq-content">تطبيق عربي يجمع مواقيت الصلاة والأذكار الموثّقة في تجربة واحدة هادئة، مع التركيز على الوضوح وسهولة الاستخدام والخصوصية.</div>
+        </details>
+        <details class="faq-item">
+          <summary>هل التطبيق متاح للتنزيل الآن؟</summary>
+          <div class="faq-content">ليس بعد. الإصدار الأول قيد التجهيز والاختبار. سيُعلن رابط التنزيل هنا وفي مستودع التطوير فور اكتماله.</div>
+        </details>
+        <details class="faq-item">
+          <summary>كيف أتابع التحديثات؟</summary>
+          <div class="faq-content">تابع مستودع التطوير على <a href="https://github.com/TEaG3/Dhker" target="_blank" style="color:var(--gold-primary);">GitHub</a>، أو راقب هذه الصفحة. لا نستخدم قنوات إعلانية مزعجة.</div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- التذييل -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>ذِكر</h3>
+          <p>سكينة ترافق يومك. تطبيق عربي لمواقيت الصلاة والأذكار، قيد التجهيز.</p>
+        </div>
+        <div class="footer-links">
+          <h4>روابط سريعة</h4>
+          <ul>
+            <li><a href="https://github.com/TEaG3/Dhker" target="_blank" rel="noopener">مستودع التطبيق (GitHub)</a></li>
+            <li><a href="https://github.com/TEaG3/Dhker-Website" target="_blank" rel="noopener">مستودع الموقع (GitHub)</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2026 ذِكر. جميع الحقوق محفوظة.
+      </div>
+    </div>
+  </footer>
+
+  <!-- سكريبت القائمة في الجوال -->
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navList = document.getElementById('navList');
+
+    menuToggle.addEventListener('click', () => {
+      navList.classList.toggle('active');
+    });
+
+    navList.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navList.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
