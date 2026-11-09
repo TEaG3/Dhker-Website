@@ -6,28 +6,23 @@
   <title>ذِكر — سكينة ترافق يومك | مواقيت الصلاة والأذكار</title>
   <meta name="description" content="ذِكر تطبيق عربي هادئ يجمع مواقيت الصلاة والأذكار الموثقة بواجهة واضحة تعمل دون إنترنت. قيد التجهيز للإصدار الأول على أندرويد." />
   <meta name="theme-color" content="#081521" />
-
-  <!-- Open Graph -->
   <meta property="og:title" content="ذِكر — سكينة ترافق يومك" />
   <meta property="og:description" content="تطبيق عربي هادئ لمواقيت الصلاة والأذكار، بواجهة RTL واضحة يعمل دون إنترنت." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://teag3.github.io/Dhker-Website/" />
   <meta property="og:locale" content="ar_AR" />
   <meta property="og:site_name" content="ذِكر" />
-
-  <!-- Favicon SVG مضمّن -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23103B35'/%3E%3Cpath d='M32 14c-6 8-6 14 0 20 6 6 6 12 0 20' stroke='%2342C6A5' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='45' cy='24' r='3' fill='%23C6A76A'/%3E%3C/svg%3E" />
-
-  <!-- الخطوط العربية -->
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet" />
-
+  <!-- أضفنا خط Amiri للآيات والخطوط الأخرى للواجهة -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- شريط التنقل -->
   <header class="site-header" id="top">
     <div class="container nav-wrap">
       <a href="#top" class="brand" aria-label="ذِكر — الرئيسية">
@@ -60,7 +55,7 @@
   </header>
 
   <main>
-    <!-- قسم الهيرو -->
+    <!-- قسم الهيرو المعدل -->
     <section class="hero" id="home">
       <div class="hero-bg" aria-hidden="true">
         <div class="orb orb-1"></div>
@@ -87,30 +82,27 @@
           </ul>
         </div>
 
-        <!-- تكوين زخرفي، ليس لقطة شاشة -->
+        <!-- الآية الكريمة كعنصر بصري رئيسي -->
         <div class="hero-art" aria-hidden="true">
-          <div class="art-frame glass">
-            <div class="art-ring"></div>
-            <div class="art-ring art-ring-2"></div>
-            <span class="art-glyph">ذِكر</span>
-            <span class="art-caption">هوية بصرية هادئة</span>
+          <div class="verse-card glass">
+            <div class="verse-glow"></div>
+            <span class="verse-text">﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾</span>
+            <div class="verse-divider"></div>
+            <span class="verse-caption">طمأنينة في يومك، وقرب من الله</span>
           </div>
-          <div class="art-chip glass">واجهة عربية RTL</div>
-          <div class="art-chip glass art-chip-2">وضع داكن</div>
         </div>
       </div>
     </section>
 
-    <!-- المميزات -->
     <section class="section" id="features">
       <div class="container">
-        <div class="section-head reveal">
+        <div class="section-head">
           <h2>مميزات مدروسة، بلا زحام</h2>
           <p>كل ما يظهر هنا مبني على ما هو مؤكد في كود التطبيق، لا وعود تسويقية.</p>
         </div>
 
         <div class="features-grid">
-          <article class="feature-card glass reveal">
+          <article class="feature-card glass">
             <div class="feature-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
             </div>
@@ -118,7 +110,7 @@
             <p>تُحسب المواقيت على جهازك مباشرة بعد اختيار المدينة، فتستمر بالعمل دون اتصال بالإنترنت.</p>
           </article>
 
-          <article class="feature-card glass reveal">
+          <article class="feature-card glass">
             <div class="feature-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 0-3 3V4z" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M8 8h7M8 12h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
             </div>
@@ -126,7 +118,7 @@
             <p>أذكار الصباح والمساء والنوم وأذكار الصلاة، مع مصدر كل ذكر ودرجته الشرعية.</p>
           </article>
 
-          <article class="feature-card glass reveal">
+          <article class="feature-card glass">
             <div class="feature-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
             </div>
@@ -134,7 +126,7 @@
             <p>تصميم أصيل من اليمين إلى اليسار، بخطوط عربية مقروءة وتناسق بصري مريح.</p>
           </article>
 
-          <article class="feature-card glass reveal">
+          <article class="feature-card glass">
             <div class="feature-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
             </div>
@@ -142,7 +134,7 @@
             <p>يتكيّف التطبيق مع إعدادات جهازك، ويحافظ على تباين مريح للعين في كل الأوقات.</p>
           </article>
 
-          <article class="feature-card glass reveal">
+          <article class="feature-card glass">
             <div class="feature-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M12 4v4m0 8v4M4 12h4m8 0h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
             </div>
@@ -150,7 +142,7 @@
             <p>يفحص التطبيق وجود إصدار جديد ويُنبّهك، لتبقى على النسخة الأحدث دون متابعة يدوية.</p>
           </article>
 
-          <article class="feature-card glass reveal">
+          <article class="feature-card glass">
             <div class="feature-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
             </div>
@@ -161,10 +153,9 @@
       </div>
     </section>
 
-    <!-- عن التطبيق -->
     <section class="section section-alt" id="about">
       <div class="container about-grid">
-        <div class="about-copy reveal">
+        <div class="about-copy">
           <h2>عن ذِكر</h2>
           <p>
             ذِكر مشروع تطبيق عربي وُلد من فكرة بسيطة: أن يكون الذكر والصلاة حاضرين في يومك
@@ -191,7 +182,7 @@
           </div>
         </div>
 
-        <div class="about-art reveal" aria-hidden="true">
+        <div class="about-art" aria-hidden="true">
           <div class="glass about-frame">
             <span class="about-glyph">﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾</span>
           </div>
@@ -199,16 +190,15 @@
       </div>
     </section>
 
-    <!-- معاينة التطبيق -->
     <section class="section" id="screens">
       <div class="container">
-        <div class="section-head reveal">
+        <div class="section-head">
           <h2>معاينة التطبيق</h2>
           <p>لقطات الشاشة الرسمية ستُضاف هنا بعد اكتمال الإصدار الأول. ما تراه الآن عناصر نائبة معلَّمة بوضوح.</p>
         </div>
 
         <div class="screens-grid">
-          <figure class="screen-card glass reveal">
+          <figure class="screen-card glass">
             <div class="screen-placeholder">
               <span>لقطة شاشة قادمة</span>
               <small>شاشة المواقيت</small>
@@ -216,7 +206,7 @@
             <figcaption>المواقيت اليومية</figcaption>
           </figure>
 
-          <figure class="screen-card glass reveal">
+          <figure class="screen-card glass">
             <div class="screen-placeholder">
               <span>لقطة شاشة قادمة</span>
               <small>شاشة الأذكار</small>
@@ -224,7 +214,7 @@
             <figcaption>أذكار الصباح والمساء</figcaption>
           </figure>
 
-          <figure class="screen-card glass reveal">
+          <figure class="screen-card glass">
             <div class="screen-placeholder">
               <span>لقطة شاشة قادمة</span>
               <small>الوضع الداكن</small>
@@ -232,48 +222,43 @@
             <figcaption>تجربة القراءة الليلية</figcaption>
           </figure>
         </div>
-
-        <p class="screens-note reveal">
-          <strong>ملاحظة صريحة:</strong> لا تُعرض أي صورة وهمية كأنها لقطة حقيقية. سيتم استبدال هذه العناصر بلقطات فعلية فور توفرها.
-        </p>
       </div>
     </section>
 
-    <!-- الأسئلة الشائعة -->
     <section class="section section-alt" id="faq">
       <div class="container">
-        <div class="section-head reveal">
+        <div class="section-head">
           <h2>الأسئلة الشائعة</h2>
           <p>إجابات مباشرة، بلا مبالغة.</p>
         </div>
 
         <div class="faq-list">
-          <details class="faq-item glass reveal" open>
+          <details class="faq-item glass" open>
             <summary>ما هو تطبيق ذِكر؟</summary>
             <p>تطبيق عربي يجمع مواقيت الصلاة والأذكار الموثّقة في تجربة واحدة هادئة، مع التركيز على الوضوح وسهولة الاستخدام والخصوصية.</p>
           </details>
 
-          <details class="faq-item glass reveal">
+          <details class="faq-item glass">
             <summary>ما المنصات المدعومة؟</summary>
             <p>نركّز حاليًا على أندرويد للإصدار الأول. دعم iOS مؤجَّل حتى استقرار تجربة أندرويد بالكامل.</p>
           </details>
 
-          <details class="faq-item glass reveal">
+          <details class="faq-item glass">
             <summary>هل التطبيق متاح للتنزيل الآن؟</summary>
             <p>ليس بعد. الإصدار الأول قيد التجهيز والاختبار. سيُعلن رابط التنزيل هنا وفي مستودع التطوير فور اكتماله.</p>
           </details>
 
-          <details class="faq-item glass reveal">
+          <details class="faq-item glass">
             <summary>كيف أتابع التحديثات؟</summary>
             <p>تابع مستودع التطوير على <a href="https://github.com/TEaG3/Dhker" target="_blank" rel="noopener">GitHub</a>، أو راقب هذه الصفحة. لا نستخدم قنوات إعلانية مزعجة.</p>
           </details>
 
-          <details class="faq-item glass reveal">
+          <details class="faq-item glass">
             <summary>هل سيُطلب مني إنشاء حساب؟</summary>
             <p>لا. التطبيق لا يتطلب حسابات، ولا يرسل بياناتك إلى خدمات خارجية. الإحداثيات (إن فُعّل الموقع) تُستخدم لحساب المواقيت فقط وتبقى على جهازك.</p>
           </details>
 
-          <details class="faq-item glass reveal">
+          <details class="faq-item glass">
             <summary>هل الأذكار كلها صحيحة؟</summary>
             <p>كل ذكر يمر بمراجعة، ويُذكر مصدره ورقمه ودرجته. ما لم يثبت يُستبعد من القوائم اليومية. أي خطأ يمكن الإبلاغ عنه عبر صفحة التواصل.</p>
           </details>
@@ -281,10 +266,9 @@
       </div>
     </section>
 
-    <!-- تواصل معنا -->
     <section class="section" id="contact">
       <div class="container">
-        <div class="contact-card glass reveal">
+        <div class="contact-card glass">
           <div class="contact-copy">
             <h2>تواصل معنا</h2>
             <p>لأي استفسار أو ملاحظة أو إبلاغ عن خطأ في نص شرعي، يمكنك مراسلتنا مباشرة.</p>
@@ -323,7 +307,6 @@
     </section>
   </main>
 
-  <!-- التذييل -->
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
