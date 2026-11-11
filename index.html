@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="top" data-dhker-style="mihrab" data-dhker-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,23 +12,64 @@
   <meta property="og:description" content="اقرأ القرآن، وتابع الأذكار ومواقيت الصلاة، واستمع إلى الأذان.">
   <meta property="og:url" content="https://teag3.github.io/Dhker-Website/">
   <title>ذِكر — سكينة ترافق يومك</title>
+  
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23081521'/%3E%3Cpath d='M50 12 88 50 50 88 12 50Z' fill='none' stroke='%23C6A76A' stroke-width='5'/%3E%3Ctext x='50' y='63' text-anchor='middle' font-size='43' fill='%23F3DFB2'%3Eذ%3C/text%3E%3C/svg%3E">
+  <!-- أيقونة الموقع تم تحديثها لتكون أيقونة المشكاة والنجمة الثمانية -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%23081824' stroke='%23C6A76A' stroke-width='16'/%3E%3Cg transform='translate(256, 256)'%3E%3Crect x='-145' y='-145' width='290' height='290' rx='22' fill='%230B2623' stroke='%23C6A76A' stroke-width='14'/%3E%3Crect x='-145' y='-145' width='290' height='290' rx='22' fill='%230E332D' stroke='%23C6A76A' stroke-width='14' transform='rotate(45)'/%3E%3C/g%3E%3Cpath d='M256 96 C318 148, 356 206, 356 278 L356 386 L156 386 L156 278 C156 206, 194 148, 256 96 Z' fill='%2305111A' stroke='%23C6A76A' stroke-width='14'/%3E%3C/svg%3E">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- ملف الأنماط الأساسي الخاص بك -->
   <link rel="stylesheet" href="./styles.css">
-  <link rel="stylesheet" href="./islamic-identity.css?v=5">
+  <!-- ملف الهوية الإسلامية المتقدم (3D Architecture Engine) -->
+  <link rel="stylesheet" href="./islamic-identity.css?v=6">
 </head>
 <body>
+  
+  <!-- شريط التحكم المعماري (يُحقن تلقائياً بواسطة islamic-identity.js ولكن يمكن وضعه هنا للسرعة) -->
+  <div id="dhker-identity-bar" dir="rtl">
+    <div class="dhk-bar-inner">
+      <div class="dhk-style-group">
+        <span class="dhk-label">✦ الهوية الإسلامية:</span>
+        <button type="button" class="dhk-btn active" data-style="mihrab">١. محراب الزمرد</button>
+        <button type="button" class="dhk-btn" data-style="andalus">٢. قصر الحمراء</button>
+        <button type="button" class="dhk-btn" data-style="kufic">٣. القباب الكوفية</button>
+      </div>
+      <button type="button" class="dhk-theme-btn" id="dhkThemeToggle">☀️ الوضع النهاري</button>
+    </div>
+  </div>
+
   <div class="ayah-ribbon">﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾</div>
+  
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#home" aria-label="ذِكر - الرئيسية"><span class="brand-mark">ذ</span><span><b>ذِكر</b><small>DHKER</small></span></a>
+      <a class="brand" href="#home" aria-label="ذِكر - الرئيسية">
+        <!-- شعار المشكاة والنجمة الثمانية -->
+        <span class="dhk-injected-logo" style="display:inline-flex; width:44px; height:44px; margin-left:8px; vertical-align:middle;">
+          <svg viewBox="0 0 512 512" width="100%" height="100%">
+            <rect width="512" height="512" rx="115" fill="#081824" stroke="#C6A76A" stroke-width="14"/>
+            <g transform="translate(256, 256)">
+              <rect x="-145" y="-145" width="290" height="290" rx="22" fill="#0B2623" stroke="#C6A76A" stroke-width="12"/>
+              <rect x="-145" y="-145" width="290" height="290" rx="22" fill="#0E332D" stroke="#C6A76A" stroke-width="12" transform="rotate(45)"/>
+            </g>
+            <path d="M256 96 C318 148, 356 206, 356 278 L356 386 L156 386 L156 278 C156 206, 194 148, 256 96 Z" fill="#05111A" stroke="#C6A76A" stroke-width="12"/>
+            <line x1="256" y1="104" x2="256" y2="184" stroke="#C6A76A" stroke-width="10"/>
+            <path d="M222 192 L206 248 C202 272, 220 300, 256 308 C292 300, 310 272, 306 248 L290 192 Z" fill="#42C6A5" stroke="#C6A76A" stroke-width="10"/>
+            <path d="M256 212 L265 240 L293 249 L265 258 L256 286 L247 258 L219 249 L247 240 Z" fill="#FFFFFF"/>
+          </svg>
+        </span>
+        <span><b style="font-family:'Amiri', serif; font-size:1.6rem; margin-bottom:-4px;">ذِكْـر</b><small style="letter-spacing:1.5px;">DHKER</small></span>
+      </a>
       <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false">☰</button>
       <nav aria-label="التنقل الرئيسي">
         <ul class="nav-list" id="navList">
-          <li><a href="#home">الرئيسية</a></li><li><a href="#quran">القرآن</a></li><li><a href="#prayer">المواقيت</a></li><li><a href="#adhkar">الأذكار</a></li><li><a href="#audio">الصوتيات</a></li>
+          <li><a href="#home">الرئيسية</a></li>
+          <li><a href="#quran">القرآن</a></li>
+          <li><a href="#prayer">المواقيت</a></li>
+          <li><a href="#adhkar">الأذكار</a></li>
+          <li><a href="#audio">الصوتيات</a></li>
         </ul>
       </nav>
     </div>
@@ -47,30 +88,36 @@
           </div>
           <p class="small-note">تعمل البيانات المحفوظة مسبقاً دون اتصال. يلزم الإنترنت لجلب محتوى جديد أو تحديث المواقيت.</p>
         </div>
-        <div class="verse-card">
+        <div class="verse-card dhk-3d-mihrab-card">
+          <!-- إطار المحراب الثلاثي الأبعاد يحقن هنا عبر الجافاسكربت -->
           <span class="verse-text">﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾</span>
           <span class="verse-subtext">الرعد: ٢٨</span>
-          <div class="ornament">✦　۞　✦</div>
+          <div class="ornament">✦ ۞ ✦</div>
         </div>
       </div>
     </section>
 
+    <!-- شريط الإفريز المذهب يُحقن تلقائياً بواسطة CSS -->
+
     <section class="container service-grid" aria-label="خدمات ذِكر">
-      <a class="service-card" href="#quran"><span>۞</span><b>القرآن الكريم</b><small>قراءة بالسور وصفحات المصحف</small></a>
-      <a class="service-card" href="#prayer"><span>◷</span><b>مواقيت الصلاة</b><small>اختر مدينتك وتابع مواقيت اليوم</small></a>
-      <a class="service-card" href="#adhkar"><span>✧</span><b>الأذكار</b><small>الصباح والمساء والنوم</small></a>
-      <a class="service-card" href="#audio"><span>♫</span><b>الصوتيات</b><small>معاينة أصوات الأذان</small></a>
+      <a class="service-card dhk-illuminated-card" href="#quran"><span>۞</span><b>القرآن الكريم</b><small>قراءة بالسور وصفحات المصحف</small></a>
+      <a class="service-card dhk-illuminated-card" href="#prayer"><span>◷</span><b>مواقيت الصلاة</b><small>اختر مدينتك وتابع مواقيت اليوم</small></a>
+      <a class="service-card dhk-illuminated-card" href="#adhkar"><span>✧</span><b>الأذكار</b><small>الصباح والمساء والنوم</small></a>
+      <a class="service-card dhk-illuminated-card" href="#audio"><span>♫</span><b>الصوتيات</b><small>معاينة أصوات الأذان</small></a>
     </section>
 
     <section id="quran" class="container app-section">
       <div class="section-heading"><div><span class="eyebrow">تلاوة وتدبر</span><h2>القرآن الكريم</h2><p>عرض نص القرآن بالرسم العثماني مع حفظ الصفحات التي تفتحها على هذا الجهاز، وإمكانية الاستماع إلى تلاوات السور.</p></div><span class="section-symbol">۞</span></div>
+      
+      <!-- زر الانتقال للمصحف الورقي المستقل -->
       <p class="source-note"><a class="btn btn-outline btn-small" href="./quran-reader.html">افتح المصحف الورقي بصفحتين</a></p>
+      
       <div class="reader-toolbar">
         <label for="quranPage">رقم الصفحة</label>
         <input id="quranPage" type="number" min="1" max="604" value="1" inputmode="numeric">
         <button class="btn btn-outline btn-small" id="loadPage">فتح الصفحة</button>
-        <button class="btn btn-outline btn-small" id="prevPage">السابق</button>
-        <button class="btn btn-outline btn-small" id="nextPage">التالي</button>
+        <button class="btn btn-outline btn-small nav-prev" id="prevPage">السابق</button>
+        <button class="btn btn-outline btn-small nav-next" id="nextPage">التالي</button>
       </div>
       <div class="reader-toolbar recitation-toolbar" aria-label="مشغل تلاوة القرآن">
         <label for="quranSurah">السورة</label>
@@ -93,7 +140,12 @@
       <p class="source-note" id="quranAudioStatus" role="status">اختر السورة والقارئ لتشغيل التلاوة عبر شبكة AlQuran Cloud.</p>
       <p class="source-note">مصدر التلاوات: <a href="https://alquran.cloud/cdn" target="_blank" rel="noopener">AlQuran Cloud CDN</a> — بث عند الطلب للاستخدام الشخصي والتعليمي وفق شروط المصدر. لا تُضمّن ملفات التلاوة داخل الموقع.</p>
       <div class="reader-status" id="quranStatus" role="status">اختر صفحة لبدء القراءة. تُحفظ الصفحات التي تفتحها محلياً لهذا المتصفح.</div>
-      <article class="quran-page" id="quranContent" lang="ar" translate="no" aria-live="polite"><p class="reader-placeholder">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p></article>
+      
+      <!-- حاوية القرآن (سيتم تحويلها لورق مصحف 3D عبر islamic-identity.css) -->
+      <article class="quran-page dhk-parchment-quran-surface" id="quranContent" lang="ar" translate="no" aria-live="polite">
+        <p class="reader-placeholder">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </article>
+      
       <p class="source-note">مصدر النص: AlQuran Cloud API — النص العثماني. <a href="https://alquran.cloud/terms-and-conditions" target="_blank" rel="noopener">شروط الاستخدام والإسناد</a>. لا يتم تغيير نص الآيات.</p>
     </section>
 
@@ -118,8 +170,8 @@
     <section id="audio" class="container app-section">
       <div class="section-heading"><div><span class="eyebrow">استمع</span><h2>مكتبة الأذان</h2><p>تلاوات القرآن والأذان في مشغلين منفصلين. اختر القارئ والسورة من قسم القرآن، أو استمع إلى أحد نماذج الأذان هنا.</p></div><span class="section-symbol">♫</span></div>
       <div class="audio-list">
-        <div class="audio-card"><div><b>الأذان الأساسي</b><small>Beautiful adhan — CC0 1.0</small></div><button class="btn btn-outline btn-small audio-play" data-audio="default">استمع</button></div>
-        <div class="audio-card"><div><b>أذان الفجر</b><small>Adhan — CC0 1.0</small></div><button class="btn btn-outline btn-small audio-play" data-audio="fajr">استمع</button></div>
+        <div class="audio-card dhk-illuminated-card"><div><b>الأذان الأساسي</b><small>Beautiful adhan — CC0 1.0</small></div><button class="btn btn-outline btn-small audio-play" data-audio="default">استمع</button></div>
+        <div class="audio-card dhk-illuminated-card"><div><b>أذان الفجر</b><small>Adhan — CC0 1.0</small></div><button class="btn btn-outline btn-small audio-play" data-audio="fajr">استمع</button></div>
       </div>
       <audio id="adhanPlayer" controls preload="none"></audio>
       <p class="source-note">المصادر: <a href="https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg" target="_blank" rel="noopener">Beautiful_adhan.ogg</a> و<a href="https://commons.wikimedia.org/wiki/File:Adhan.ogg" target="_blank" rel="noopener">Adhan.ogg</a>. الصوت عبر الموقع يحتاج اتصالاً أول مرة؛ التطبيق يضم التسجيلات ضمن بناء Android.</p>
@@ -131,8 +183,25 @@
     </section>
   </main>
 
-  <footer class="site-footer"><div class="container footer-grid"><div><h3>ذِكر</h3><p>سكينة ترافق يومك.</p></div><div><h4>روابط المشروع</h4><a href="https://github.com/TEaG3/Dhker">مستودع Android</a><a href="https://github.com/TEaG3/Dhker-Website">مستودع الموقع</a><a href="https://github.com/TEaG3/Dhker/releases">إصدارات التطبيق</a></div></div><div class="footer-bottom">© 2026 ذِكر — تخضع الموارد الخارجية لشروط أصحابها.</div></footer>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3 style="font-family:'Amiri', serif; font-size:1.6rem; color:var(--dhk-gold-bright);">ذِكر</h3>
+        <p>سكينة ترافق يومك.</p>
+      </div>
+      <div>
+        <h4 style="color:var(--dhk-gold);">روابط المشروع</h4>
+        <a href="https://github.com/TEaG3/Dhker">مستودع Android</a>
+        <a href="https://github.com/TEaG3/Dhker-Website">مستودع الموقع</a>
+        <a href="https://github.com/TEaG3/Dhker/releases">إصدارات التطبيق</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 ذِكر — تخضع الموارد الخارجية لشروط أصحابها.</div>
+  </footer>
+
+  <!-- ملف الجافاسكربت الخاص بك (يعمل كما هو لجلب الآيات والمواقيت) -->
   <script src="./script.js" defer></script>
-  <script src="./islamic-identity.js?v=5" defer></script>
+  <!-- ملف محرك العمارة 3D والزخارف (يضمن حركة القناديل وتقليب الصفحات) -->
+  <script src="./islamic-identity.js?v=6" defer></script>
 </body>
 </html>
