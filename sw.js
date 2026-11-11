@@ -1,4 +1,4 @@
-const CACHE_NAME = "dhker-web-v1";
+const CACHE_NAME = "dhker-web-v2";
 const CORE = [
   "./", "./index.html", "./styles.css", "./script.js",
   "./manifest.webmanifest", "./data/adhkar.json",

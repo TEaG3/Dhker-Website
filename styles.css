@@ -531,9 +531,32 @@ ul { list-style: none; }
 .reader-toolbar input,.reader-toolbar select { min-width:100px; max-width:220px; padding:.6rem .8rem; color:var(--warm-white); background:var(--bg-deep); border:1px solid var(--gold-border); border-radius:10px; font:inherit; }
 .btn-small { padding:.55rem 1rem; font-size:.88rem; }
 .reader-status { min-height:2.5rem; padding:.8rem .2rem; color:var(--text-muted); font-size:.88rem; }
-.quran-page { min-height:230px; padding:2rem 1.5rem; border:1px solid var(--gold-border); border-radius:18px; background:linear-gradient(145deg,#112d29,#091822); text-align:center; }
-.mushaf-heading { color:var(--gold-primary); font:700 1.2rem var(--font-serif); margin-bottom:1.5rem; }
-.ayah-line { display:inline; color:#f5e9cb; font:1.65rem/2.35 var(--font-quran); }
+.quran-page {
+  min-height:230px;
+  position:relative;
+  padding:clamp(1.5rem,4vw,3rem);
+  border:8px double #28745e;
+  outline:2px solid #c96d91;
+  outline-offset:3px;
+  border-radius:10px;
+  background:
+    radial-gradient(circle at 8px 8px, rgba(201,109,145,.28) 1.5px, transparent 2px) 0 0/24px 24px,
+    linear-gradient(90deg, rgba(40,116,94,.05) 1px, transparent 1px) 0 0/18px 18px,
+    #f5eedc;
+  box-shadow:inset 0 0 0 7px #e2d4b6, inset 0 0 0 10px #3b866c, 0 12px 28px rgba(0,0,0,.22);
+  text-align:center;
+}
+.mushaf-heading {
+  display:inline-block;
+  color:#245d49;
+  font:700 1.2rem var(--font-serif);
+  margin:0 auto 1.5rem;
+  padding:.45rem 1.5rem;
+  border:1px solid #4c957c;
+  border-radius:40px;
+  background:#e4eee0;
+}
+.ayah-line { display:inline; color:#211f18; font:1.65rem/2.35 var(--font-quran); }
 .ayah-marker { display:inline-block; color:var(--turquoise); font: .8rem var(--font-sans); white-space:nowrap; margin-inline:.25rem; }
 .reader-placeholder { color:var(--gold-light); font:2rem var(--font-quran); }
 .prayer-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; margin-top:1rem; }
@@ -558,3 +581,8 @@ ul { list-style: none; }
 @media(max-width:800px) { .service-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .app-section { padding:1.2rem; } .prayer-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .about-section { align-items:flex-start; flex-direction:column; } }
 @media(max-width:480px) { .service-grid { gap:.6rem; } .service-card { padding:1rem; } .reader-toolbar { align-items:stretch; } .reader-toolbar input,.reader-toolbar select { flex:1; max-width:none; } .section-heading h2 { font-size:1.7rem; } .ayah-line { font-size:1.35rem; } .audio-card { align-items:flex-start; flex-direction:column; } }
 @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; animation:none!important; } }
+
+.recitation-toolbar { margin-top:.8rem; }
+.recitation-toolbar select { min-width:190px; }
+#quranPlayer { display:block; width:100%; margin-top:.8rem; }
+@media(max-width:480px) { .recitation-toolbar select { width:100%; max-width:none; } }

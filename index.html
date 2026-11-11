@@ -62,7 +62,7 @@
     </section>
 
     <section id="quran" class="container app-section">
-      <div class="section-heading"><div><span class="eyebrow">تلاوة وتدبر</span><h2>القرآن الكريم</h2><p>عرض نص القرآن بالرسم العثماني من خدمة AlQuran Cloud، مع حفظ الصفحات التي تفتحها على هذا الجهاز.</p></div><span class="section-symbol">۞</span></div>
+      <div class="section-heading"><div><span class="eyebrow">تلاوة وتدبر</span><h2>القرآن الكريم</h2><p>عرض نص القرآن بالرسم العثماني مع حفظ الصفحات التي تفتحها على هذا الجهاز، وإمكانية الاستماع إلى تلاوات السور.</p></div><span class="section-symbol">۞</span></div>
       <div class="reader-toolbar">
         <label for="quranPage">رقم الصفحة</label>
         <input id="quranPage" type="number" min="1" max="604" value="1" inputmode="numeric">
@@ -70,6 +70,26 @@
         <button class="btn btn-outline btn-small" id="prevPage">السابق</button>
         <button class="btn btn-outline btn-small" id="nextPage">التالي</button>
       </div>
+      <div class="reader-toolbar recitation-toolbar" aria-label="مشغل تلاوة القرآن">
+        <label for="quranSurah">السورة</label>
+        <input id="quranSurah" type="number" min="1" max="114" value="1" inputmode="numeric">
+        <label for="quranReciter">القارئ</label>
+        <select id="quranReciter">
+          <option value="ar.alafasy">مشاري راشد العفاسي</option>
+          <option value="ar.husary">محمود خليل الحصري</option>
+          <option value="ar.minshawi">محمد صديق المنشاوي</option>
+          <option value="ar.sudais">عبدالرحمن السديس</option>
+          <option value="ar.shuraim">سعود الشريم</option>
+          <option value="ar.abdulbasit">عبدالباسط عبدالصمد</option>
+          <option value="ar.ajamy">أحمد العجمي</option>
+          <option value="ar.muhammadayoub">محمد أيوب</option>
+          <option value="ar.hudhaify">علي الحذيفي</option>
+        </select>
+        <button class="btn btn-primary btn-small" id="playQuranRecitation">استمع للسورة</button>
+      </div>
+      <audio id="quranPlayer" controls preload="none" aria-label="مشغل تلاوة القرآن"></audio>
+      <p class="source-note" id="quranAudioStatus" role="status">اختر السورة والقارئ لتشغيل التلاوة عبر شبكة AlQuran Cloud.</p>
+      <p class="source-note">مصدر التلاوات: <a href="https://alquran.cloud/cdn" target="_blank" rel="noopener">AlQuran Cloud CDN</a> — بث عند الطلب للاستخدام الشخصي والتعليمي وفق شروط المصدر. لا تُضمّن ملفات التلاوة داخل الموقع.</p>
       <div class="reader-status" id="quranStatus" role="status">اختر صفحة لبدء القراءة. تُحفظ الصفحات التي تفتحها محلياً لهذا المتصفح.</div>
       <article class="quran-page" id="quranContent" lang="ar" translate="no" aria-live="polite"><p class="reader-placeholder">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p></article>
       <p class="source-note">مصدر النص: AlQuran Cloud API — النص العثماني. <a href="https://alquran.cloud/terms-and-conditions" target="_blank" rel="noopener">شروط الاستخدام والإسناد</a>. لا يتم تغيير نص الآيات.</p>
@@ -94,7 +114,7 @@
     </section>
 
     <section id="audio" class="container app-section">
-      <div class="section-heading"><div><span class="eyebrow">استمع</span><h2>مكتبة الأذان</h2><p>تسجيلان متاحان للمعاينة من Wikimedia Commons. شغّل الصوت باختيارك.</p></div><span class="section-symbol">♫</span></div>
+      <div class="section-heading"><div><span class="eyebrow">استمع</span><h2>مكتبة الأذان</h2><p>تلاوات القرآن والأذان في مشغلين منفصلين. اختر القارئ والسورة من قسم القرآن، أو استمع إلى أحد نماذج الأذان هنا.</p></div><span class="section-symbol">♫</span></div>
       <div class="audio-list">
         <div class="audio-card"><div><b>الأذان الأساسي</b><small>Beautiful adhan — CC0 1.0</small></div><button class="btn btn-outline btn-small audio-play" data-audio="default">استمع</button></div>
         <div class="audio-card"><div><b>أذان الفجر</b><small>Adhan — CC0 1.0</small></div><button class="btn btn-outline btn-small audio-play" data-audio="fajr">استمع</button></div>
