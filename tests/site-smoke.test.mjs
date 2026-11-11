@@ -39,7 +39,7 @@ test("prayer city catalog includes Baghdad and valid methods", () => {
 test("script implements offline Quran cache and service worker registration", () => {
   assert.match(script, /indexedDB/);
   assert.match(script, /serviceWorker/);
-  assert.match(script, /alquran\\.cloud/);
+  assert.ok(script.includes("api.alquran.cloud"));
 });
 
 test("Quran recitation player offers multiple reciters and uses the documented AlQuran Cloud CDN", () => {
