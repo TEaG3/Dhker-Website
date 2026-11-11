@@ -125,6 +125,16 @@ body.mushaf-body{
  .quran-gutter{display:none}
 }
 
+/* StPageFlip is desktop-only; keep the original reader on phones */
+@media(min-width:769px){
+  .quran-container,.mushaf-nav{display:none!important}
+  #quranFlipSection{display:block}
+}
+@media(max-width:768px){
+  #quranFlipSection{display:none!important}
+  .quran-container{display:block!important}
+  .mushaf-nav{display:flex!important}
+}
 </style>
 </head>
 <body class="mushaf-body">
@@ -139,7 +149,7 @@ body.mushaf-body{
   </div>
 </header>
 <p class="mushaf-status" id="readerStatus" role="status" aria-live="polite">جارٍ تحميل الصفحة…</p>
-<main class="quran-container" style="display:none">
+<main class="quran-container">
   <div class="quran-book">
     <div class="quran-gutter" aria-hidden="true"></div>
     <section class="quran-page page-right" aria-label="الصفحة اليمنى">
@@ -156,7 +166,7 @@ body.mushaf-body{
     </section>
   </div>
 </main>
-<section aria-label="قارئ المصحف بتقليب الصفحات">
+<section id="quranFlipSection" aria-label="قارئ المصحف بتقليب الصفحات">
   <div id="quranFlipControls">
     <button id="flipPrev" type="button">الصفحة السابقة</button>
     <label for="flipPageNumber">اذهب إلى صفحة</label>
@@ -171,7 +181,6 @@ body.mushaf-body{
   <button id="previous" type="button">الصفحتان السابقتان ←</button>
   <button id="next" type="button">الصفحتان التاليتان →</button>
 </nav>
-<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script>
 (() => {
   "use strict";
@@ -181,6 +190,21 @@ body.mushaf-body{
   const flipStatus=document.getElementById("quranFlipStatus");
   const flipPageInput=document.getElementById("flipPageNumber");
   let flipInstance=null, flipBusy=false, flipStart=1;
+  const desktopFlip=window.matchMedia("(min-width: 769px)");
+  let pageFlipLoader=null;
+  function ensurePageFlip(){
+    if(window.St?.PageFlip)return Promise.resolve();
+    if(!pageFlipLoader){
+      pageFlipLoader=new Promise((resolve,reject)=>{
+        const script=document.createElement("script");
+        script.src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js";
+        script.onload=resolve;
+        script.onerror=()=>reject(new Error("تعذر تحميل مكتبة تقليب الصفحات"));
+        document.head.appendChild(script);
+      });
+    }
+    return pageFlipLoader;
+  }
   const flipCacheKey=n=>"dhker-stpageflip-page-"+n;
   const flipArabic=n=>String(n).replace(/[0-9]/g,d=>"٠١٢٣٤٥٦٧٨٩"[Number(d)]);
   async function getFlipPage(n){
@@ -246,7 +270,7 @@ body.mushaf-body{
     }
   }
   async function loadFlipWindow(center){
-    if(flipBusy)return;
+    if(!desktopFlip.matches||flipBusy)return;
     flipBusy=true;
     flipStatus.textContent="تحميل صفحات المصحف لمحرك التقليب…";
     try{
@@ -262,6 +286,7 @@ body.mushaf-body{
       const width=Math.max(300,Math.min(520,Math.floor((flipViewport.clientWidth||900)/2)));
       const height=Math.max(420,Math.min(760,Math.floor(flipViewport.clientHeight||700)));
       if(flipInstance){flipInstance.destroy();flipInstance=null;}
+      await ensurePageFlip();
       if(!window.St?.PageFlip)throw new Error("تعذر تحميل مكتبة StPageFlip");
       flipInstance=new St.PageFlip(flipBookEl,{
         width,height,size:"stretch",minWidth:280,maxWidth:520,minHeight:400,maxHeight:780,
@@ -313,12 +338,12 @@ body.mushaf-body{
   window.addEventListener("resize",()=>{
     clearTimeout(resizeTimer);
     resizeTimer=setTimeout(()=>{
-      if(!flipInstance)return;
+      if(!desktopFlip.matches||!flipInstance)return;
       const current=flipInstance.getCurrentPageIndex()+1;
       loadFlipWindow(current);
     },300);
   });
-  loadFlipWindow(Number(localStorage.getItem("dhker-paper-mushaf-bookmark")||localStorage.getItem("dhker-paper-mushaf-last-page")||1));
+  if(desktopFlip.matches) loadFlipWindow(Number(localStorage.getItem("dhker-paper-mushaf-bookmark")||localStorage.getItem("dhker-paper-mushaf-last-page")||1));
 
   const API = "https://api.alquran.cloud/v1/page/";
   const $ = id => document.getElementById(id);
