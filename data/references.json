@@ -1,0 +1,9 @@
+{
+  "references":[
+    {"id":"ref_001","book_name":"صحيح البخاري","author":"الإمام محمد بن إسماعيل البخاري","hadith_number":"6306","grade":"صحيح","scholar":"اتفاق الأمة","url":"https://dorar.net/hadith/sharh/6306"},
+    {"id":"ref_002","book_name":"صحيح مسلم","author":"الإمام مسلم بن الحجاج","hadith_number":"2723","grade":"صحيح","scholar":"اتفاق الأمة","url":"https://dorar.net/hadith/sharh/2723"},
+    {"id":"ref_003","book_name":"سنن الترمذي","author":"الإمام أبو عيسى الترمذي","hadith_number":"3391","grade":"حسن","scholar":"الألباني","url":"https://dorar.net/hadith/sharh/3391"},
+    {"id":"ref_004","book_name":"سنن أبي داود","author":"الإمام أبو داود السجستاني","hadith_number":"5045","grade":"صحيح","scholar":"الألباني","url":"https://dorar.net/hadith/sharh/5045"},
+    {"id":"ref_005","book_name":"سنن ابن ماجه","author":"الإمام ابن ماجه القزويني","hadith_number":"3871","grade":"حسن","scholar":"الألباني","url":"https://dorar.net/hadith/sharh/3871"}
+  ]
+}
