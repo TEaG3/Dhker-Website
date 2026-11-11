@@ -4,178 +4,140 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07130f">
+<meta name="description" content="اقرأ المصحف الشريف بصفحاته المصورة مع تقليب الصفحات وحفظ موضع القراءة.">
 <title>المصحف الشريف | ذِكر</title>
+<link rel="manifest" href="./manifest.webmanifest">
 <link rel="stylesheet" href="./styles.css">
 <link rel="stylesheet" href="./islamic-identity.css?v=4">
 <style>
-:root{--ink:#102c22;--paper:#faf6ee;--gold:#b18a45;--deep:#07130f;--muted:#cdbb91}
+:root{--m-ink:#172c22;--m-paper:#faf6ee;--m-gold:#b18a45}
 *{box-sizing:border-box}
 body.mushaf-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0,#173d30 0,#0a1b15 48%,#050b09 100%);color:#f5ead0;font-family:'IBM Plex Sans Arabic','Amiri',serif}
 .mushaf-header{max-width:1400px;margin:auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #b18a4566}
-.brand{display:flex;align-items:center;gap:14px}.brand-mark{width:42px;height:42px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:#e8d3a4;font-size:22px}.brand h1{font-family:'Amiri',serif;font-size:1.5rem;margin:0;color:#f2dfb6}.brand p{margin:0;color:#c9b98f;font-size:.82rem}
+.mushaf-brand{display:flex;align-items:center;gap:14px}.brand-mark{width:42px;height:42px;border:1px solid var(--m-gold);border-radius:50%;display:grid;place-items:center;color:#e8d3a4;font-size:22px}.mushaf-brand h1{font-family:'Amiri',serif;font-size:1.5rem;margin:0;color:#f2dfb6}.mushaf-brand p{margin:0;color:#c9b98f;font-size:.82rem}
 .header-link{color:#e8d3a4;text-decoration:none;border:1px solid #b18a4577;border-radius:30px;padding:8px 15px}
 .reader-shell{max-width:1400px;margin:0 auto;padding:18px 24px 34px}
 .reader-toolbar{display:flex;justify-content:center;align-items:center;gap:9px;flex-wrap:wrap;margin:4px auto 14px}
 .reader-toolbar button,.reader-toolbar input{font:inherit;border:1px solid #b18a45;border-radius:8px;padding:8px 13px}
-.reader-toolbar button{background:#173b2e;color:#f6e9ca;cursor:pointer}
-.reader-toolbar button:hover{background:#b18a45;color:#101b14}
+.reader-toolbar button{background:#173b2e;color:#f6e9ca;cursor:pointer}.reader-toolbar button:hover{background:#b18a45;color:#101b14}
+.reader-toolbar button:focus-visible,.reader-toolbar input:focus-visible{outline:3px solid #e4c77e;outline-offset:2px}
 .reader-toolbar input{width:82px;background:#fffaf0;color:#102c22;text-align:center}
 .reader-toolbar label{color:#e8d8b5}
 .reader-status{text-align:center;min-height:28px;color:#d6c49b;margin:6px 0 14px}
-.flip-stage{width:100%;height:min(76vh,850px);min-height:570px;display:flex;align-items:center;justify-content:center;overflow:visible}
-#quranFlipBook{margin:auto}
-.quran-flip-page{position:relative;display:flex;flex-direction:column;overflow:hidden;background:radial-gradient(ellipse at center,#fffdf8 0,#faf6ee 75%,#f1e8d7 100%);color:var(--ink);padding:42px 34px 28px;box-shadow:inset 0 0 22px #9b7a4320}
-.quran-flip-page:before{content:"";position:absolute;inset:17px;border:3px double var(--gold);pointer-events:none}
-.quran-flip-page:after{content:"";position:absolute;inset:23px;border:1px solid #17624c55;pointer-events:none}
-.qfp-inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;min-height:0}
-.qfp-heading{text-align:center;color:#164333;border:1px solid #b18a45;padding:6px 8px;margin:0 auto 14px;max-width:92%;font-family:'Amiri',serif;font-size:1.15rem}
-.qfp-basmala{text-align:center;color:#164333;font-family:'Amiri Quran','Amiri',serif;font-size:1.3rem;margin:-4px 0 10px}
-.qfp-text{font-family:'Amiri Quran','Amiri',serif;font-size:1.34rem;line-height:2.18;text-align:justify;text-align-last:center;overflow:hidden;flex:1}
-.qfp-ayah{white-space:normal}.qfp-marker{color:#98702f;font-size:.72em;white-space:nowrap}
-.qfp-footer{border-top:1px solid #b18a4566;margin-top:10px;padding-top:7px;text-align:center;color:#98702f;font-family:'Amiri',serif}
-.qfp-loading{height:100%;display:grid;place-items:center;color:#91784d;font-family:'Amiri',serif}
-.reader-help{text-align:center;color:#c6b58d;font-size:.85rem;margin:10px 0}
-.mobile-reader{display:none}
-@media(max-width:768px){
- .mushaf-header{padding:12px 15px}.brand p{display:none}.reader-shell{padding:12px}
- .flip-stage,.flip-only{display:none!important}.mobile-reader{display:block}
- .mobile-page{position:relative;min-height:62vh;background:var(--paper);color:var(--ink);border:8px solid #76532d;border-radius:5px;padding:32px 22px;margin:12px auto;box-shadow:0 14px 35px #0008}
- .mobile-page:before{content:"";position:absolute;inset:10px;border:3px double var(--gold);pointer-events:none}
- .mobile-content{position:relative;z-index:1;font-family:'Amiri Quran','Amiri',serif;font-size:1.35rem;line-height:2.2;text-align:justify;text-align-last:center}
- .mobile-title{text-align:center;color:#164333;border:1px solid var(--gold);padding:5px;margin-bottom:14px}
- .mobile-nav{display:flex;justify-content:center;gap:10px}.mobile-nav button{background:#173b2e;color:#f6e9ca;border:1px solid var(--gold);border-radius:25px;padding:9px 16px}
+.reader-status.error{color:#ffd0c5}
+.mushaf-stage{width:100%;min-height: min(78vh,900px);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:8px}
+.mushaf-book{display:flex;direction:ltr;align-items:stretch;justify-content:center;width:min(100%,1120px);perspective:1800px;transform-style:preserve-3d;transition:transform .48s ease,opacity .25s ease;filter:drop-shadow(0 16px 26px #0008)}
+.mushaf-book.turn-next{transform:rotateY(-7deg) scale(.985);opacity:.84}
+.mushaf-book.turn-prev{transform:rotateY(7deg) scale(.985);opacity:.84}
+.mushaf-leaf{position:relative;width:50%;height:min(76vh,850px);min-height:450px;background:var(--m-paper);border:1px solid #a78348;overflow:hidden;backface-visibility:hidden}
+.mushaf-leaf img{display:block;width:100%;height:100%;object-fit:contain;background:var(--m-paper)}
+.mushaf-leaf.left{border-inline-start:5px solid #8a6a38;box-shadow:inset 8px 0 14px #4b351b22}
+.mushaf-leaf.right{border-inline-end:5px solid #8a6a38;box-shadow:inset -8px 0 14px #4b351b22}
+.mushaf-leaf img.loading{opacity:.35}
+.mushaf-mobile-page{display:none}
+.reader-help{text-align:center;color:#c6b58d;font-size:.86rem;margin:10px 0}
+.source-credit{text-align:center;color:#b9aa89;font-size:.78rem;margin:18px auto 0;max-width:850px}
+@media(max-width:767px){
+ .mushaf-header{padding:12px 15px}.mushaf-brand p{display:none}.reader-shell{padding:12px 10px 24px}
+ .mushaf-stage{min-height:0;padding:0}.mushaf-book{display:none}
+ .mushaf-mobile-page{display:block;position:relative;width:min(100%,520px);height:min(72vh,780px);min-height:430px;margin:0 auto;background:var(--m-paper);border:8px solid #76532d;border-radius:5px;box-shadow:0 14px 35px #0008;overflow:hidden}
+ .mushaf-mobile-page:before{content:"";position:absolute;inset:8px;border:3px double var(--m-gold);pointer-events:none;z-index:1}
+ .mushaf-mobile-page img{width:100%;height:100%;object-fit:contain;display:block;background:var(--m-paper)}
+ .reader-toolbar{gap:6px}.reader-toolbar button{padding:8px 10px;font-size:.88rem}
 }
+@media(prefers-reduced-motion:reduce){.mushaf-book{transition:none}}
 </style>
 </head>
 <body class="mushaf-body">
 <header class="mushaf-header">
- <div class="brand"><div class="brand-mark" aria-hidden="true">۞</div><div><h1>المصحف الشريف</h1><p>قارئ ذِكر — قراءة هادئة ومريحة</p></div></div>
+ <div class="mushaf-brand"><div class="brand-mark" aria-hidden="true">۞</div><div><h1>المصحف الشريف</h1><p>قارئ ذِكر — صفحات مصوّرة</p></div></div>
  <a class="header-link" href="./index.html">العودة إلى ذِكر</a>
 </header>
 <main class="reader-shell">
- <div class="reader-toolbar flip-only" aria-label="أدوات المصحف">
+ <div class="reader-toolbar" aria-label="أدوات المصحف">
   <button id="previous" type="button">السابق</button>
-  <label for="pageNumber">رقم الصفحة</label><input id="pageNumber" type="number" min="1" max="604" value="1">
+  <label for="pageNumber">رقم الصفحة</label><input id="pageNumber" type="number" min="1" max="604" value="1" inputmode="numeric">
   <button id="goPage" type="button">انتقال</button>
   <button id="next" type="button">التالي</button>
-  <button id="zoomOut" type="button" aria-label="تصغير الخط">−</button>
-  <button id="zoomIn" type="button" aria-label="تكبير الخط">+</button>
   <button id="bookmark" type="button">حفظ الموضع</button>
  </div>
  <p id="readerStatus" class="reader-status" role="status" aria-live="polite">جارٍ تجهيز المصحف…</p>
- <section class="flip-stage flip-only" aria-label="المصحف بتقليب الصفحات"><div id="quranFlipBook"></div></section>
- <section class="mushaf-image-reader" aria-label="صفحتا المصحف من صور المشروع المرجعي">
-  <div class="reader-toolbar">
-   <button id="mushafImagePrev" type="button">السابق</button>
-   <label for="mushafImagePage">رقم الصفحة</label><input id="mushafImagePage" type="number" min="1" max="604" value="1">
-   <button id="mushafImageGo" type="button">انتقال</button>
-   <button id="mushafImageNext" type="button">التالي</button>
-   <button id="mushafImageBookmark" type="button">حفظ الموضع</button>
+ <section class="mushaf-stage" aria-label="صفحتا المصحف">
+  <div class="mushaf-book" id="mushafBook">
+   <div class="mushaf-leaf left"><img id="leftPage" alt="صفحة المصحف اليسرى" decoding="async"></div>
+   <div class="mushaf-leaf right"><img id="rightPage" alt="صفحة المصحف اليمنى" decoding="async"></div>
   </div>
-  <div class="mushaf-image-book">
-   <img class="mushaf-image-page" id="mushafPageLeft" alt="صفحة المصحف اليسرى" loading="eager">
-   <img class="mushaf-image-page" id="mushafPageRight" alt="صفحة المصحف اليمنى" loading="eager">
-  </div>
-  <p class="reader-help">صفحات مصوّرة من أصول مشروع مصحف موري. اسحب أو استخدم أزرار التنقل لتغيير الصفحات.</p>
+  <div class="mushaf-mobile-page"><img id="mobilePageImage" alt="صفحة المصحف" decoding="async"></div>
  </section>
- <p class="reader-help flip-only">استخدم أزرار السابق والتالي أو اسحب زاوية الصفحة للتقليب.</p>
- <section class="mobile-reader" aria-label="قارئ المصحف للأجهزة الصغيرة">
-  <div class="reader-toolbar"><button id="mobilePrev" type="button">الصفحة السابقة</button><label for="mobilePage">صفحة</label><input id="mobilePage" type="number" min="1" max="604" value="1"><button id="mobileGo" type="button">انتقال</button><button id="mobileNext" type="button">التالية</button></div>
-  <article class="mobile-page"><div id="mobileContent" class="mobile-content">جارٍ تحميل الآيات…</div></article>
-  <div class="mobile-nav"><button id="mobileBookmark" type="button">حفظ موضع القراءة</button></div>
- </section>
+ <p class="reader-help">على الكمبيوتر تظهر صفحتان متقابلتان. على الهاتف تظهر صفحة واحدة. استخدم الأزرار أو مفاتيح الأسهم للتنقل.</p>
+ <p class="source-credit">صور الصفحات من مشروع <a href="https://github.com/Zizwar/mushaf-mauri" target="_blank" rel="noopener">Mushaf Mauri</a> — رواية حفص مع التجويد. تُحمّل الصفحات عند الطلب وتُخزّن مؤقتاً على جهازك بعد فتحها، حسب مساحة المتصفح.</p>
 </main>
 <script>
 (()=>{"use strict";
-const API="https://api.alquran.cloud/v1/page/";
-const $=id=>document.getElementById(id);
-const cache=n=>"dhker-paper-mushaf-page-"+n;
-const flipCache=n=>"dhker-stpageflip-page-"+n;
-const ar=n=>String(n).replace(/[0-9]/g,d=>"٠١٢٣٤٥٦٧٨٩"[+d]);
-let current=+(localStorage.getItem("dhker-paper-mushaf-bookmark")||localStorage.getItem("dhker-paper-mushaf-last-page")||1);
-let zoom=1.34,book=null,loading=false,loader=null;
-async function getPage(n){
- const key=cache(n),old=localStorage.getItem(key),flip=localStorage.getItem(flipCache(n));
- if(!navigator.onLine){const v=old||flip;if(v)return JSON.parse(v);throw Error("هذه الصفحة غير محفوظة على هذا الجهاز؛ اتصل بالإنترنت لتحميلها.");}
- try{const r=await fetch(API+n+"/quran-uthmani");if(!r.ok)throw Error("تعذر الاتصال بمصدر القرآن");
- const j=await r.json();if(j.code!==200||!j.data?.ayahs?.length)throw Error("بيانات الصفحة غير متاحة");
- // التخزين تحسين اختياري: لا نُفشل عرض الآية إذا امتلأت مساحة localStorage.
- try{localStorage.setItem(key,JSON.stringify(j.data));localStorage.setItem(flipCache(n),JSON.stringify(j.data));}catch(storageError){console.warn("تعذر حفظ صفحة المصحف محلياً:",storageError);}
- return j.data;
- }catch(e){const v=old||flip;if(v)return JSON.parse(v);throw e;}
-}
-function pageMarkup(data,n){
- const root=document.createElement("div");root.className="qfp-inner";
- if(!data){root.innerHTML='<div class="qfp-loading">المصحف الشريف</div>';return root;}
- const first=data.ayahs[0],surahs=[...new Set(data.ayahs.map(a=>a.surah?.name).filter(Boolean))];
- const h=document.createElement("header");h.className="qfp-heading";h.textContent=surahs.join(" — ");root.append(h);
- if(first?.numberInSurah===1&&first?.surah?.number!==1&&first?.surah?.number!==9){const b=document.createElement("div");b.className="qfp-basmala";b.textContent="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";root.append(b);}
- const text=document.createElement("div");text.className="qfp-text";text.style.fontSize=zoom+"rem";
- for(const a of data.ayahs){const t=document.createElement("span");t.className="qfp-ayah";t.lang="ar";t.textContent=a.text+" ";
- const m=document.createElement("span");m.className="qfp-marker";m.textContent="۞"+ar(a.numberInSurah)+" ";text.append(t,m);}
- root.append(text);const f=document.createElement("footer");f.className="qfp-footer";f.textContent="صفحة "+ar(n)+" • الجزء "+ar(first.juz||"—");root.append(f);return root;
-}
-function pageNode(n,data){const el=document.createElement("article");el.className="quran-flip-page";el.dataset.page=n;el.append(pageMarkup(data,n));return el;}
-async function ensureLibrary(){if(window.St?.PageFlip)return;if(!loader)loader=new Promise((resolve,reject)=>{const s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js";s.onload=resolve;s.onerror=()=>reject(Error("لم نتمكن من تحميل مكتبة تقليب الصفحات"));document.head.append(s);});return loader;}
-async function fillPages(numbers){const unique=[...new Set(numbers.filter(n=>n>=1&&n<=604))];await Promise.all(unique.map(async n=>{try{const data=await getPage(n);const node=$("quranFlipBook").querySelector('[data-page="'+n+'"]');if(node)node.replaceChildren(pageMarkup(data,n));}catch(e){$("readerStatus").textContent=e.message;}}));}
-async function startBook(){
- if(loading||!matchMedia("(min-width:769px)").matches)return;loading=true;
- $("readerStatus").textContent="تحميل صفحات المصحف…";
- try{
-  const bookEl=$("quranFlipBook");bookEl.replaceChildren();
-  for(let n=1;n<=604;n++)bookEl.append(pageNode(n,null));
-  await fillPages(Array.from({length:8},(_,i)=>Math.max(1,Math.min(604,current-2+i))));
-  await ensureLibrary();
-  if(book)book.destroy();
-  const width=Math.max(300,Math.min(540,Math.floor((document.querySelector(".flip-stage").clientWidth||1100)/2)));
-  const height=Math.max(440,Math.min(780,document.querySelector(".flip-stage").clientHeight||700));
-  book=new St.PageFlip(bookEl,{width,height,size:"stretch",minWidth:280,maxWidth:540,minHeight:400,maxHeight:780,showCover:false,usePortrait:false,drawShadow:true,maxShadowOpacity:.28,flippingTime:650,autoSize:true,disableFlipByClick:false});
-  // PageFlip لا يلتقط عناصر HTML تلقائياً؛ يجب تسجيل صفحات المصحف صراحةً.
-  book.loadFromHTML(bookEl.querySelectorAll(".quran-flip-page"));
-  book.on("flip",async e=>{current=Number(e.data)+1;$("pageNumber").value=current;localStorage.setItem("dhker-paper-mushaf-last-page",String(current));$("readerStatus").textContent="صفحة "+ar(current);await fillPages([current-2,current-1,current,current+1,current+2,current+3]);});
-  book.turnToPage(current-1);$("pageNumber").value=current;
-  $("readerStatus").textContent="المصحف جاهز — تقليب الصفحات مفعّل على الكمبيوتر.";
- }catch(e){$("readerStatus").textContent=e.message||"تعذر تشغيل المصحف.";}
- finally{loading=false;}
-}
-async function mobileRender(){
- const n=Math.max(1,Math.min(604,current));current=n;$("mobilePage").value=n;
- $("readerStatus").textContent="تحميل الصفحة "+ar(n)+"…";
- try{const data=await getPage(n);const root=pageMarkup(data,n);$("mobileContent").replaceChildren(root);$("readerStatus").textContent="صفحة "+ar(n);}
- catch(e){$("readerStatus").textContent=e.message;$("mobileContent").textContent=e.message;}
-}
-function go(n){current=Math.max(1,Math.min(604,+n||1));if(matchMedia("(min-width:769px)").matches){if(book)book.turnToPage(current-1);else startBook();}else mobileRender();}
-$("previous").addEventListener("click",()=>go(current-2));$("next").addEventListener("click",()=>go(current+2));
-$("goPage").addEventListener("click",()=>go($("pageNumber").value));
-$("pageNumber").addEventListener("keydown",e=>{if(e.key==="Enter")go($("pageNumber").value);});
-$("zoomIn").addEventListener("click",()=>{zoom=Math.min(2,zoom+.1);if(book)fillPages([current-1,current,current+1,current+2]);});
-$("zoomOut").addEventListener("click",()=>{zoom=Math.max(1,zoom-.1);if(book)fillPages([current-1,current,current+1,current+2]);});
-function save(){localStorage.setItem("dhker-paper-mushaf-bookmark",String(current));$("readerStatus").textContent="تم حفظ موضع القراءة عند الصفحة "+ar(current);}
-$("bookmark").addEventListener("click",save);$("mobileBookmark").addEventListener("click",save);
-$("mobilePrev").addEventListener("click",()=>go(current-1));$("mobileNext").addEventListener("click",()=>go(current+1));$("mobileGo").addEventListener("click",()=>go($("mobilePage").value));$("mobilePage").addEventListener("keydown",e=>{if(e.key==="Enter")go($("mobilePage").value);});
-let resizeTimer;window.addEventListener("resize",()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(matchMedia("(min-width:769px)").matches&&!book)startBook();},250);});
-if(matchMedia("(min-width:769px)").matches)startBook();else mobileRender();
-
 const IMAGE_BASE="https://raw.githubusercontent.com/Zizwar/mushaf-mauri/expo55/_archive/assets/pages/hafsTajweed/page";
-let imageSpread=+(localStorage.getItem("dhker-mushaf-mauri-bookmark")||"1");
-function renderImageSpread(){
- imageSpread=Math.max(1,Math.min(604,imageSpread));
- const left= imageSpread%2===0 ? imageSpread : Math.min(604,imageSpread+1);
- const right= imageSpread%2===0 ? Math.max(1,imageSpread-1) : imageSpread;
- const l=$("mushafPageLeft"),r=$("mushafPageRight");
- l.src=IMAGE_BASE+left+".png";r.src=IMAGE_BASE+right+".png";
- $("mushafImagePage").value=imageSpread;
- l.onerror=()=>{l.alt="تعذر تحميل الصفحة "+left;l.removeAttribute("src");};
- r.onerror=()=>{r.alt="تعذر تحميل الصفحة "+right;r.removeAttribute("src");};
+const $=id=>document.getElementById(id);
+const MAX_PAGE=604;
+let current=Number(localStorage.getItem("dhker-mushaf-mauri-bookmark")||1);
+let busy=false;
+const isMobile=()=>matchMedia("(max-width:767px)").matches;
+const pageUrl=n=>IMAGE_BASE+n+".png";
+function setStatus(message,error=false){const el=$("readerStatus");el.textContent=message;el.classList.toggle("error",error);}
+function loadImage(img,n){
+ return new Promise(resolve=>{
+  img.classList.add("loading");
+  img.onload=()=>{img.classList.remove("loading");resolve(true);};
+  img.onerror=()=>{img.classList.remove("loading");img.removeAttribute("src");resolve(false);};
+  img.src=pageUrl(n);
+ });
 }
-function setImagePage(n){imageSpread=Math.max(1,Math.min(604,Math.floor(+n||1)));renderImageSpread();}
-$("mushafImagePrev").addEventListener("click",()=>setImagePage(imageSpread-2));
-$("mushafImageNext").addEventListener("click",()=>setImagePage(imageSpread+2));
-$("mushafImageGo").addEventListener("click",()=>setImagePage($("mushafImagePage").value));
-$("mushafImagePage").addEventListener("keydown",e=>{if(e.key==="Enter")setImagePage($("mushafImagePage").value);});
-$("mushafImageBookmark").addEventListener("click",()=>{localStorage.setItem("dhker-mushaf-mauri-bookmark",String(imageSpread));$("readerStatus").textContent="تم حفظ موضع المصحف عند الصفحة "+ar(imageSpread);});
-renderImageSpread();
-})(); 
+async function render(){
+ if(busy)return;busy=true;
+ current=Math.max(1,Math.min(MAX_PAGE,Math.floor(Number(current)||1)));
+ $("pageNumber").value=current;
+ setStatus("جارٍ تحميل صفحة "+current+"…");
+ let ok;
+ if(isMobile()){
+  ok=await loadImage($("mobilePageImage"),current);
+ }else{
+  const first=current%2===0?current-1:current;
+  const second=Math.min(MAX_PAGE,first+1);
+  const results=await Promise.all([loadImage($("rightPage"),first),loadImage($("leftPage"),second)]);
+  ok=results.every(Boolean);
+  // الصفحة الأخيرة ليس لها ورقة مقابلة.
+  if(second>MAX_PAGE)$("leftPage").removeAttribute("src");
+ }
+ if(ok){setStatus("المصحف جاهز — الصفحة "+current+(isMobile()?"":" وما يقابلها"));}
+ else{setStatus("تعذر تحميل صورة الصفحة. تحقق من الاتصال ثم أعد المحاولة.",true);}
+ busy=false;
+}
+async function go(n,direction){
+ const next=Math.max(1,Math.min(MAX_PAGE,Math.floor(Number(n)||1)));
+ if(next===current){await render();return;}
+ const book=$("mushafBook");
+ book.classList.remove("turn-next","turn-prev");
+ void book.offsetWidth;
+ book.classList.add(direction==="prev"?"turn-prev":"turn-next");
+ current=next;
+ await new Promise(resolve=>setTimeout(resolve,180));
+ await render();
+ setTimeout(()=>book.classList.remove("turn-next","turn-prev"),280);
+}
+$("previous").addEventListener("click",()=>go(current-(isMobile()?1:2),"prev"));
+$("next").addEventListener("click",()=>go(current+(isMobile()?1:2),"next"));
+$("goPage").addEventListener("click",()=>go($("pageNumber").value,"next"));
+$("pageNumber").addEventListener("keydown",e=>{if(e.key==="Enter")go($("pageNumber").value,"next");});
+$("bookmark").addEventListener("click",()=>{localStorage.setItem("dhker-mushaf-mauri-bookmark",String(current));setStatus("تم حفظ موضع القراءة عند الصفحة "+current);});
+document.addEventListener("keydown",e=>{if(e.target.matches("input,button,a"))return;if(e.key==="ArrowLeft")go(current+(isMobile()?1:2),"next");if(e.key==="ArrowRight")go(current-(isMobile()?1:2),"prev");});
+let touchX=0;
+$("mushafBook").addEventListener("touchstart",e=>{touchX=e.changedTouches[0].clientX;},{passive:true});
+$("mushafBook").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45)go(current+(dx<0?2:-2),dx<0?"next":"prev");},{passive:true});
+$("mobilePageImage").addEventListener("touchstart",e=>{touchX=e.changedTouches[0].clientX;},{passive:true});
+$("mobilePageImage").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45)go(current+(dx<0?1:-1),dx<0?"next":"prev");},{passive:true});
+window.addEventListener("online",render);
+window.addEventListener("resize",()=>{clearTimeout(window.__mushafResize);window.__mushafResize=setTimeout(render,180);});
+render();
+if("serviceWorker"in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
+})();
 </script>
 </body>
 </html>
