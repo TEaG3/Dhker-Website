@@ -8,7 +8,7 @@
 <title>المصحف الشريف | ذِكر</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="stylesheet" href="./styles.css">
-<link rel="stylesheet" href="./islamic-identity.css?v=4">
+<link rel="stylesheet" href="./islamic-identity.css?v=5">
 <style>
 :root{--m-ink:#172c22;--m-paper:#faf6ee;--m-gold:#b18a45}
 *{box-sizing:border-box}
@@ -75,10 +75,12 @@ body.mushaf-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at
 <script>
 (()=>{"use strict";
 const IMAGE_BASE="https://raw.githubusercontent.com/Zizwar/mushaf-mauri/expo55/_archive/assets/pages/hafsTajweed/page";
+// Source: Zizwar/mushaf-mauri (604 Hafs/Tajweed page scans). Images load on demand.
 const $=id=>document.getElementById(id);
 const MAX_PAGE=604;
 let current=Number(localStorage.getItem("dhker-mushaf-mauri-bookmark")||1);
 let busy=false;
+let renderToken=0;
 const isMobile=()=>matchMedia("(max-width:767px)").matches;
 const pageUrl=n=>IMAGE_BASE+n+".png";
 function setStatus(message,error=false){const el=$("readerStatus");el.textContent=message;el.classList.toggle("error",error);}
@@ -92,6 +94,7 @@ function loadImage(img,n){
 }
 async function render(){
  if(busy)return;busy=true;
+ const token=++renderToken;
  current=Math.max(1,Math.min(MAX_PAGE,Math.floor(Number(current)||1)));
  $("pageNumber").value=current;
  setStatus("جارٍ تحميل صفحة "+current+"…");
@@ -106,6 +109,7 @@ async function render(){
   // الصفحة الأخيرة ليس لها ورقة مقابلة.
   if(second>MAX_PAGE)$("leftPage").removeAttribute("src");
  }
+ if(token!==renderToken){busy=false;return;}
  if(ok){setStatus("المصحف جاهز — الصفحة "+current+(isMobile()?"":" وما يقابلها"));}
  else{setStatus("تعذر تحميل صورة الصفحة. تحقق من الاتصال ثم أعد المحاولة.",true);}
  busy=false;
