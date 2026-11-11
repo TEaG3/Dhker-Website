@@ -79,7 +79,7 @@ body {
     radial-gradient(ellipse at 82% 8%,var(--dhk-bg-surface),transparent 54%),
     radial-gradient(ellipse at 8% 82%,var(--dhk-glow),transparent 46%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23C6A76A' stroke-width='.7' stroke-opacity='.12'%3E%3Cpath d='M48 0 58 38 96 48 58 58 48 96 38 58 0 48 38 38Z'/%3E%3Cpath d='M48 0 82 14 96 48 82 82 48 96 14 82 0 48 14 14Z'/%3E%3Ccircle cx='48' cy='48' r='18'/%3E%3Crect x='30' y='30' width='36' height='36' transform='rotate(45 48 48)'/%3E%3C/g%3E%3C/svg%3E");
-  background-attachment:scroll,fixed,scroll;
+  background-attachment:scroll,scroll,scroll;
   background-position:center,center,center;
   background-size:auto,auto,96px 96px;
   color:var(--dhk-text);
@@ -143,11 +143,11 @@ html[data-dhker-style="kufic"] body {
   border-color:var(--dhk-border);
 }
 .service-card,.feature-card,.audio-card {
-  transition:border-color .3s ease,box-shadow .3s ease,background-color .3s ease,transform .3s ease;
+  transition:border-color .15s ease,background-color .15s ease;
 }
 .service-card:hover,.feature-card:hover,.audio-card:hover {
   border-color:var(--dhk-gold);
-  box-shadow:0 10px 28px var(--dhk-glow);
+  box-shadow:none;
 }
 .section-heading h2,.about-section h2,.section-title,
 .feature-card h3,.faq-item summary,.footer-brand h3 {
