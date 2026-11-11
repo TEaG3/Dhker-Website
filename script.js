@@ -232,6 +232,44 @@ function setupAudio() {
   });
 }
 
+function setupQuranAudio() {
+  const player = $("quranPlayer");
+  const button = $("playQuranRecitation");
+  const status = $("quranAudioStatus");
+  if (!player || !button || !status) return;
+
+  button.addEventListener("click", async () => {
+    const surah = Math.min(114, Math.max(1, Number($("quranSurah").value) || 1));
+    const reciter = $("quranReciter").value;
+    $("quranSurah").value = String(surah);
+    const url = `https://cdn.islamic.network/quran/audio-surah/128/${encodeURIComponent(reciter)}/${surah}.mp3`;
+
+    if (player.dataset.source === url && !player.paused) {
+      player.pause();
+      status.textContent = "تم إيقاف التلاوة مؤقتاً.";
+      return;
+    }
+
+    player.pause();
+    player.src = url;
+    player.dataset.source = url;
+    status.textContent = "جارٍ الاتصال بمصدر التلاوة…";
+    try {
+      await player.play();
+      status.textContent = `تلاوة السورة رقم ${surah} — ${$("quranReciter").selectedOptions[0].textContent}`;
+    } catch {
+      status.textContent = "تعذر تشغيل التلاوة حالياً. تحقق من الاتصال أو جرّب قارئاً آخر.";
+    }
+  });
+
+  player.addEventListener("ended", () => {
+    status.textContent = "انتهت التلاوة.";
+  });
+  player.addEventListener("error", () => {
+    status.textContent = "تعذر تحميل الملف الصوتي من المصدر حالياً.";
+  });
+}
+
 function setupNavigation() {
   const toggle = $("menuToggle");
   const nav = $("navList");
@@ -248,6 +286,7 @@ function setupNavigation() {
 document.addEventListener("DOMContentLoaded", async () => {
   setupNavigation();
   setupAudio();
+  setupQuranAudio();
   $("loadPage").addEventListener("click", () => loadQuranPage($("quranPage").value));
   $("prevPage").addEventListener("click", () => loadQuranPage(Number($("quranPage").value) - 1));
   $("nextPage").addEventListener("click", () => loadQuranPage(Number($("quranPage").value) + 1));
