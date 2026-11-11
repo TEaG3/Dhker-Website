@@ -64,6 +64,20 @@ body.mushaf-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at
  </div>
  <p id="readerStatus" class="reader-status" role="status" aria-live="polite">جارٍ تجهيز المصحف…</p>
  <section class="flip-stage flip-only" aria-label="المصحف بتقليب الصفحات"><div id="quranFlipBook"></div></section>
+ <section class="mushaf-image-reader" aria-label="صفحتا المصحف من صور المشروع المرجعي">
+  <div class="reader-toolbar">
+   <button id="mushafImagePrev" type="button">السابق</button>
+   <label for="mushafImagePage">رقم الصفحة</label><input id="mushafImagePage" type="number" min="1" max="604" value="1">
+   <button id="mushafImageGo" type="button">انتقال</button>
+   <button id="mushafImageNext" type="button">التالي</button>
+   <button id="mushafImageBookmark" type="button">حفظ الموضع</button>
+  </div>
+  <div class="mushaf-image-book">
+   <img class="mushaf-image-page" id="mushafPageLeft" alt="صفحة المصحف اليسرى" loading="eager">
+   <img class="mushaf-image-page" id="mushafPageRight" alt="صفحة المصحف اليمنى" loading="eager">
+  </div>
+  <p class="reader-help">صفحات مصوّرة من أصول مشروع مصحف موري. اسحب أو استخدم أزرار التنقل لتغيير الصفحات.</p>
+ </section>
  <p class="reader-help flip-only">استخدم أزرار السابق والتالي أو اسحب زاوية الصفحة للتقليب.</p>
  <section class="mobile-reader" aria-label="قارئ المصحف للأجهزة الصغيرة">
   <div class="reader-toolbar"><button id="mobilePrev" type="button">الصفحة السابقة</button><label for="mobilePage">صفحة</label><input id="mobilePage" type="number" min="1" max="604" value="1"><button id="mobileGo" type="button">انتقال</button><button id="mobileNext" type="button">التالية</button></div>
@@ -141,6 +155,26 @@ $("bookmark").addEventListener("click",save);$("mobileBookmark").addEventListene
 $("mobilePrev").addEventListener("click",()=>go(current-1));$("mobileNext").addEventListener("click",()=>go(current+1));$("mobileGo").addEventListener("click",()=>go($("mobilePage").value));$("mobilePage").addEventListener("keydown",e=>{if(e.key==="Enter")go($("mobilePage").value);});
 let resizeTimer;window.addEventListener("resize",()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(matchMedia("(min-width:769px)").matches&&!book)startBook();},250);});
 if(matchMedia("(min-width:769px)").matches)startBook();else mobileRender();
+
+const IMAGE_BASE="https://raw.githubusercontent.com/Zizwar/mushaf-mauri/expo55/_archive/assets/pages/hafsTajweed/page";
+let imageSpread=+(localStorage.getItem("dhker-mushaf-mauri-bookmark")||"1");
+function renderImageSpread(){
+ imageSpread=Math.max(1,Math.min(604,imageSpread));
+ const left= imageSpread%2===0 ? imageSpread : Math.min(604,imageSpread+1);
+ const right= imageSpread%2===0 ? Math.max(1,imageSpread-1) : imageSpread;
+ const l=$("mushafPageLeft"),r=$("mushafPageRight");
+ l.src=IMAGE_BASE+left+".png";r.src=IMAGE_BASE+right+".png";
+ $("mushafImagePage").value=imageSpread;
+ l.onerror=()=>{l.alt="تعذر تحميل الصفحة "+left;l.removeAttribute("src");};
+ r.onerror=()=>{r.alt="تعذر تحميل الصفحة "+right;r.removeAttribute("src");};
+}
+function setImagePage(n){imageSpread=Math.max(1,Math.min(604,Math.floor(+n||1)));renderImageSpread();}
+$("mushafImagePrev").addEventListener("click",()=>setImagePage(imageSpread-2));
+$("mushafImageNext").addEventListener("click",()=>setImagePage(imageSpread+2));
+$("mushafImageGo").addEventListener("click",()=>setImagePage($("mushafImagePage").value));
+$("mushafImagePage").addEventListener("keydown",e=>{if(e.key==="Enter")setImagePage($("mushafImagePage").value);});
+$("mushafImageBookmark").addEventListener("click",()=>{localStorage.setItem("dhker-mushaf-mauri-bookmark",String(imageSpread));$("readerStatus").textContent="تم حفظ موضع المصحف عند الصفحة "+ar(imageSpread);});
+renderImageSpread();
 })(); 
 </script>
 </body>
