@@ -264,3 +264,93 @@ html[data-dhker-style="kufic"] body {
 .mushaf-image-page:first-child{border-inline-start:5px solid #8a6a38}
 .mushaf-image-page:last-child{border-inline-end:5px solid #8a6a38}
 @media(max-width:767px){.mushaf-image-page{width:100%;max-height:74vh}.mushaf-image-page:nth-child(2){display:none}}
+
+
+/* ==========================================================================
+   Dhker 3D architectural layer — additive enhancement
+   Does not replace the existing identity palettes or touch page geometry.
+   ========================================================================== */
+:root {
+  --dhk-3d-depth: 900px;
+  --dhk-3d-gold: var(--dhk-gold, #C6A76A);
+}
+html[data-dhker-style] .hero {
+  perspective: var(--dhk-3d-depth);
+  transform-style: preserve-3d;
+}
+html[data-dhker-style] .dhk-lanterns-stage {
+  perspective: 700px;
+  transform-style: preserve-3d;
+}
+html[data-dhker-style] .dhk-lantern {
+  filter: drop-shadow(0 8px 12px color-mix(in srgb,var(--dhk-gold) 20%,transparent));
+  animation: dhkLanternFloat3d 7s ease-in-out infinite alternate;
+  will-change: transform;
+}
+html[data-dhker-style] .dhk-lantern.l-left { animation-delay: -2.4s; }
+html[data-dhker-style] .dhk-lantern.l-center { animation-delay: -4.8s; }
+html[data-dhker-style] .dhk-shamsa-bg {
+  animation: dhkShamsaOrbit3d 90s linear infinite;
+  transform-style: preserve-3d;
+}
+html[data-dhker-style] .verse-card {
+  transform-style: preserve-3d;
+  box-shadow: 0 22px 44px rgba(0,0,0,.2), inset 0 0 0 1px var(--dhk-glow);
+}
+html[data-dhker-style] .service-card,
+html[data-dhker-style] .audio-card {
+  transform: translateZ(0);
+  transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+}
+html[data-dhker-style] .service-card:hover,
+html[data-dhker-style] .audio-card:hover {
+  transform: perspective(700px) translateY(-4px) rotateX(1.2deg);
+  box-shadow: 0 13px 26px rgba(0,0,0,.15);
+}
+@keyframes dhkLanternFloat3d {
+  0% { transform: translateY(0) rotateX(-2deg) rotateZ(-1.2deg); }
+  100% { transform: translateY(5px) rotateX(2deg) rotateZ(1.2deg); }
+}
+@keyframes dhkShamsaOrbit3d {
+  0% { transform: rotateZ(0) rotateX(0); }
+  50% { transform: rotateZ(180deg) rotateX(7deg); }
+  100% { transform: rotateZ(360deg) rotateX(0); }
+}
+/* Isolated scanned-page book presentation: preserve existing manuscript imagery. */
+.mushaf-book {
+  transform-style: preserve-3d;
+  transform: rotateX(.35deg);
+}
+.mushaf-leaf {
+  transform-style: preserve-3d;
+  box-shadow: inset 0 0 18px rgba(74,48,17,.10);
+}
+.mushaf-leaf.left { transform-origin: right center; }
+.mushaf-leaf.right { transform-origin: left center; }
+.mushaf-book.turn-next .mushaf-leaf.right {
+  transform: rotateY(-8deg);
+}
+.mushaf-book.turn-prev .mushaf-leaf.left {
+  transform: rotateY(8deg);
+}
+.mushaf-leaf img {
+  backface-visibility: hidden;
+}
+.mushaf-mobile-page {
+  transform: perspective(1000px) rotateX(.35deg);
+  box-shadow: 0 18px 38px rgba(0,0,0,.32), inset 0 0 0 1px rgba(255,255,255,.45);
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-dhker-style] .dhk-lantern,
+  html[data-dhker-style] .dhk-shamsa-bg {
+    animation: none !important;
+  }
+  html[data-dhker-style] .service-card,
+  html[data-dhker-style] .audio-card,
+  .mushaf-book,
+  .mushaf-leaf,
+  .mushaf-mobile-page {
+    transition: none !important;
+    transform: none !important;
+  }
+}
