@@ -43,7 +43,7 @@ test("Quran recitation player offers multiple reciters", () => {
 });
 test("standalone mushaf uses scanned 604-page images with responsive navigation", () => {
   assert.match(reader, /Zizwar\/mushaf-mauri/);
-  assert.match(reader, /page\d+\.png/);
+  assert.ok(reader.includes("IMAGE_BASE+n+\".png\"));
   assert.match(reader, /MAX_PAGE=604/);
   assert.match(reader, /mushaf-mobile-page/);
   assert.match(reader, /dhker-mushaf-mauri-bookmark/);
