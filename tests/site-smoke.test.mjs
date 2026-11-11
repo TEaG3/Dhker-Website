@@ -37,6 +37,15 @@ test("prayer city catalog includes Baghdad and valid methods", () => {
 });
 
 test("script implements offline Quran cache and service worker registration", () => {
+  assert.match(script, /indexedDB/);
+  assert.match(script, /serviceWorker/);
+  assert.match(script, /alquran\\.cloud/);
+});
+
+test("Quran recitation player offers multiple reciters and uses the documented AlQuran Cloud CDN", () => {
+  assert.ok(html.includes('id="quranPlayer"'));
+  assert.ok(html.includes('id="quranReciter"'));
+  assert.ok(html.includes('id="quranSurah"'));
   assert.ok(script.includes("cdn.islamic.network/quran/audio-surah/128/"));
   for (const reciter of ["ar.alafasy", "ar.husary", "ar.minshawi", "ar.abdulbasit"]) {
     assert.ok(html.includes(reciter));
