@@ -85,7 +85,9 @@ async function getPage(n){
  if(!navigator.onLine){const v=old||flip;if(v)return JSON.parse(v);throw Error("هذه الصفحة غير محفوظة على هذا الجهاز؛ اتصل بالإنترنت لتحميلها.");}
  try{const r=await fetch(API+n+"/quran-uthmani");if(!r.ok)throw Error("تعذر الاتصال بمصدر القرآن");
  const j=await r.json();if(j.code!==200||!j.data?.ayahs?.length)throw Error("بيانات الصفحة غير متاحة");
- localStorage.setItem(key,JSON.stringify(j.data));localStorage.setItem(flipCache(n),JSON.stringify(j.data));return j.data;
+ // التخزين تحسين اختياري: لا نُفشل عرض الآية إذا امتلأت مساحة localStorage.
+ try{localStorage.setItem(key,JSON.stringify(j.data));localStorage.setItem(flipCache(n),JSON.stringify(j.data));}catch(storageError){console.warn("تعذر حفظ صفحة المصحف محلياً:",storageError);}
+ return j.data;
  }catch(e){const v=old||flip;if(v)return JSON.parse(v);throw e;}
 }
 function pageMarkup(data,n){
@@ -114,6 +116,8 @@ async function startBook(){
   const width=Math.max(300,Math.min(540,Math.floor((document.querySelector(".flip-stage").clientWidth||1100)/2)));
   const height=Math.max(440,Math.min(780,document.querySelector(".flip-stage").clientHeight||700));
   book=new St.PageFlip(bookEl,{width,height,size:"stretch",minWidth:280,maxWidth:540,minHeight:400,maxHeight:780,showCover:false,usePortrait:false,drawShadow:true,maxShadowOpacity:.28,flippingTime:650,autoSize:true,disableFlipByClick:false});
+  // PageFlip لا يلتقط عناصر HTML تلقائياً؛ يجب تسجيل صفحات المصحف صراحةً.
+  book.loadFromHTML(bookEl.querySelectorAll(".quran-flip-page"));
   book.on("flip",async e=>{current=Number(e.data)+1;$("pageNumber").value=current;localStorage.setItem("dhker-paper-mushaf-last-page",String(current));$("readerStatus").textContent="صفحة "+ar(current);await fillPages([current-2,current-1,current,current+1,current+2,current+3]);});
   book.turnToPage(current-1);$("pageNumber").value=current;
   $("readerStatus").textContent="المصحف جاهز — تقليب الصفحات مفعّل على الكمبيوتر.";
