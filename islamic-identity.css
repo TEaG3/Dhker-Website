@@ -1,6 +1,7 @@
 /* ==========================================================================
-   Dhker — Islamic identity system
-   Three visual styles × light/dark modes. Existing site structure is preserved.
+   Dhker — Islamic architecture & ornamental layer
+   Visual-only enhancement: preserves the existing HTML layout and dimensions.
+   The Quran reader is intentionally isolated from site theme colors.
    ========================================================================== */
 
 html[data-dhker-style="mihrab"][data-dhker-theme="dark"] {
@@ -8,140 +9,229 @@ html[data-dhker-style="mihrab"][data-dhker-theme="dark"] {
   --dhk-bg-card:rgba(16,59,53,.48); --dhk-gold:#C6A76A; --dhk-gold-light:#E5CE9A;
   --dhk-accent:#42C6A5; --dhk-text:#F7FAF8; --dhk-muted:#B0C4BE;
   --dhk-border:rgba(198,167,106,.34); --dhk-font-head:'Amiri',serif;
-  --dhk-card-radius:18px; --dhk-arch-radius:180px 180px 24px 24px; --dhk-clip:none;
+  --dhk-glow:rgba(66,198,165,.16);
 }
 html[data-dhker-style="mihrab"][data-dhker-theme="light"] {
   --dhk-bg-deep:#EFE8D8; --dhk-bg-main:#FAF6EE; --dhk-bg-surface:#E6DEC8;
   --dhk-bg-card:rgba(255,252,245,.94); --dhk-gold:#9A7432; --dhk-gold-light:#0D3B33;
   --dhk-accent:#126E5B; --dhk-text:#0A2923; --dhk-muted:#435E58;
   --dhk-border:rgba(154,116,50,.32); --dhk-font-head:'Amiri',serif;
-  --dhk-card-radius:18px; --dhk-arch-radius:180px 180px 24px 24px; --dhk-clip:none;
+  --dhk-glow:rgba(154,116,50,.13);
 }
 html[data-dhker-style="andalus"][data-dhker-theme="dark"] {
   --dhk-bg-deep:#110B0A; --dhk-bg-main:#18100E; --dhk-bg-surface:#2B1714;
   --dhk-bg-card:rgba(48,25,22,.58); --dhk-gold:#D9A05B; --dhk-gold-light:#F4CFA0;
   --dhk-accent:#E06D53; --dhk-text:#FDF8F2; --dhk-muted:#D2B8AC;
   --dhk-border:rgba(217,160,91,.36); --dhk-font-head:'Amiri',serif;
-  --dhk-card-radius:32px 32px 10px 10px; --dhk-arch-radius:230px 230px 32px 32px; --dhk-clip:none;
+  --dhk-glow:rgba(224,109,83,.15);
 }
 html[data-dhker-style="andalus"][data-dhker-theme="light"] {
   --dhk-bg-deep:#EFE5D8; --dhk-bg-main:#FDFBF7; --dhk-bg-surface:#F4EAE0;
   --dhk-bg-card:rgba(255,250,244,.95); --dhk-gold:#8C3A2B; --dhk-gold-light:#692316;
   --dhk-accent:#B87D3B; --dhk-text:#2A1512; --dhk-muted:#694A44;
   --dhk-border:rgba(140,58,43,.28); --dhk-font-head:'Amiri',serif;
-  --dhk-card-radius:32px 32px 10px 10px; --dhk-arch-radius:230px 230px 32px 32px; --dhk-clip:none;
+  --dhk-glow:rgba(184,125,59,.13);
 }
 html[data-dhker-style="kufic"][data-dhker-theme="dark"] {
   --dhk-bg-deep:#040914; --dhk-bg-main:#071124; --dhk-bg-surface:#0C2540;
   --dhk-bg-card:rgba(12,37,64,.56); --dhk-gold:#2CC4CB; --dhk-gold-light:#8CEEEF;
   --dhk-accent:#E2B86B; --dhk-text:#F2F9FC; --dhk-muted:#9EC0D6;
   --dhk-border:rgba(44,196,203,.36); --dhk-font-head:'Reem Kufi',sans-serif;
-  --dhk-card-radius:6px; --dhk-arch-radius:12px;
-  --dhk-clip:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+  --dhk-glow:rgba(44,196,203,.16);
 }
 html[data-dhker-style="kufic"][data-dhker-theme="light"] {
   --dhk-bg-deep:#E2EEF2; --dhk-bg-main:#F4F9FB; --dhk-bg-surface:#E1EFF4;
   --dhk-bg-card:rgba(255,255,255,.95); --dhk-gold:#0B556C; --dhk-gold-light:#073B4C;
   --dhk-accent:#B8862D; --dhk-text:#07222C; --dhk-muted:#416775;
   --dhk-border:rgba(11,85,108,.28); --dhk-font-head:'Reem Kufi',sans-serif;
-  --dhk-card-radius:6px; --dhk-arch-radius:12px;
-  --dhk-clip:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+  --dhk-glow:rgba(11,85,108,.12);
 }
 
-/* Map identity tokens to the legacy variables used by styles.css. */
+/* Theme tokens are scoped to the active identity; legacy site variables are mapped
+   without changing the dimensions, order, or display model of existing sections. */
 html[data-dhker-style] {
-  color-scheme: light;
-  --bg-deep:var(--dhk-bg-deep); --bg-navy:var(--dhk-bg-main);
-  --bg-emerald:var(--dhk-bg-surface); --bg-card:var(--dhk-bg-card);
-  --bg-card-hover:color-mix(in srgb,var(--dhk-bg-card) 78%,var(--dhk-accent));
-  --gold-primary:var(--dhk-gold); --gold-light:var(--dhk-gold-light);
-  --gold-border:var(--dhk-border); --gold-glow:color-mix(in srgb,var(--dhk-gold) 18%,transparent);
-  --turquoise:var(--dhk-accent); --mint:var(--dhk-accent);
-  --warm-white:var(--dhk-text); --text-muted:var(--dhk-muted);
-  --font-serif:var(--dhk-font-head); --gold-dark:var(--dhk-gold);
-  background:var(--dhk-bg-deep); color:var(--dhk-text);
+  --bg-deep:var(--dhk-bg-deep);
+  --bg-navy:var(--dhk-bg-main);
+  --bg-emerald:var(--dhk-bg-surface);
+  --bg-card:var(--dhk-bg-card);
+  --bg-card-hover:color-mix(in srgb,var(--dhk-bg-card) 82%,var(--dhk-accent));
+  --gold-primary:var(--dhk-gold);
+  --gold-light:var(--dhk-gold-light);
+  --gold-border:var(--dhk-border);
+  --gold-glow:color-mix(in srgb,var(--dhk-gold) 18%,transparent);
+  --gold-dark:var(--dhk-gold);
+  --turquoise:var(--dhk-accent);
+  --mint:var(--dhk-accent);
+  --warm-white:var(--dhk-text);
+  --text-muted:var(--dhk-muted);
+  --font-serif:var(--dhk-font-head);
+  color:var(--dhk-text);
+  background-color:var(--dhk-bg-deep);
   transition:background-color .35s ease,color .35s ease;
 }
 html[data-dhker-theme="dark"] { color-scheme:dark; }
 html[data-dhker-theme="light"] { color-scheme:light; }
 
+/* Architectural geometric background. Kept behind all content. */
 body {
-  background-color:var(--dhk-bg-main) !important;
-  color:var(--dhk-text) !important;
+  background-color:var(--dhk-bg-main);
   background-image:
-    radial-gradient(circle at 85% 12%,var(--dhk-bg-surface) 0%,transparent 48%),
-    url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C6A76A' stroke-width='.65' stroke-opacity='.09'%3E%3Cpath d='M40 0L48.28 31.72L80 40L48.28 48.28L40 80L31.72 48.28L0 40L31.72 31.72Z'/%3E%3Cpath d='M40 0L68.28 11.72L80 40L68.28 68.28L40 80L11.72 68.28L0 40L11.72 11.72Z'/%3E%3Ccircle cx='40' cy='40' r='12'/%3E%3C/g%3E%3C/svg%3E") !important;
-  transition:background-color .35s ease,color .35s ease !important;
+    radial-gradient(ellipse at 82% 8%,var(--dhk-bg-surface),transparent 54%),
+    radial-gradient(ellipse at 8% 82%,var(--dhk-glow),transparent 46%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23C6A76A' stroke-width='.7' stroke-opacity='.12'%3E%3Cpath d='M48 0 58 38 96 48 58 58 48 96 38 58 0 48 38 38Z'/%3E%3Cpath d='M48 0 82 14 96 48 82 82 48 96 14 82 0 48 14 14Z'/%3E%3Ccircle cx='48' cy='48' r='18'/%3E%3Crect x='30' y='30' width='36' height='36' transform='rotate(45 48 48)'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment:scroll,fixed,scroll;
+  background-position:center,center,center;
+  background-size:auto,auto,96px 96px;
+  color:var(--dhk-text);
 }
-.site-header,.site-footer,.ayah-ribbon {
-  background-color:var(--dhk-bg-deep) !important;
-  border-color:var(--dhk-border) !important;
+
+/* Style-specific ornament color and pattern weight. */
+html[data-dhker-style="andalus"] body {
+  background-image:
+    radial-gradient(ellipse at 82% 8%,var(--dhk-bg-surface),transparent 54%),
+    radial-gradient(ellipse at 8% 82%,var(--dhk-glow),transparent 46%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23D9A05B' stroke-width='.8' stroke-opacity='.13'%3E%3Cpath d='M48 4 58 25 80 16 71 38 92 48 71 58 80 80 58 71 48 92 38 71 16 80 25 58 4 48 25 38 16 16 38 25Z'/%3E%3Ccircle cx='48' cy='48' r='15'/%3E%3C/g%3E%3C/svg%3E");
 }
-h1,h2,h3,.section-heading h2,.about-section h2 {
-  font-family:var(--dhk-font-head) !important;
+html[data-dhker-style="kufic"] body {
+  background-image:
+    radial-gradient(ellipse at 82% 8%,var(--dhk-bg-surface),transparent 54%),
+    radial-gradient(ellipse at 8% 82%,var(--dhk-glow),transparent 46%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%232CC4CB' stroke-width='.8' stroke-opacity='.13'%3E%3Cpath d='M24 0H72L96 24V72L72 96H24L0 72V24Z'/%3E%3Cpath d='M48 8 88 48 48 88 8 48Z'/%3E%3Ccircle cx='48' cy='48' r='13'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Fine ornamental rule: pseudo-element does not add height to the header. */
+.site-header {
+  position:sticky;
+  isolation:isolate;
+  border-bottom:1px solid var(--dhk-border);
+}
+.site-header::after {
+  content:"";
+  position:absolute;
+  inset-inline:0;
+  bottom:-2px;
+  height:3px;
+  pointer-events:none;
+  opacity:.72;
+  background:repeating-linear-gradient(135deg,transparent 0 7px,var(--dhk-gold) 7px 8px,transparent 8px 14px);
+}
+.ayah-ribbon {
+  border-color:var(--dhk-border);
   color:var(--dhk-gold-light);
 }
-p,li,small,figcaption,.hero-desc,.section-heading p,.about-section p {
-  color:var(--dhk-muted);
-}
-.app-section,.service-card,.verse-card,.feature-card,.faq-item,
-.audio-card,.reader-toolbar,.quran-page,.prayer-grid > *,
-.adhkar-list > * {
-  background-color:var(--dhk-bg-card) !important;
-  border-color:var(--dhk-border) !important;
-  border-radius:var(--dhk-card-radius) !important;
-  color:var(--dhk-text);
-  transition:background-color .3s ease,border-color .3s ease,transform .3s ease;
-}
+
+/* Preserve the current hero geometry; add only a quiet architectural frame. */
 .verse-card {
-  background:linear-gradient(180deg,var(--dhk-bg-surface),var(--dhk-bg-deep)) !important;
-  border:2px solid var(--dhk-gold) !important;
-  border-radius:var(--dhk-arch-radius) !important;
-  box-shadow:0 20px 50px rgba(0,0,0,.22) !important;
+  isolation:isolate;
+  border-color:var(--dhk-gold);
+  box-shadow:0 18px 42px rgba(0,0,0,.22),inset 0 0 0 1px var(--dhk-glow);
+}
+.verse-card::after {
+  content:"";
+  position:absolute;
+  inset:9px;
+  border:1px solid var(--dhk-border);
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:0;
+}
+.verse-text,.verse-subtext,.ornament { position:relative; z-index:1; }
+.ornament { color:var(--dhk-gold); }
+
+/* Subtle ornamental edge on existing cards; no forced heights or layout changes. */
+.service-card,.feature-card,.faq-item,.app-section,.audio-card,.prayer-card {
+  border-color:var(--dhk-border);
+}
+.service-card,.feature-card,.audio-card {
+  transition:border-color .3s ease,box-shadow .3s ease,background-color .3s ease,transform .3s ease;
 }
 .service-card:hover,.feature-card:hover,.audio-card:hover {
-  border-color:var(--dhk-gold) !important; transform:translateY(-3px);
+  border-color:var(--dhk-gold);
+  box-shadow:0 10px 28px var(--dhk-glow);
 }
-.btn-primary,.dhk-btn.active {
-  background:var(--dhk-gold) !important; color:var(--dhk-bg-deep) !important;
-  border-color:var(--dhk-gold) !important;
+.section-heading h2,.about-section h2,.section-title,
+.feature-card h3,.faq-item summary,.footer-brand h3 {
+  color:var(--dhk-gold-light);
+  font-family:var(--dhk-font-head);
 }
-.btn-outline,.reader-toolbar input,.reader-toolbar select {
-  color:var(--dhk-text); border-color:var(--dhk-border);
+.eyebrow,.section-symbol,.feature-icon,.ayah-star { color:var(--dhk-accent); }
+.btn-primary {
+  border-color:var(--dhk-gold);
+  box-shadow:0 5px 18px var(--dhk-glow);
 }
-.quran-page {
-  background:var(--dhk-bg-card) !important;
-  color:var(--dhk-text) !important;
+.btn-outline { border-color:var(--dhk-border); }
+
+/* Quran reader isolation — intentionally do not theme .quran-page or .ayah-line.
+   Keep the manuscript paper, ink, ayah markers and tashkeel readable in every theme. */
+#quran .quran-page {
+  background:
+    radial-gradient(circle at 8px 8px,rgba(201,109,145,.28) 1.5px,transparent 2px) 0 0/24px 24px,
+    linear-gradient(90deg,rgba(40,116,94,.05) 1px,transparent 1px) 0 0/18px 18px,
+    #F6E7A4 !important;
+  color:#211F18 !important;
+  border-color:#28745E;
 }
+#quran .ayah-line { color:#211F18 !important; }
+#quran .ayah-marker { color:#9A5A22 !important; }
+#quran .mushaf-heading {
+  color:#245D49;
+  border-color:#4C957C;
+  background:#E4EEE0;
+}
+
+/* Existing identity switcher controls only. */
 #dhker-identity-bar {
-  background:var(--dhk-bg-deep); border-bottom:1px solid var(--dhk-border);
-  padding:.65rem 1rem; font-family:'IBM Plex Sans Arabic',sans-serif;
-  position:relative; z-index:99;
+  background:var(--dhk-bg-deep);
+  border-bottom:1px solid var(--dhk-border);
+  padding:.65rem 1rem;
+  font-family:'IBM Plex Sans Arabic',sans-serif;
+  position:relative;
+  z-index:99;
 }
 .dhk-bar-inner {
-  max-width:1180px; margin:0 auto; display:flex; align-items:center;
-  justify-content:space-between; flex-wrap:wrap; gap:.7rem;
+  max-width:1180px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:.7rem;
 }
-.dhk-style-group {display:flex;align-items:center;flex-wrap:wrap;gap:.4rem}
-.dhk-label {color:var(--dhk-gold);font-weight:700;font-size:.85rem;margin-inline-end:.3rem}
+.dhk-style-group { display:flex;align-items:center;flex-wrap:wrap;gap:.4rem; }
+.dhk-label { color:var(--dhk-gold);font-weight:700;font-size:.85rem;margin-inline-end:.3rem; }
 .dhk-btn,.dhk-theme-btn {
-  background:var(--dhk-bg-card); color:var(--dhk-text);
-  border:1px solid var(--dhk-border); padding:.42rem .85rem;
-  border-radius:99px; font:600 .82rem 'IBM Plex Sans Arabic',sans-serif;
-  cursor:pointer; transition:.2s ease;
+  background:var(--dhk-bg-card);
+  color:var(--dhk-text);
+  border:1px solid var(--dhk-border);
+  padding:.42rem .85rem;
+  border-radius:99px;
+  font:600 .82rem 'IBM Plex Sans Arabic',sans-serif;
+  cursor:pointer;
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease;
 }
-.dhk-btn.active {font-weight:700}
-.dhk-theme-btn {background:var(--dhk-bg-surface);border-color:var(--dhk-gold)}
+.dhk-btn.active {
+  background:var(--dhk-gold);
+  color:var(--dhk-bg-deep);
+  border-color:var(--dhk-gold);
+  font-weight:700;
+}
+.dhk-theme-btn { background:var(--dhk-bg-surface);border-color:var(--dhk-gold); }
 .dhk-btn:focus-visible,.dhk-theme-btn:focus-visible {
-  outline:3px solid var(--dhk-accent);outline-offset:2px;
+  outline:3px solid var(--dhk-accent);
+  outline-offset:2px;
 }
 @media(max-width:700px) {
-  .dhk-bar-inner {justify-content:center}
-  .dhk-style-group {justify-content:center}
-  .dhk-label {width:100%;text-align:center}
-  #dhker-identity-bar {padding:.7rem .5rem}
+  .dhk-bar-inner,.dhk-style-group { justify-content:center; }
+  .dhk-label { width:100%;text-align:center; }
+  #dhker-identity-bar { padding:.7rem .5rem; }
 }
+
+/* Respect the visitor's motion preference. */
 @media(prefers-reduced-motion:reduce) {
   html[data-dhker-style],html[data-dhker-style] *,html[data-dhker-style] *::before,
-  html[data-dhker-style] *::after {transition:none !important;scroll-behavior:auto !important}
+  html[data-dhker-style] *::after {
+    transition:none !important;
+    scroll-behavior:auto !important;
+    animation:none !important;
+  }
 }
