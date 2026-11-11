@@ -124,11 +124,11 @@
     style.textContent = `
       .hero{position:relative;isolation:isolate}
       .dhk-lanterns-stage{position:absolute;inset:0 0 auto;height:205px;z-index:3;pointer-events:none;overflow:visible}
-      .dhk-lantern{position:absolute;top:-4px;width:clamp(42px,5vw,66px);height:180px;filter:drop-shadow(0 5px 12px var(--dhk-glow));transform-origin:50% 0;animation:dhkLanternSway 6s ease-in-out infinite alternate}
+      .dhk-lantern{position:absolute;top:-4px;width:clamp(42px,5vw,66px);height:180px;filter:none;transform-origin:50% 0;animation:none}
       .dhk-lantern svg{display:block;width:100%;height:100%;overflow:visible}
       .dhk-lantern.l-right{right:5%}.dhk-lantern.l-left{left:5%;animation-delay:-2.2s}
       .dhk-lantern.l-center{left:50%;transform:translateX(-50%) scale(.78);animation-delay:-4s;opacity:.82}
-      .dhk-shamsa-bg{position:absolute;width:min(44vw,360px);aspect-ratio:1;left:2%;top:8%;z-index:-1;pointer-events:none;color:var(--dhk-gold);opacity:.11;animation:dhkShamsaTurn 100s linear infinite}
+      .dhk-shamsa-bg{position:absolute;width:min(44vw,360px);aspect-ratio:1;left:2%;top:8%;z-index:-1;pointer-events:none;color:var(--dhk-gold);opacity:.11;animation:none}
       .dhk-shamsa-bg svg{width:100%;height:100%;display:block}
       .verse-card{position:relative;isolation:isolate}
       .dhk-arch-svg-overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.34}
