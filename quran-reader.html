@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#081521">
 <title>المصحف الورقي — ذِكر</title>
 <link rel="stylesheet" href="./styles.css">
-<link rel="stylesheet" href="./islamic-identity.css?v=2">
+<link rel="stylesheet" href="./islamic-identity.css?v=3">
 <style>
 :root{--paper:#FAF6EE;--gold:#9A7432;--green:#0D3B33}
 body.mushaf-body{min-height:100vh;background:radial-gradient(circle at 50% 25%,#153329 0,transparent 55%),linear-gradient(160deg,#09131b,#03080c);color:#f5e9cf;font-family:'Amiri',serif;padding:1rem}
@@ -41,6 +41,70 @@ body.mushaf-body{min-height:100vh;background:radial-gradient(circle at 50% 25%,#
 .mushaf-nav button{border:1px solid #c6a76a;background:#12372e;color:#f5e6c3;border-radius:50px;padding:.65rem 1.2rem;font:inherit;cursor:pointer}
 @media(max-width:850px){.quran-book{flex-direction:column;gap:10px}.quran-gutter{display:none}.quran-page{min-height:520px}.marginal-mark{right:0}.page-left .marginal-mark{left:0}.ayah-flow{font-size:1.25rem;line-height:2.2}.quran-page{padding:2rem 1.4rem 1.2rem}}
 @media(max-width:480px){body.mushaf-body{padding:.35rem}.quran-book{padding:7px}.quran-page{min-height:470px;padding:1.8rem 1rem 1rem}.page-border{inset:9px}.ayah-flow{font-size:1.12rem}.mushaf-top{padding:.6rem}}
+
+/* Historic open-mushaf presentation from the supplied design */
+body.mushaf-body{
+  background-color:#060e14;
+  background-image:radial-gradient(circle at 50% 30%,rgba(13,46,38,.45),transparent 70%),linear-gradient(180deg,rgba(0,0,0,.48),rgba(0,0,0,.82)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M0 0h80v80H0z' fill='%23190f07' fill-opacity='.15'/%3E%3Cpath d='M0 0h40v40H0zm40 40h40v40H40z' fill='%23080503' fill-opacity='.2'/%3E%3C/svg%3E");
+}
+.mushaf-top{
+  width:100%;max-width:none;background:rgba(4,9,13,.92);
+  border-bottom:2px solid #C6A76A;box-shadow:0 4px 20px #0008;
+  padding:.8rem max(2rem,calc((100% - 1200px)/2));
+}
+.mushaf-top h1{color:#E5CE9A;text-shadow:0 2px 4px #0008}
+.mushaf-top a{color:#E5CE9A}
+.quran-container{width:min(1200px,95%);margin:2rem auto}
+.quran-book{
+  padding:14px;border:2px solid #5a3c1e;border-radius:12px;
+  background:linear-gradient(135deg,#a17a4c,#60401f);
+  box-shadow:0 30px 70px #000d,inset 0 0 10px #0009;
+}
+.quran-page{
+  min-height:680px;padding:2.5rem 2rem 2rem;
+  background-color:#FAF6EE;
+  background-image:radial-gradient(circle at 50% 50%,rgba(255,255,255,.4),transparent 72%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+}
+.quran-gutter{
+  width:40px;background:linear-gradient(90deg,#0002 0%,#0007 45%,#0009 50%,#0007 55%,#0002 100%);
+}
+.page-border{inset:16px;border:3px double #9A7432}
+.page-border:after{
+  content:"";position:absolute;inset:4px;border:1px solid #126E5B;
+  background:repeating-linear-gradient(135deg,transparent 0 8px,#9A74320d 8px 10px);
+  pointer-events:none
+}
+.corner{width:24px;height:24px;border:2px solid #9A7432}
+.corner:after{content:"✦";display:grid;place-items:center;height:100%;color:#9A7432}
+.surah-heading{
+  border:2px solid #9A7432;border-radius:6px;
+  background:repeating-linear-gradient(45deg,#FAF6EE,#FAF6EE 5px,#f4eee2 5px,#f4eee2 10px);
+  color:#0D3B33;font-family:'Amiri',serif
+}
+.surah-heading span{border:1px solid #126E5B}
+.basmala{color:#0D3B33;font-family:'Amiri',serif}
+.ayah-flow{font-family:'Amiri',serif;color:#0A2923;line-height:2.3}
+.ayah-marker{
+  border:1px solid #9A7432;border-radius:50%;
+  background:radial-gradient(circle,#126E5B 0 22%,transparent 25%);
+  color:#9A7432;min-width:1.8rem;height:1.8rem
+}
+.marginal-mark{
+  width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;
+  border:1.5px solid #9A7432;background:#FAF6EE;color:#9A7432;
+  box-shadow:2px 2px 5px #0002;writing-mode:vertical-rl
+}
+.page-footer{color:#9A7432;border-top-color:#9A743244}
+.mushaf-nav button,.mushaf-controls button{
+  background:#0d211a;border-color:#C6A76A;color:#fff
+}
+.mushaf-nav button:hover,.mushaf-controls button:hover{background:#C6A76A;color:#060e14}
+@media(max-width:850px){
+ .mushaf-top{padding:.8rem 1rem}
+ .quran-page{min-height:560px}
+ .quran-gutter{display:none}
+}
+
 </style>
 </head>
 <body class="mushaf-body">
