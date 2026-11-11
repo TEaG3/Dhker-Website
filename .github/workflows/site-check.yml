@@ -1,0 +1,24 @@
+name: Dhker Website Checks
+
+on:
+  push:
+    branches: [main, "feature/**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JSON resources
+        run: |
+          node -e "for (const f of ['data/adhkar.json','data/references.json','data/cities.json','manifest.webmanifest']) JSON.parse(require('fs').readFileSync(f,'utf8'))"
+      - name: Check JavaScript syntax
+        run: node --check script.js
+      - name: Run website smoke tests
+        run: node --test tests/site-smoke.test.mjs

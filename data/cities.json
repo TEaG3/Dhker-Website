@@ -1,0 +1,11 @@
+[
+  {"id":"baghdad","name":"بغداد","city":"Baghdad","country":"Iraq","method":3},
+  {"id":"basra","name":"البصرة","city":"Basra","country":"Iraq","method":3},
+  {"id":"mosul","name":"الموصل","city":"Mosul","country":"Iraq","method":3},
+  {"id":"erbil","name":"أربيل","city":"Erbil","country":"Iraq","method":3},
+  {"id":"najaf","name":"النجف","city":"Najaf","country":"Iraq","method":3},
+  {"id":"karbala","name":"كربلاء","city":"Karbala","country":"Iraq","method":3},
+  {"id":"makkah","name":"مكة المكرمة","city":"Makkah","country":"Saudi Arabia","method":4},
+  {"id":"madinah","name":"المدينة المنورة","city":"Madinah","country":"Saudi Arabia","method":4},
+  {"id":"cairo","name":"القاهرة","city":"Cairo","country":"Egypt","method":5}
+]

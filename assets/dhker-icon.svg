@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#081521"/>
+  <path d="M256 38 474 256 256 474 38 256Z" fill="#103B35" stroke="#C6A76A" stroke-width="12"/>
+  <path d="M256 105 407 256 256 407 105 256Z" fill="none" stroke="#C6A76A" stroke-width="7"/>
+  <text x="256" y="335" text-anchor="middle" font-family="serif" font-size="245" fill="#F3DFB2">ذ</text>
+</svg>

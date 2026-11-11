@@ -1,0 +1,15 @@
+{
+  "name":"ذِكر — سكينة ترافق يومك",
+  "short_name":"ذِكر",
+  "lang":"ar",
+  "dir":"rtl",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "background_color":"#081521",
+  "theme_color":"#081521",
+  "description":"القرآن الكريم والأذكار ومواقيت الصلاة والصوتيات.",
+  "icons":[
+    {"src":"./assets/dhker-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}
+  ]
+}
