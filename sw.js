@@ -1,8 +1,10 @@
-const CACHE_NAME = "dhker-web-v2";
+const CACHE_NAME = "dhker-web-v3";
+const MUSHAF_CACHE = "dhker-mushaf-pages-v1";
 const CORE = [
-  "./", "./index.html", "./styles.css", "./script.js",
-  "./manifest.webmanifest", "./data/adhkar.json",
-  "./data/references.json", "./data/cities.json"
+  "./", "./index.html", "./quran-reader.html",
+  "./styles.css", "./islamic-identity.css", "./islamic-identity.js",
+  "./script.js", "./manifest.webmanifest",
+  "./data/adhkar.json", "./data/references.json", "./data/cities.json"
 ];
 
 self.addEventListener("install", (event) => {
@@ -13,7 +15,9 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) => Promise.all(
-      keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+      keys.filter((key) => key !== CACHE_NAME && key !== MUSHAF_CACHE)
+        .filter((key) => key.startsWith("dhker-web-"))
+        .map((key) => caches.delete(key))
     ))
   );
   self.clients.claim();
@@ -21,12 +25,36 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   const request = event.request;
-  if (request.method !== "GET" || new URL(request.url).origin !== self.location.origin) return;
+  if (request.method !== "GET") return;
+  const url = new URL(request.url);
+
+  // Cache Quran page images on demand. Only pages already opened can be read offline.
+  if (url.origin === "https://raw.githubusercontent.com" &&
+      url.pathname.includes("/Zizwar/mushaf-mauri/") &&
+      /\/page\d+\.png$/.test(url.pathname)) {
+    event.respondWith((async () => {
+      const cache = await caches.open(MUSHAF_CACHE);
+      const cached = await cache.match(request);
+      if (cached) return cached;
+      try {
+        const response = await fetch(request);
+        if (response.ok || response.type === "opaque") {
+          try { await cache.put(request, response.clone()); } catch (_) {}
+        }
+        return response;
+      } catch (error) {
+        return cached || new Response("", { status: 503, statusText: "Offline page not cached" });
+      }
+    })());
+    return;
+  }
+
+  if (url.origin !== self.location.origin) return;
   event.respondWith(
     caches.match(request).then((cached) => cached || fetch(request).then((response) => {
       if (response.ok) {
         const copy = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, copy)).catch(() => {});
       }
       return response;
     }).catch(() => caches.match("./index.html")))
