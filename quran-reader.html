@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#081521">
 <title>المصحف الورقي — ذِكر</title>
 <link rel="stylesheet" href="./styles.css">
-<link rel="stylesheet" href="./islamic-identity.css?v=3">
+<link rel="stylesheet" href="./islamic-identity.css?v=4">
 <style>
 :root{--paper:#FAF6EE;--gold:#9A7432;--green:#0D3B33}
 body.mushaf-body{min-height:100vh;background:radial-gradient(circle at 50% 25%,#153329 0,transparent 55%),linear-gradient(160deg,#09131b,#03080c);color:#f5e9cf;font-family:'Amiri',serif;padding:1rem}
@@ -22,7 +22,7 @@ body.mushaf-body{min-height:100vh;background:radial-gradient(circle at 50% 25%,#
 .page-right{border-radius:5px 18px 18px 5px;border-left:1px solid #755b352e}.page-left{border-radius:18px 5px 5px 18px;border-right:1px solid #755b352e}
 .quran-gutter{position:absolute;z-index:4;top:14px;bottom:14px;left:50%;width:38px;transform:translateX(-50%);pointer-events:none;background:linear-gradient(90deg,#0002,#0007 44%,#000a 50%,#0007 56%,#0002)}
 .page-border{position:absolute;inset:15px;border:3px double var(--gold);border-radius:8px;pointer-events:none}
-.page-border:after{content:"";position:absolute;inset:5px;border:1px solid #126e5b66;background:repeating-linear-gradient(135deg,transparent 0 8px,#9a74320d 8px 10px)}
+.page-border:after{content:"";position:absolute;inset:5px;border:1px solid #126e5b66;background:transparent}
 .corner{position:absolute;width:23px;height:23px;border:2px solid var(--gold);border-radius:50%;background:var(--paper);z-index:2}
 .corner:after{content:"✦";display:grid;place-items:center;color:var(--gold);font-size:10px;height:100%}
 .tl{top:10px;left:10px}.tr{top:10px;right:10px}.bl{bottom:10px;left:10px}.br{bottom:10px;right:10px}
@@ -78,7 +78,7 @@ body.mushaf-body{
 .corner:after{content:"✦";display:grid;place-items:center;height:100%;color:#9A7432}
 .surah-heading{
   border:2px solid #9A7432;border-radius:6px;
-  background:repeating-linear-gradient(45deg,#FAF6EE,#FAF6EE 5px,#f4eee2 5px,#f4eee2 10px);
+  background:linear-gradient(180deg,#FCF9F2,#F7F1E6);
   color:#0D3B33;font-family:'Amiri',serif
 }
 .surah-heading span{border:1px solid #126E5B}
