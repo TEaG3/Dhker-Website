@@ -1,165 +1,115 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl" id="top">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ذِكر — سكينة ترافق يومك | ﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾</title>
-  <meta name="description" content="تطبيق عربي هادئ يجمع مواقيت الصلاة والأذكار الموثّقة في مكان واحد، بواجهة واضحة من اليمين إلى اليسار تعمل دون إنترنت.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google" content="notranslate">
   <meta name="theme-color" content="#081521">
-
-  <!-- بيانات المشاركة الاجتماعية (OpenGraph) -->
+  <meta name="description" content="ذِكر — القرآن الكريم والأذكار ومواقيت الصلاة والصوتيات، مع تطبيق Android يعمل دون اتصال في وظائفه الأساسية.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ar_AR">
-  <meta property="og:title" content="ذِكر — سكينة ترافق يومك | ﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾">
-  <meta property="og:description" content="تطبيق عربي هادئ يجمع مواقيت الصلاة والأذكار الموثّقة في مكان واحد، يعمل دون إنترنت وبدون إعلانات.">
+  <meta property="og:title" content="ذِكر — سكينة ترافق يومك">
+  <meta property="og:description" content="اقرأ القرآن، وتابع الأذكار ومواقيت الصلاة، واستمع إلى الأذان.">
   <meta property="og:url" content="https://teag3.github.io/Dhker-Website/">
-  
-  <!-- الأيقونة الرسمية المدمجة (Favicon SVG) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23081521'/%3E%3Crect x='116' y='116' width='280' height='280' rx='20' fill='%23103B35' stroke='%23C6A76A' stroke-width='14'/%3E%3Crect x='116' y='116' width='280' height='280' rx='20' fill='%230D2E28' stroke='%23C6A76A' stroke-width='14' transform='rotate(45 256 256)'/%3E%3Cpath d='M256 125 C300 165 332 210 332 270 L332 355 L180 355 L180 270 C180 210 212 165 256 125 Z' fill='%23081521' stroke='%23C6A76A' stroke-width='10'/%3E%3Cpath d='M286 266 A42 42 0 1 1 232 216 A34 34 0 1 0 286 266 Z' fill='%23C6A76A'/%3E%3Cpath d='M266 208 L272 224 L288 230 L272 236 L266 252 L260 236 L244 230 L260 224 Z' fill='%2342C6A5'/%3E%3C/svg%3E">
-
-  <!-- الخطوط العربية -->
+  <title>ذِكر — سكينة ترافق يومك</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23081521'/%3E%3Cpath d='M50 12 88 50 50 88 12 50Z' fill='none' stroke='%23C6A76A' stroke-width='5'/%3E%3Ctext x='50' y='63' text-anchor='middle' font-size='43' fill='%23F3DFB2'%3Eذ%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- ربط ملف التصميم -->
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-
-  <!-- شريط الآية الكريمة العلوي -->
-  <div class="ayah-ribbon">
-    <div class="ayah-ribbon-inner">
-      <span class="ayah-star">✦</span>
-      ﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾
-      <span class="ayah-star">✦</span>
-    </div>
-  </div>
-
-  <!-- الهيدر -->
+  <div class="ayah-ribbon">﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾</div>
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#top" aria-label="الرئيسية">
-        <svg class="brand-logo-svg" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
-          <g transform="translate(10, 10)">
-            <rect x="0" y="0" width="100" height="100" rx="20" fill="#103B35" stroke="#C6A76A" stroke-width="4"/>
-            <rect x="0" y="0" width="100" height="100" rx="20" fill="#0D2E28" stroke="#C6A76A" stroke-width="4" transform="rotate(45 50 50)"/>
-            <path d="M50 25 C65 40 75 55 75 75 L75 85 L25 85 L25 75 C25 55 35 40 50 25 Z" fill="#050D15" stroke="#C6A76A" stroke-width="3"/>
-            <path d="M60 65 A15 15 0 1 1 42 45 A12 12 0 1 0 60 65 Z" fill="#C6A76A"/>
-            <path d="M53 42 L56 49 L63 51 L56 53 L53 60 L50 53 L43 51 L50 49 Z" fill="#42C6A5"/>
-          </g>
-          <text x="130" y="65" font-family="'Amiri', serif" font-size="52" font-weight="bold" fill="#F7FAF8">ذِكر</text>
-          <text x="132" y="95" font-family="'IBM Plex Sans Arabic', sans-serif" font-size="16" fill="#B2C6C0" letter-spacing="4">DHKER</text>
-        </svg>
-      </a>
-      
-      <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
-      
-      <nav>
+      <a class="brand" href="#home" aria-label="ذِكر - الرئيسية"><span class="brand-mark">ذ</span><span><b>ذِكر</b><small>DHKER</small></span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false">☰</button>
+      <nav aria-label="التنقل الرئيسي">
         <ul class="nav-list" id="navList">
-          <li><a href="#top">الرئيسية</a></li>
-          <li><a href="#features">المميزات</a></li>
-          <li><a href="#about">عن التطبيق</a></li>
-          <li><a href="#faq">الأسئلة الشائعة</a></li>
+          <li><a href="#home">الرئيسية</a></li><li><a href="#quran">القرآن</a></li><li><a href="#prayer">المواقيت</a></li><li><a href="#adhkar">الأذكار</a></li><li><a href="#audio">الصوتيات</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main>
-    <!-- قسم الهيرو -->
+  <main id="home">
     <section class="hero container">
       <div class="hero-grid">
         <div class="hero-content">
-          <div class="status-badge">الإصدار التجريبي الأول — v0.1.0-beta.1</div>
-          <h1>ذِكر... <span>سكينة ترافق يومك</span></h1>
-          <p class="hero-desc">
-            تطبيق عربي يجمع أدوات العبادة اليومية في واجهة من اليمين إلى اليسار. هذه نسخة تجريبية أولى قابلة للتثبيت والاختبار على أجهزة Android.
-          </p>
+          <span class="status-badge">منصة ذِكر الرقمية</span>
+          <h1>سكينة ترافق <span>يومك</span></h1>
+          <p class="hero-desc">القرآن الكريم، والأذكار، ومواقيت الصلاة، والصوتيات في تجربة عربية هادئة. ويمكن تثبيت الموقع كتطبيق ويب على جهازك.</p>
           <div class="cta-group">
-            <a href="https://github.com/TEaG3/Dhker/releases/download/v0.1.0-beta.1/app-release.apk" class="btn btn-primary">تحميل APK للأندرويد</a>
-            <a href="#features" class="btn btn-outline">اكتشف المميزات</a>
+            <a class="btn btn-primary" href="https://github.com/TEaG3/Dhker/releases/download/v0.1.0-beta.1/app-release.apk">تحميل تطبيق Android</a>
+            <a class="btn btn-outline" href="#quran">ابدأ القراءة</a>
           </div>
+          <p class="small-note">تعمل البيانات المحفوظة مسبقاً دون اتصال. يلزم الإنترنت لجلب محتوى جديد أو تحديث المواقيت.</p>
         </div>
-        
-        <div class="hero-art">
-          <div class="verse-card">
-            <span class="verse-text">﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾</span>
-            <span class="verse-subtext">طمأنينة في يومك، وقرب من الله</span>
-          </div>
+        <div class="verse-card">
+          <span class="verse-text">﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾</span>
+          <span class="verse-subtext">الرعد: ٢٨</span>
+          <div class="ornament">✦　۞　✦</div>
         </div>
       </div>
     </section>
 
-    <!-- قسم المميزات -->
-    <section id="features" class="container" style="margin-top: 2rem;">
-      <h2 class="section-title">مميزات مدروسة، بلا زحام</h2>
-      <p class="section-subtitle">كل ما يظهر هنا مبني على ما هو مؤكد في كود التطبيق، لا وعود تسويقية.</p>
-      
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18" stroke-linecap="round"/><circle cx="12" cy="12" r="8"/></svg></div>
-          <h3>مواقيت صلاة محلية</h3>
-          <p>تُحسب المواقيت على جهازك مباشرة بعد اختيار المدينة، فتستمر بالعمل دون اتصال بالإنترنت.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 0-3 3V4z"/><path d="M8 8h7M8 12h7" stroke-linecap="round"/></svg></div>
-          <h3>أذكار موثّقة</h3>
-          <p>أذكار الصباح والمساء والنوم وأذكار الصلاة، مع مصدر كل ذكر ودرجته الشرعية.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
-          <h3>حفظ محلي للبيانات</h3>
-          <p>تُحفظ بعض الإعدادات والبيانات محلياً على الجهاز. سننشر تفاصيل الخصوصية والصلاحيات بوضوح قبل الإصدار.</p>
-        </div>
-      </div>
+    <section class="container service-grid" aria-label="خدمات ذِكر">
+      <a class="service-card" href="#quran"><span>۞</span><b>القرآن الكريم</b><small>قراءة بالسور وصفحات المصحف</small></a>
+      <a class="service-card" href="#prayer"><span>◷</span><b>مواقيت الصلاة</b><small>اختر مدينتك وتابع مواقيت اليوم</small></a>
+      <a class="service-card" href="#adhkar"><span>✧</span><b>الأذكار</b><small>الصباح والمساء والنوم</small></a>
+      <a class="service-card" href="#audio"><span>♫</span><b>الصوتيات</b><small>معاينة أصوات الأذان</small></a>
     </section>
 
-    <!-- قسم الأسئلة الشائعة -->
-    <section id="faq" class="container" style="margin-top: 5rem;">
-      <h2 class="section-title">الأسئلة الشائعة</h2>
-      <p class="section-subtitle">إجابات مباشرة، بلا مبالغة.</p>
-      
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary>ما هو تطبيق ذِكر؟</summary>
-          <div class="faq-content">تطبيق عربي يجمع مواقيت الصلاة والأذكار الموثّقة في تجربة واحدة هادئة، مع التركيز على الوضوح وسهولة الاستخدام والخصوصية.</div>
-        </details>
-        <details class="faq-item">
-          <summary>هل التطبيق متاح للتنزيل الآن؟</summary>
-          <div class="faq-content">نعم، تتوفر النسخة التجريبية الأولى لأجهزة Android من زر التحميل في أعلى الصفحة. هذه نسخة تجريبية وقد تحتاج إلى مزيد من الاختبارات والتحسينات.</div>
-        </details>
-        <details class="faq-item">
-          <summary>كيف أتابع التحديثات؟</summary>
-          <div class="faq-content">يمكنك الاطلاع على تفاصيل الإصدار وملاحظاته في صفحة <a href="https://github.com/TEaG3/Dhker/releases" target="_blank" rel="noopener" style="color:var(--gold-primary);">إصدارات GitHub</a>.</div>
-        </details>
+    <section id="quran" class="container app-section">
+      <div class="section-heading"><div><span class="eyebrow">تلاوة وتدبر</span><h2>القرآن الكريم</h2><p>عرض نص القرآن بالرسم العثماني من خدمة AlQuran Cloud، مع حفظ الصفحات التي تفتحها على هذا الجهاز.</p></div><span class="section-symbol">۞</span></div>
+      <div class="reader-toolbar">
+        <label for="quranPage">رقم الصفحة</label>
+        <input id="quranPage" type="number" min="1" max="604" value="1" inputmode="numeric">
+        <button class="btn btn-outline btn-small" id="loadPage">فتح الصفحة</button>
+        <button class="btn btn-outline btn-small" id="prevPage">السابق</button>
+        <button class="btn btn-outline btn-small" id="nextPage">التالي</button>
       </div>
+      <div class="reader-status" id="quranStatus" role="status">اختر صفحة لبدء القراءة. تُحفظ الصفحات التي تفتحها محلياً لهذا المتصفح.</div>
+      <article class="quran-page" id="quranContent" lang="ar" translate="no" aria-live="polite"><p class="reader-placeholder">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p></article>
+      <p class="source-note">مصدر النص: AlQuran Cloud API — النص العثماني. <a href="https://alquran.cloud/terms-and-conditions" target="_blank" rel="noopener">شروط الاستخدام والإسناد</a>. لا يتم تغيير نص الآيات.</p>
+    </section>
+
+    <section id="prayer" class="container app-section">
+      <div class="section-heading"><div><span class="eyebrow">على مدار اليوم</span><h2>مواقيت الصلاة</h2><p>تُجلب مواقيت اليوم حسب المدينة وطريقة الحساب، ويُحتفظ بآخر نتيجة على هذا الجهاز.</p></div><span class="section-symbol">◷</span></div>
+      <div class="reader-toolbar">
+        <label for="citySelect">المدينة</label><select id="citySelect"></select>
+        <button class="btn btn-primary btn-small" id="refreshPrayer">تحديث المواقيت</button>
+      </div>
+      <div class="reader-status" id="prayerStatus" role="status">جارٍ تجهيز قائمة المدن…</div>
+      <div class="prayer-grid" id="prayerGrid"></div>
+      <p class="source-note">مصدر الحساب: AlAdhan API. قد تختلف النتائج بحسب طريقة الحساب وإعدادات الجهة الدينية المحلية.</p>
+    </section>
+
+    <section id="adhkar" class="container app-section">
+      <div class="section-heading"><div><span class="eyebrow">وردك اليومي</span><h2>الأذكار</h2><p>اختر القسم، واقرأ الذكر، واستخدم العداد لحفظ تقدمك على هذا الجهاز.</p></div><span class="section-symbol">✧</span></div>
+      <div class="category-tabs" id="adhkarCategories" role="group" aria-label="أقسام الأذكار"></div>
+      <div class="adhkar-list" id="adhkarList"></div>
+      <p class="source-note">تُعرض المراجع المتاحة مع الأذكار. يُرجى مراجعة المصادر العلمية عند اعتماد المحتوى للنشر الموسع.</p>
+    </section>
+
+    <section id="audio" class="container app-section">
+      <div class="section-heading"><div><span class="eyebrow">استمع</span><h2>مكتبة الأذان</h2><p>تسجيلان متاحان للمعاينة من Wikimedia Commons. شغّل الصوت باختيارك.</p></div><span class="section-symbol">♫</span></div>
+      <div class="audio-list">
+        <div class="audio-card"><div><b>الأذان الأساسي</b><small>Beautiful adhan — CC0 1.0</small></div><button class="btn btn-outline btn-small audio-play" data-audio="default">استمع</button></div>
+        <div class="audio-card"><div><b>أذان الفجر</b><small>Adhan — CC0 1.0</small></div><button class="btn btn-outline btn-small audio-play" data-audio="fajr">استمع</button></div>
+      </div>
+      <audio id="adhanPlayer" controls preload="none"></audio>
+      <p class="source-note">المصادر: <a href="https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg" target="_blank" rel="noopener">Beautiful_adhan.ogg</a> و<a href="https://commons.wikimedia.org/wiki/File:Adhan.ogg" target="_blank" rel="noopener">Adhan.ogg</a>. الصوت عبر الموقع يحتاج اتصالاً أول مرة؛ التطبيق يضم التسجيلات ضمن بناء Android.</p>
+    </section>
+
+    <section id="about" class="container app-section about-section">
+      <div><span class="eyebrow">مشروعان متكاملان</span><h2>ذِكر معك على كل جهاز</h2><p>الموقع يقدم الخدمات الأساسية من المتصفح، وتطبيق Android يحتفظ بموارده المحلية لتعمل وظائفه الأساسية دون اتصال. موضع القراءة والإعدادات على الموقع تُحفظ في متصفح الجهاز، ولا تتم مزامنتها تلقائياً مع التطبيق.</p></div>
+      <a class="btn btn-primary" href="https://github.com/TEaG3/Dhker/releases">كل إصدارات التطبيق</a>
     </section>
   </main>
 
-  <!-- التذييل -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h3>ذِكر</h3>
-          <p>سكينة ترافق يومك. تطبيق عربي لمواقيت الصلاة والأذكار.</p>
-        </div>
-        <div class="footer-links">
-          <h4>روابط سريعة</h4>
-          <ul>
-            <li><a href="https://github.com/TEaG3/Dhker" target="_blank" rel="noopener">مستودع التطبيق (GitHub)</a></li>
-            <li><a href="https://github.com/TEaG3/Dhker-Website" target="_blank" rel="noopener">مستودع الموقع (GitHub)</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        © 2026 ذِكر. جميع الحقوق محفوظة.
-      </div>
-    </div>
-  </footer>
-
-  <!-- ربط ملف الجافاسكريبت -->
-  <script src="script.js" defer></script>
+  <footer class="site-footer"><div class="container footer-grid"><div><h3>ذِكر</h3><p>سكينة ترافق يومك.</p></div><div><h4>روابط المشروع</h4><a href="https://github.com/TEaG3/Dhker">مستودع Android</a><a href="https://github.com/TEaG3/Dhker-Website">مستودع الموقع</a><a href="https://github.com/TEaG3/Dhker/releases">إصدارات التطبيق</a></div></div><div class="footer-bottom">© 2026 ذِكر — تخضع الموارد الخارجية لشروط أصحابها.</div></footer>
+  <script src="./script.js" defer></script>
 </body>
 </html>
