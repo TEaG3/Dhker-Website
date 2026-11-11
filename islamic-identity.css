@@ -1,356 +1,441 @@
 /* ==========================================================================
-   Dhker — Islamic architecture & ornamental layer
-   Visual-only enhancement: preserves the existing HTML layout and dimensions.
-   The Quran reader is intentionally isolated from site theme colors.
+   محرك العمارة والزخرفة الإسلامية ثلاثي الأبعاد (islamic-identity.css v3 - True 3D)
    ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
 
+/* --------------------------------------------------------------------------
+   الأنظمة اللونية للطرز الثلاثة × الوضعين (الليلي والنهاري)
+   -------------------------------------------------------------------------- */
 html[data-dhker-style="mihrab"][data-dhker-theme="dark"] {
-  --dhk-bg-deep:#050E16; --dhk-bg-main:#081521; --dhk-bg-surface:#0D2E28;
-  --dhk-bg-card:rgba(16,59,53,.48); --dhk-gold:#C6A76A; --dhk-gold-light:#E5CE9A;
-  --dhk-accent:#42C6A5; --dhk-text:#F7FAF8; --dhk-muted:#B0C4BE;
-  --dhk-border:rgba(198,167,106,.34); --dhk-font-head:'Amiri',serif;
-  --dhk-glow:rgba(66,198,165,.16);
+  --dhk-bg-deep: #03090E;
+  --dhk-bg-main: #06121B;
+  --dhk-bg-surface: #0B2822;
+  --dhk-bg-card: rgba(10, 36, 31, 0.78);
+  --dhk-gold: #D4AF37;
+  --dhk-gold-bright: #FFF3C4;
+  --dhk-gold-dark: #8A6611;
+  --dhk-accent: #3FE0B5;
+  --dhk-text: #FAF8F2;
+  --dhk-muted: #B2C7C0;
+  --dhk-border: rgba(212, 175, 55, 0.48);
+  --dhk-font-head: 'Amiri', serif;
+  --dhk-glow: rgba(63, 224, 181, 0.38);
 }
+
 html[data-dhker-style="mihrab"][data-dhker-theme="light"] {
-  --dhk-bg-deep:#EFE8D8; --dhk-bg-main:#FAF6EE; --dhk-bg-surface:#E6DEC8;
-  --dhk-bg-card:rgba(255,252,245,.94); --dhk-gold:#9A7432; --dhk-gold-light:#0D3B33;
-  --dhk-accent:#126E5B; --dhk-text:#0A2923; --dhk-muted:#435E58;
-  --dhk-border:rgba(154,116,50,.32); --dhk-font-head:'Amiri',serif;
-  --dhk-glow:rgba(154,116,50,.13);
+  --dhk-bg-deep: #E4DAC3;
+  --dhk-bg-main: #FAF5E8;
+  --dhk-bg-surface: #EBE1C8;
+  --dhk-bg-card: rgba(255, 252, 244, 0.94);
+  --dhk-gold: #9A6F1A;
+  --dhk-gold-bright: #0B3B30;
+  --dhk-gold-dark: #5C3F08;
+  --dhk-accent: #0F6B56;
+  --dhk-text: #092620;
+  --dhk-muted: #46615A;
+  --dhk-border: rgba(154, 111, 26, 0.42);
+  --dhk-font-head: 'Amiri', serif;
+  --dhk-glow: rgba(212, 175, 55, 0.35);
 }
+
 html[data-dhker-style="andalus"][data-dhker-theme="dark"] {
-  --dhk-bg-deep:#110B0A; --dhk-bg-main:#18100E; --dhk-bg-surface:#2B1714;
-  --dhk-bg-card:rgba(48,25,22,.58); --dhk-gold:#D9A05B; --dhk-gold-light:#F4CFA0;
-  --dhk-accent:#E06D53; --dhk-text:#FDF8F2; --dhk-muted:#D2B8AC;
-  --dhk-border:rgba(217,160,91,.36); --dhk-font-head:'Amiri',serif;
-  --dhk-glow:rgba(224,109,83,.15);
+  --dhk-bg-deep: #0C0605;
+  --dhk-bg-main: #150B09;
+  --dhk-bg-surface: #2C1310;
+  --dhk-bg-card: rgba(44, 19, 16, 0.8);
+  --dhk-gold: #E5A952;
+  --dhk-gold-bright: #FFE4BA;
+  --dhk-gold-dark: #8C5814;
+  --dhk-accent: #E8684A;
+  --dhk-text: #FDF6EE;
+  --dhk-muted: #D4B5A7;
+  --dhk-border: rgba(229, 169, 82, 0.48);
+  --dhk-font-head: 'Aref Ruqaa', serif;
+  --dhk-glow: rgba(232, 104, 74, 0.35);
 }
+
 html[data-dhker-style="andalus"][data-dhker-theme="light"] {
-  --dhk-bg-deep:#EFE5D8; --dhk-bg-main:#FDFBF7; --dhk-bg-surface:#F4EAE0;
-  --dhk-bg-card:rgba(255,250,244,.95); --dhk-gold:#8C3A2B; --dhk-gold-light:#692316;
-  --dhk-accent:#B87D3B; --dhk-text:#2A1512; --dhk-muted:#694A44;
-  --dhk-border:rgba(140,58,43,.28); --dhk-font-head:'Amiri',serif;
-  --dhk-glow:rgba(184,125,59,.13);
+  --dhk-bg-deep: #EADBC8;
+  --dhk-bg-main: #FCF8F2;
+  --dhk-bg-surface: #F2E5D5;
+  --dhk-bg-card: rgba(255, 250, 244, 0.95);
+  --dhk-gold: #8F2D1E;
+  --dhk-gold-bright: #5E190E;
+  --dhk-gold-dark: #4A1108;
+  --dhk-accent: #B87928;
+  --dhk-text: #29120E;
+  --dhk-muted: #6B4740;
+  --dhk-border: rgba(143, 45, 30, 0.4);
+  --dhk-font-head: 'Aref Ruqaa', serif;
+  --dhk-glow: rgba(184, 121, 40, 0.3);
 }
+
 html[data-dhker-style="kufic"][data-dhker-theme="dark"] {
-  --dhk-bg-deep:#040914; --dhk-bg-main:#071124; --dhk-bg-surface:#0C2540;
-  --dhk-bg-card:rgba(12,37,64,.56); --dhk-gold:#2CC4CB; --dhk-gold-light:#8CEEEF;
-  --dhk-accent:#E2B86B; --dhk-text:#F2F9FC; --dhk-muted:#9EC0D6;
-  --dhk-border:rgba(44,196,203,.36); --dhk-font-head:'Reem Kufi',sans-serif;
-  --dhk-glow:rgba(44,196,203,.16);
+  --dhk-bg-deep: #02060D;
+  --dhk-bg-main: #050E1D;
+  --dhk-bg-surface: #0A213D;
+  --dhk-bg-card: rgba(10, 33, 61, 0.8);
+  --dhk-gold: #26D0CE;
+  --dhk-gold-bright: #B0FFFF;
+  --dhk-gold-dark: #0E6E6D;
+  --dhk-accent: #F0C265;
+  --dhk-text: #F0F9FF;
+  --dhk-muted: #9CC2DC;
+  --dhk-border: rgba(38, 208, 206, 0.48);
+  --dhk-font-head: 'Reem Kufi', sans-serif;
+  --dhk-glow: rgba(38, 208, 206, 0.38);
 }
+
 html[data-dhker-style="kufic"][data-dhker-theme="light"] {
-  --dhk-bg-deep:#E2EEF2; --dhk-bg-main:#F4F9FB; --dhk-bg-surface:#E1EFF4;
-  --dhk-bg-card:rgba(255,255,255,.95); --dhk-gold:#0B556C; --dhk-gold-light:#073B4C;
-  --dhk-accent:#B8862D; --dhk-text:#07222C; --dhk-muted:#416775;
-  --dhk-border:rgba(11,85,108,.28); --dhk-font-head:'Reem Kufi',sans-serif;
-  --dhk-glow:rgba(11,85,108,.12);
+  --dhk-bg-deep: #D8E8EE;
+  --dhk-bg-main: #F2F8FA;
+  --dhk-bg-surface: #E0EEF3;
+  --dhk-bg-card: rgba(255, 255, 255, 0.95);
+  --dhk-gold: #094D63;
+  --dhk-gold-bright: #053242;
+  --dhk-gold-dark: #03202B;
+  --dhk-accent: #B8841E;
+  --dhk-text: #06212B;
+  --dhk-muted: #3E6675;
+  --dhk-border: rgba(9, 77, 99, 0.4);
+  --dhk-font-head: 'Reem Kufi', sans-serif;
+  --dhk-glow: rgba(9, 77, 99, 0.25);
 }
 
-/* Theme tokens are scoped to the active identity; legacy site variables are mapped
-   without changing the dimensions, order, or display model of existing sections. */
-html[data-dhker-style] {
-  --bg-deep:var(--dhk-bg-deep);
-  --bg-navy:var(--dhk-bg-main);
-  --bg-emerald:var(--dhk-bg-surface);
-  --bg-card:var(--dhk-bg-card);
-  --bg-card-hover:color-mix(in srgb,var(--dhk-bg-card) 82%,var(--dhk-accent));
-  --gold-primary:var(--dhk-gold);
-  --gold-light:var(--dhk-gold-light);
-  --gold-border:var(--dhk-border);
-  --gold-glow:color-mix(in srgb,var(--dhk-gold) 18%,transparent);
-  --gold-dark:var(--dhk-gold);
-  --turquoise:var(--dhk-accent);
-  --mint:var(--dhk-accent);
-  --warm-white:var(--dhk-text);
-  --text-muted:var(--dhk-muted);
-  --font-serif:var(--dhk-font-head);
-  color:var(--dhk-text);
-  background-color:var(--dhk-bg-deep);
-  transition:background-color .35s ease,color .35s ease;
-}
-html[data-dhker-theme="dark"] { color-scheme:dark; }
-html[data-dhker-theme="light"] { color-scheme:light; }
-
-/* Architectural geometric background. Kept behind all content. */
+/* ==========================================================================
+   الخلفية المعمارية وإفريز المصحف المذهب (Islamic Frieze Border)
+   ========================================================================== */
 body {
-  background-color:var(--dhk-bg-main);
+  background-color: var(--dhk-bg-main) !important;
+  color: var(--dhk-text) !important;
   background-image:
-    radial-gradient(ellipse at 82% 8%,var(--dhk-bg-surface),transparent 54%),
-    radial-gradient(ellipse at 8% 82%,var(--dhk-glow),transparent 46%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23C6A76A' stroke-width='.7' stroke-opacity='.12'%3E%3Cpath d='M48 0 58 38 96 48 58 58 48 96 38 58 0 48 38 38Z'/%3E%3Cpath d='M48 0 82 14 96 48 82 82 48 96 14 82 0 48 14 14Z'/%3E%3Ccircle cx='48' cy='48' r='18'/%3E%3Crect x='30' y='30' width='36' height='36' transform='rotate(45 48 48)'/%3E%3C/g%3E%3C/svg%3E");
-  background-attachment:scroll,scroll,scroll;
-  background-position:center,center,center;
-  background-size:auto,auto,96px 96px;
-  color:var(--dhk-text);
+    radial-gradient(circle at 50% 0%, var(--dhk-bg-surface) 0%, transparent 68%),
+    url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-width='0.75' stroke-opacity='0.13'%3E%3Cpath d='M60 0L74 46L120 60L74 74L60 120L46 74L0 60L46 46Z'/%3E%3Cpath d='M60 0L102 18L120 60L102 102L60 120L18 102L0 60L18 18Z'/%3E%3Ccircle cx='60' cy='60' r='22'/%3E%3Crect x='38' y='38' width='44' height='44' transform='rotate(45 60 60)'/%3E%3C/g%3E%3C/svg%3E") !important;
+  perspective: 1400px;
+  overflow-x: hidden;
 }
 
-/* Style-specific ornament color and pattern weight. */
-html[data-dhker-style="andalus"] body {
-  background-image:
-    radial-gradient(ellipse at 82% 8%,var(--dhk-bg-surface),transparent 54%),
-    radial-gradient(ellipse at 8% 82%,var(--dhk-glow),transparent 46%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23D9A05B' stroke-width='.8' stroke-opacity='.13'%3E%3Cpath d='M48 4 58 25 80 16 71 38 92 48 71 58 80 80 58 71 48 92 38 71 16 80 25 58 4 48 25 38 16 16 38 25Z'/%3E%3Ccircle cx='48' cy='48' r='15'/%3E%3C/g%3E%3C/svg%3E");
-}
-html[data-dhker-style="kufic"] body {
-  background-image:
-    radial-gradient(ellipse at 82% 8%,var(--dhk-bg-surface),transparent 54%),
-    radial-gradient(ellipse at 8% 82%,var(--dhk-glow),transparent 46%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%232CC4CB' stroke-width='.8' stroke-opacity='.13'%3E%3Cpath d='M24 0H72L96 24V72L72 96H24L0 72V24Z'/%3E%3Cpath d='M48 8 88 48 48 88 8 48Z'/%3E%3Ccircle cx='48' cy='48' r='13'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-/* Fine ornamental rule: pseudo-element does not add height to the header. */
-.site-header {
-  position:sticky;
-  isolation:isolate;
-  border-bottom:1px solid var(--dhk-border);
-}
-.site-header::after {
-  content:"";
-  position:absolute;
-  inset-inline:0;
-  bottom:-2px;
-  height:3px;
-  pointer-events:none;
-  opacity:.72;
-  background:repeating-linear-gradient(135deg,transparent 0 7px,var(--dhk-gold) 7px 8px,transparent 8px 14px);
-}
-.ayah-ribbon {
-  border-color:var(--dhk-border);
-  color:var(--dhk-gold-light);
+/* 4. شريط الإفريز الإسلامي المذهب بين الهيدر والأقسام */
+.dhk-frieze-divider,
+header::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 18px;
+  background-color: rgba(4, 11, 16, 0.65);
+  border-top: 1px solid var(--dhk-gold);
+  border-bottom: 1px solid var(--dhk-gold);
+  background-image: url("data:image/svg+xml,%3Csvg width='64' height='18' viewBox='0 0 64 18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 9 L8 2 L16 9 L24 2 L32 9 L40 2 L48 9 L56 2 L64 9 L56 16 L48 9 L40 16 L32 9 L24 16 L16 9 L8 16 Z' fill='none' stroke='%23D4AF37' stroke-width='1.3' stroke-opacity='0.8'/%3E%3Ccircle cx='16' cy='9' r='2' fill='%233FE0B5'/%3E%3Ccircle cx='48' cy='9' r='2' fill='%233FE0B5'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-/* Preserve the current hero geometry; add only a quiet architectural frame. */
-.verse-card {
-  isolation:isolate;
-  border-color:var(--dhk-gold);
-  box-shadow:0 18px 42px rgba(0,0,0,.22),inset 0 0 0 1px var(--dhk-glow);
-}
-.verse-card::after {
-  content:"";
-  position:absolute;
-  inset:9px;
-  border:1px solid var(--dhk-border);
-  border-radius:inherit;
-  pointer-events:none;
-  z-index:0;
-}
-.verse-text,.verse-subtext,.ornament { position:relative; z-index:1; }
-.ornament { color:var(--dhk-gold); }
-
-/* Subtle ornamental edge on existing cards; no forced heights or layout changes. */
-.service-card,.feature-card,.faq-item,.app-section,.audio-card,.prayer-card {
-  border-color:var(--dhk-border);
-}
-.service-card,.feature-card,.audio-card {
-  transition:border-color .15s ease,background-color .15s ease;
-}
-.service-card:hover,.feature-card:hover,.audio-card:hover {
-  border-color:var(--dhk-gold);
-  box-shadow:none;
-}
-.section-heading h2,.about-section h2,.section-title,
-.feature-card h3,.faq-item summary,.footer-brand h3 {
-  color:var(--dhk-gold-light);
-  font-family:var(--dhk-font-head);
-}
-.eyebrow,.section-symbol,.feature-icon,.ayah-star { color:var(--dhk-accent); }
-.btn-primary {
-  border-color:var(--dhk-gold);
-  box-shadow:0 5px 18px var(--dhk-glow);
-}
-.btn-outline { border-color:var(--dhk-border); }
-
-/* Quran reader isolation — intentionally do not theme .quran-page or .ayah-line.
-   Keep the manuscript paper, ink, ayah markers and tashkeel readable in every theme. */
-#quran .quran-page {
-  background:
-    radial-gradient(circle at 8px 8px,rgba(201,109,145,.28) 1.5px,transparent 2px) 0 0/24px 24px,
-    linear-gradient(90deg,rgba(40,116,94,.05) 1px,transparent 1px) 0 0/18px 18px,
-    #F6E7A4 !important;
-  color:#211F18 !important;
-  border-color:#28745E;
-}
-#quran .ayah-line { color:#211F18 !important; }
-#quran .ayah-marker { color:#9A5A22 !important; }
-#quran .mushaf-heading {
-  color:#245D49;
-  border-color:#4C957C;
-  background:#E4EEE0;
+/* ==========================================================================
+   1. قناديل ومشكاوات 3D حقيقية متعددة الأوجه (True 3D Volumetric Lanterns)
+   ========================================================================== */
+.dhk-3d-lantern-stage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 310px;
+  pointer-events: none;
+  z-index: 60;
+  perspective: 1000px;
 }
 
-/* Existing identity switcher controls only. */
-#dhker-identity-bar {
-  background:var(--dhk-bg-deep);
-  border-bottom:1px solid var(--dhk-border);
-  padding:.65rem 1rem;
-  font-family:'IBM Plex Sans Arabic',sans-serif;
-  position:relative;
-  z-index:99;
-}
-.dhk-bar-inner {
-  max-width:1180px;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:.7rem;
-}
-.dhk-style-group { display:flex;align-items:center;flex-wrap:wrap;gap:.4rem; }
-.dhk-label { color:var(--dhk-gold);font-weight:700;font-size:.85rem;margin-inline-end:.3rem; }
-.dhk-btn,.dhk-theme-btn {
-  background:var(--dhk-bg-card);
-  color:var(--dhk-text);
-  border:1px solid var(--dhk-border);
-  padding:.42rem .85rem;
-  border-radius:99px;
-  font:600 .82rem 'IBM Plex Sans Arabic',sans-serif;
-  cursor:pointer;
-  transition:background-color .2s ease,color .2s ease,border-color .2s ease;
-}
-.dhk-btn.active {
-  background:var(--dhk-gold);
-  color:var(--dhk-bg-deep);
-  border-color:var(--dhk-gold);
-  font-weight:700;
-}
-.dhk-theme-btn { background:var(--dhk-bg-surface);border-color:var(--dhk-gold); }
-.dhk-btn:focus-visible,.dhk-theme-btn:focus-visible {
-  outline:3px solid var(--dhk-accent);
-  outline-offset:2px;
-}
-@media(max-width:700px) {
-  .dhk-bar-inner,.dhk-style-group { justify-content:center; }
-  .dhk-label { width:100%;text-align:center; }
-  #dhker-identity-bar { padding:.7rem .5rem; }
+.dhk-3d-pendulum {
+  position: absolute;
+  top: -12px;
+  width: 74px;
+  height: 260px;
+  transform-style: preserve-3d;
+  transform-origin: 50% 0%;
 }
 
-/* Respect the visitor's motion preference. */
-@media(prefers-reduced-motion:reduce) {
-  html[data-dhker-style],html[data-dhker-style] *,html[data-dhker-style] *::before,
-  html[data-dhker-style] *::after {
-    transition:none !important;
-    scroll-behavior:auto !important;
-    animation:none !important;
+.dhk-3d-pendulum.pos-right {
+  right: 3.5%;
+  animation: pendulum3D 6.5s ease-in-out infinite alternate;
+}
+
+.dhk-3d-pendulum.pos-left {
+  left: 4%;
+  transform: scale(0.88);
+  animation: pendulum3D 7.8s ease-in-out infinite alternate-reverse;
+}
+
+.dhk-3d-pendulum.pos-far-right {
+  right: 14%;
+  top: -35px;
+  transform: scale(0.68);
+  opacity: 0.85;
+  animation: pendulum3D 5.4s ease-in-out infinite alternate;
+}
+
+/* جسم القنديل الدوار حول محوره Y في الفضاء ثلاثي الأبعاد */
+.dhk-lantern-rotor {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: spinLanternY 18s linear infinite;
+}
+
+/* الأوجه الأربعة المتقاطعة في الفضاء 3D لتشكيل المجسم الحجمي للمشكاة */
+.dhk-lantern-plane {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: visible;
+  filter: drop-shadow(0 0 12px var(--dhk-glow));
+}
+
+.dhk-lantern-plane.p1 { transform: rotateY(0deg); }
+.dhk-lantern-plane.p2 { transform: rotateY(45deg); }
+.dhk-lantern-plane.p3 { transform: rotateY(90deg); }
+.dhk-lantern-plane.p4 { transform: rotateY(135deg); }
+
+/* الحلقات المعدنية الأفقية ثلاثية الأبعاد (rotateX 90deg) */
+.dhk-lantern-ring {
+  position: absolute;
+  left: 50%;
+  transform-style: preserve-3d;
+  border-radius: 50%;
+  border: 2.5px solid var(--dhk-gold);
+  box-shadow: 0 0 12px var(--dhk-gold);
+}
+
+.dhk-lantern-ring.ring-top {
+  top: 98px;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  transform: rotateX(90deg);
+}
+
+.dhk-lantern-ring.ring-mid {
+  top: 145px;
+  width: 62px;
+  height: 62px;
+  margin-left: -31px;
+  transform: rotateX(90deg);
+  border-color: var(--dhk-accent);
+}
+
+.dhk-lantern-ring.ring-bot {
+  top: 186px;
+  width: 36px;
+  height: 36px;
+  margin-left: -18px;
+  transform: rotateX(90deg);
+}
+
+/* نواة الضوء النوراني النابض في قلب القنديل الثلاثي الأبعاد */
+.dhk-lantern-core-light {
+  position: absolute;
+  top: 125px;
+  left: 50%;
+  width: 28px;
+  height: 42px;
+  margin-left: -14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFFFFF 0%, var(--dhk-accent) 45%, transparent 80%);
+  box-shadow: 
+    0 0 30px 12px var(--dhk-glow),
+    0 0 70px 25px rgba(212, 175, 55, 0.28);
+  animation: pulseLight 3s ease-in-out infinite alternate;
+}
+
+@keyframes pendulum3D {
+  0%   { transform: rotateZ(-4.5deg) rotateX(3deg); }
+  50%  { transform: rotateZ(0deg) rotateX(-2deg); }
+  100% { transform: rotateZ(4.5deg) rotateX(3deg); }
+}
+
+@keyframes spinLanternY {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+@keyframes pulseLight {
+  0%   { opacity: 0.75; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1.18); }
+}
+
+@media (max-width: 900px) {
+  .dhk-3d-pendulum.pos-far-right { display: none; }
+  .dhk-3d-pendulum.pos-right, .dhk-3d-pendulum.pos-left { transform: scale(0.7); }
+}
+
+/* ==========================================================================
+   3. الشمسة الإسلامية الهندسية المعقدة (16-Pointed Star Mandala 3D)
+   ========================================================================== */
+.dhk-3d-shamsa-wrap {
+  position: absolute;
+  top: 40px;
+  left: 4%;
+  width: 540px;
+  height: 540px;
+  pointer-events: none;
+  z-index: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(18deg) rotateY(-14deg);
+  opacity: 0.22;
+}
+
+.dhk-shamsa-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dhk-shamsa-layer.outer-ring {
+  transform: translateZ(-40px);
+  animation: rotateCW 110s linear infinite;
+}
+
+.dhk-shamsa-layer.inner-ring {
+  transform: translateZ(-15px) scale(0.72);
+  animation: rotateCCW 75s linear infinite;
+}
+
+@keyframes rotateCW { from { transform: translateZ(-40px) rotate(0deg); } to { transform: translateZ(-40px) rotate(360deg); } }
+@keyframes rotateCCW { from { transform: translateZ(-15px) scale(0.72) rotate(360deg); } to { transform: translateZ(-15px) scale(0.72) rotate(0deg); } }
+
+/* ==========================================================================
+   2. إطار المحراب المعماري المنقوش ثلاثي الأبعاد (3D Muqarnas & Arabesque Arch)
+   ========================================================================== */
+.dhk-3d-mihrab-card {
+  position: relative !important;
+  background: radial-gradient(circle at 50% 28%, var(--dhk-bg-surface) 0%, var(--dhk-bg-deep) 95%) !important;
+  border: 2.5px solid var(--dhk-gold) !important;
+  padding: 5.5rem 2.6rem 3.8rem !important;
+  transform-style: preserve-3d !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease !important;
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.65),
+    inset 0 0 50px rgba(0, 0, 0, 0.7),
+    0 0 35px var(--dhk-glow) !important;
+  overflow: visible !important;
+  z-index: 5;
+}
+
+html[data-dhker-style="mihrab"] .dhk-3d-mihrab-card {
+  border-radius: 230px 230px 24px 24px !important;
+}
+html[data-dhker-style="andalus"] .dhk-3d-mihrab-card {
+  border-radius: 270px 270px 48px 48px !important;
+}
+html[data-dhker-style="kufic"] .dhk-3d-mihrab-card {
+  border-radius: 16px !important;
+}
+
+/* طبقة القوس والمقرنصات البارزة في الفضاء 3D (translateZ 28px) */
+.dhk-muqarnas-svg-frame {
+  position: absolute;
+  inset: -6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  pointer-events: none;
+  transform: translateZ(26px);
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.65));
+  z-index: 6;
+}
+
+/* زوايا تذهيب المصاحف الأربع (Corner Rosettes) ببروز 3D */
+.dhk-rosette-corner {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  pointer-events: none;
+  transform: translateZ(34px);
+  z-index: 8;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+.dhk-rosette-corner.c-tl { top: 8px; left: 8px; }
+.dhk-rosette-corner.c-tr { top: 8px; right: 8px; transform: translateZ(34px) scaleX(-1); }
+.dhk-rosette-corner.c-bl { bottom: 8px; left: 8px; transform: translateZ(34px) scaleY(-1); }
+.dhk-rosette-corner.c-br { bottom: 8px; right: 8px; transform: translateZ(34px) scale(-1, -1); }
+
+/* بروز نص الآية القرآنية للأمام عند تحريك الماوس */
+.dhk-3d-mihrab-card > *:not(.dhk-muqarnas-svg-frame):not(.dhk-rosette-corner) {
+  position: relative;
+  transform: translateZ(42px);
+  z-index: 10;
+}
+
+/* ==========================================================================
+   5. تقليب صفحات المصحف الورقي ثلاثي الأبعاد (3D Realistic Quran Page Flip)
+   ========================================================================== */
+.quran-book {
+  perspective: 2200px !important;
+  transform-style: preserve-3d !important;
+}
+
+.quran-page {
+  transform-style: preserve-3d !important;
+  backface-visibility: hidden !important;
+  transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.9s ease !important;
+}
+
+/* ورقة التقليب المتحركة 3D عند الانتقال للصفحة التالية أو السابقة */
+.dhk-turning-leaf {
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  width: calc(50% - 14px);
+  background-color: #FAF6EE;
+  background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.5), rgba(218, 200, 165, 0.4));
+  border: 2px solid #9A7432;
+  z-index: 40;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.dhk-turning-leaf.turn-next {
+  left: 14px;
+  transform-origin: right center;
+  border-radius: 20px 4px 4px 20px;
+  animation: flipPageNext3D 0.95s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+}
+
+.dhk-turning-leaf.turn-prev {
+  right: 14px;
+  transform-origin: left center;
+  border-radius: 4px 20px 20px 4px;
+  animation: flipPagePrev3D 0.95s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+}
+
+@keyframes flipPageNext3D {
+  0% {
+    transform: rotateY(0deg) skewY(0deg);
+    box-shadow: -5px 0 15px rgba(0,0,0,0.15);
+  }
+  50% {
+    transform: rotateY(90deg) skewY(-3deg);
+    box-shadow: -40px 0 60px rgba(0,0,0,0.55);
+    background-color: #E8DEC8;
+  }
+  100% {
+    transform: rotateY(180deg) skewY(0deg);
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
   }
 }
 
-
-/* ==========================================================================
-   Dhker — 3D Islamic architecture layer (scoped, layout-safe)
-   This layer decorates the site; it does not replace the Quran page renderer.
-   ========================================================================== */
-.dhk-3d-lantern-stage{position:absolute;inset:0 0 auto;height:190px;pointer-events:none;perspective:1000px;z-index:3;overflow:hidden}
-.dhk-3d-pendulum{position:absolute;top:-12px;width:54px;height:158px;transform-origin:50% 0;transform-style:preserve-3d}
-.dhk-3d-pendulum.pos-right{right:5%;animation:dhkPendulum3d 6s ease-in-out infinite alternate}
-.dhk-3d-pendulum.pos-left{left:5%;animation:dhkPendulum3d 7s ease-in-out infinite alternate-reverse}
-.dhk-3d-pendulum svg{width:100%;height:100%;filter:drop-shadow(0 0 8px var(--dhk-glow))}
-.dhk-3d-shamsa-wrap{position:absolute;inset:auto auto 5% 2%;width:min(34vw,300px);aspect-ratio:1;pointer-events:none;z-index:0;color:var(--dhk-gold);opacity:.12;transform:rotateX(18deg) rotateY(-12deg);transform-style:preserve-3d}
-.dhk-3d-shamsa-wrap svg{width:100%;height:100%;animation:dhkShamsaSpin 90s linear infinite}
-.dhk-3d-mihrab-card{position:relative;isolation:isolate}
-.dhk-muqarnas-svg-frame{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);pointer-events:none;z-index:1}
-.dhk-rosette-corner{position:absolute;width:30px;height:30px;color:var(--dhk-gold);pointer-events:none;z-index:2}
-.dhk-rosette-corner.c-tl{top:9px;left:9px}.dhk-rosette-corner.c-tr{top:9px;right:9px;transform:scaleX(-1)}
-.dhk-rosette-corner.c-bl{bottom:9px;left:9px;transform:scaleY(-1)}.dhk-rosette-corner.c-br{bottom:9px;right:9px;transform:scale(-1)}
-.dhk-3d-lantern{width:100%;height:100%}
-@keyframes dhkPendulum3d{from{transform:rotateZ(-3deg) rotateX(2deg)}to{transform:rotateZ(3deg) rotateX(-2deg)}}
-@keyframes dhkShamsaSpin{to{transform:rotate(360deg)}}
-@media(max-width:700px){.dhk-3d-lantern-stage{height:120px}.dhk-3d-pendulum{width:32px;height:100px}.dhk-3d-shamsa-wrap{width:55vw;left:-8%}}
-@media(prefers-reduced-motion:reduce){.dhk-3d-pendulum,.dhk-3d-shamsa-wrap svg{animation:none!important}}
-/* Real two-page book viewport used by the imported page images. */
-.mushaf-image-book{display:flex;align-items:stretch;justify-content:center;gap:0;perspective:1800px;direction:ltr;max-width:100%;margin:0 auto}
-.mushaf-image-page{display:block;width:50%;max-height:min(78vh,920px);object-fit:contain;background:#f7efdc;box-shadow:0 12px 38px #0007;border:1px solid #ac8a50}
-.mushaf-image-page:first-child{border-inline-start:5px solid #8a6a38}
-.mushaf-image-page:last-child{border-inline-end:5px solid #8a6a38}
-@media(max-width:767px){.mushaf-image-page{width:100%;max-height:74vh}.mushaf-image-page:nth-child(2){display:none}}
-
-
-/* ==========================================================================
-   Dhker 3D architectural layer — additive enhancement
-   Does not replace the existing identity palettes or touch page geometry.
-   ========================================================================== */
-:root {
-  --dhk-3d-depth: 900px;
-  --dhk-3d-gold: var(--dhk-gold, #C6A76A);
-}
-html[data-dhker-style] .hero {
-  perspective: var(--dhk-3d-depth);
-  transform-style: preserve-3d;
-}
-html[data-dhker-style] .dhk-lanterns-stage {
-  perspective: 700px;
-  transform-style: preserve-3d;
-}
-html[data-dhker-style] .dhk-lantern {
-  filter: drop-shadow(0 8px 12px color-mix(in srgb,var(--dhk-gold) 20%,transparent));
-  animation: dhkLanternFloat3d 7s ease-in-out infinite alternate;
-  will-change: transform;
-}
-html[data-dhker-style] .dhk-lantern.l-left { animation-delay: -2.4s; }
-html[data-dhker-style] .dhk-lantern.l-center { animation-delay: -4.8s; }
-html[data-dhker-style] .dhk-shamsa-bg {
-  animation: dhkShamsaOrbit3d 90s linear infinite;
-  transform-style: preserve-3d;
-}
-html[data-dhker-style] .verse-card {
-  transform-style: preserve-3d;
-  box-shadow: 0 22px 44px rgba(0,0,0,.2), inset 0 0 0 1px var(--dhk-glow);
-}
-html[data-dhker-style] .service-card,
-html[data-dhker-style] .audio-card {
-  transform: translateZ(0);
-  transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
-}
-html[data-dhker-style] .service-card:hover,
-html[data-dhker-style] .audio-card:hover {
-  transform: perspective(700px) translateY(-4px) rotateX(1.2deg);
-  box-shadow: 0 13px 26px rgba(0,0,0,.15);
-}
-@keyframes dhkLanternFloat3d {
-  0% { transform: translateY(0) rotateX(-2deg) rotateZ(-1.2deg); }
-  100% { transform: translateY(5px) rotateX(2deg) rotateZ(1.2deg); }
-}
-@keyframes dhkShamsaOrbit3d {
-  0% { transform: rotateZ(0) rotateX(0); }
-  50% { transform: rotateZ(180deg) rotateX(7deg); }
-  100% { transform: rotateZ(360deg) rotateX(0); }
-}
-/* Isolated scanned-page book presentation: preserve existing manuscript imagery. */
-.mushaf-book {
-  transform-style: preserve-3d;
-  transform: rotateX(.35deg);
-}
-.mushaf-leaf {
-  transform-style: preserve-3d;
-  box-shadow: inset 0 0 18px rgba(74,48,17,.10);
-}
-.mushaf-leaf.left { transform-origin: right center; }
-.mushaf-leaf.right { transform-origin: left center; }
-.mushaf-book.turn-next .mushaf-leaf.right {
-  transform: rotateY(-8deg);
-}
-.mushaf-book.turn-prev .mushaf-leaf.left {
-  transform: rotateY(8deg);
-}
-.mushaf-leaf img {
-  backface-visibility: hidden;
-}
-.mushaf-mobile-page {
-  transform: perspective(1000px) rotateX(.35deg);
-  box-shadow: 0 18px 38px rgba(0,0,0,.32), inset 0 0 0 1px rgba(255,255,255,.45);
-}
-@media (prefers-reduced-motion: reduce) {
-  html[data-dhker-style] .dhk-lantern,
-  html[data-dhker-style] .dhk-shamsa-bg {
-    animation: none !important;
+@keyframes flipPagePrev3D {
+  0% {
+    transform: rotateY(0deg) skewY(0deg);
+    box-shadow: 5px 0 15px rgba(0,0,0,0.15);
   }
-  html[data-dhker-style] .service-card,
-  html[data-dhker-style] .audio-card,
-  .mushaf-book,
-  .mushaf-leaf,
-  .mushaf-mobile-page {
-    transition: none !important;
-    transform: none !important;
+  50% {
+    transform: rotateY(-90deg) skewY(3deg);
+    box-shadow: 40px 0 60px rgba(0,0,0,0.55);
+    background-color: #E8DEC8;
+  }
+  100% {
+    transform: rotateY(-180deg) skewY(0deg);
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
   }
 }
