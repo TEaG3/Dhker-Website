@@ -1,0 +1,147 @@
+/* ==========================================================================
+   Dhker — Islamic identity system
+   Three visual styles × light/dark modes. Existing site structure is preserved.
+   ========================================================================== */
+
+html[data-dhker-style="mihrab"][data-dhker-theme="dark"] {
+  --dhk-bg-deep:#050E16; --dhk-bg-main:#081521; --dhk-bg-surface:#0D2E28;
+  --dhk-bg-card:rgba(16,59,53,.48); --dhk-gold:#C6A76A; --dhk-gold-light:#E5CE9A;
+  --dhk-accent:#42C6A5; --dhk-text:#F7FAF8; --dhk-muted:#B0C4BE;
+  --dhk-border:rgba(198,167,106,.34); --dhk-font-head:'Amiri',serif;
+  --dhk-card-radius:18px; --dhk-arch-radius:180px 180px 24px 24px; --dhk-clip:none;
+}
+html[data-dhker-style="mihrab"][data-dhker-theme="light"] {
+  --dhk-bg-deep:#EFE8D8; --dhk-bg-main:#FAF6EE; --dhk-bg-surface:#E6DEC8;
+  --dhk-bg-card:rgba(255,252,245,.94); --dhk-gold:#9A7432; --dhk-gold-light:#0D3B33;
+  --dhk-accent:#126E5B; --dhk-text:#0A2923; --dhk-muted:#435E58;
+  --dhk-border:rgba(154,116,50,.32); --dhk-font-head:'Amiri',serif;
+  --dhk-card-radius:18px; --dhk-arch-radius:180px 180px 24px 24px; --dhk-clip:none;
+}
+html[data-dhker-style="andalus"][data-dhker-theme="dark"] {
+  --dhk-bg-deep:#110B0A; --dhk-bg-main:#18100E; --dhk-bg-surface:#2B1714;
+  --dhk-bg-card:rgba(48,25,22,.58); --dhk-gold:#D9A05B; --dhk-gold-light:#F4CFA0;
+  --dhk-accent:#E06D53; --dhk-text:#FDF8F2; --dhk-muted:#D2B8AC;
+  --dhk-border:rgba(217,160,91,.36); --dhk-font-head:'Amiri',serif;
+  --dhk-card-radius:32px 32px 10px 10px; --dhk-arch-radius:230px 230px 32px 32px; --dhk-clip:none;
+}
+html[data-dhker-style="andalus"][data-dhker-theme="light"] {
+  --dhk-bg-deep:#EFE5D8; --dhk-bg-main:#FDFBF7; --dhk-bg-surface:#F4EAE0;
+  --dhk-bg-card:rgba(255,250,244,.95); --dhk-gold:#8C3A2B; --dhk-gold-light:#692316;
+  --dhk-accent:#B87D3B; --dhk-text:#2A1512; --dhk-muted:#694A44;
+  --dhk-border:rgba(140,58,43,.28); --dhk-font-head:'Amiri',serif;
+  --dhk-card-radius:32px 32px 10px 10px; --dhk-arch-radius:230px 230px 32px 32px; --dhk-clip:none;
+}
+html[data-dhker-style="kufic"][data-dhker-theme="dark"] {
+  --dhk-bg-deep:#040914; --dhk-bg-main:#071124; --dhk-bg-surface:#0C2540;
+  --dhk-bg-card:rgba(12,37,64,.56); --dhk-gold:#2CC4CB; --dhk-gold-light:#8CEEEF;
+  --dhk-accent:#E2B86B; --dhk-text:#F2F9FC; --dhk-muted:#9EC0D6;
+  --dhk-border:rgba(44,196,203,.36); --dhk-font-head:'Reem Kufi',sans-serif;
+  --dhk-card-radius:6px; --dhk-arch-radius:12px;
+  --dhk-clip:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+}
+html[data-dhker-style="kufic"][data-dhker-theme="light"] {
+  --dhk-bg-deep:#E2EEF2; --dhk-bg-main:#F4F9FB; --dhk-bg-surface:#E1EFF4;
+  --dhk-bg-card:rgba(255,255,255,.95); --dhk-gold:#0B556C; --dhk-gold-light:#073B4C;
+  --dhk-accent:#B8862D; --dhk-text:#07222C; --dhk-muted:#416775;
+  --dhk-border:rgba(11,85,108,.28); --dhk-font-head:'Reem Kufi',sans-serif;
+  --dhk-card-radius:6px; --dhk-arch-radius:12px;
+  --dhk-clip:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+}
+
+/* Map identity tokens to the legacy variables used by styles.css. */
+html[data-dhker-style] {
+  color-scheme: light;
+  --bg-deep:var(--dhk-bg-deep); --bg-navy:var(--dhk-bg-main);
+  --bg-emerald:var(--dhk-bg-surface); --bg-card:var(--dhk-bg-card);
+  --bg-card-hover:color-mix(in srgb,var(--dhk-bg-card) 78%,var(--dhk-accent));
+  --gold-primary:var(--dhk-gold); --gold-light:var(--dhk-gold-light);
+  --gold-border:var(--dhk-border); --gold-glow:color-mix(in srgb,var(--dhk-gold) 18%,transparent);
+  --turquoise:var(--dhk-accent); --mint:var(--dhk-accent);
+  --warm-white:var(--dhk-text); --text-muted:var(--dhk-muted);
+  --font-serif:var(--dhk-font-head); --gold-dark:var(--dhk-gold);
+  background:var(--dhk-bg-deep); color:var(--dhk-text);
+  transition:background-color .35s ease,color .35s ease;
+}
+html[data-dhker-theme="dark"] { color-scheme:dark; }
+html[data-dhker-theme="light"] { color-scheme:light; }
+
+body {
+  background-color:var(--dhk-bg-main) !important;
+  color:var(--dhk-text) !important;
+  background-image:
+    radial-gradient(circle at 85% 12%,var(--dhk-bg-surface) 0%,transparent 48%),
+    url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C6A76A' stroke-width='.65' stroke-opacity='.09'%3E%3Cpath d='M40 0L48.28 31.72L80 40L48.28 48.28L40 80L31.72 48.28L0 40L31.72 31.72Z'/%3E%3Cpath d='M40 0L68.28 11.72L80 40L68.28 68.28L40 80L11.72 68.28L0 40L11.72 11.72Z'/%3E%3Ccircle cx='40' cy='40' r='12'/%3E%3C/g%3E%3C/svg%3E") !important;
+  transition:background-color .35s ease,color .35s ease !important;
+}
+.site-header,.site-footer,.ayah-ribbon {
+  background-color:var(--dhk-bg-deep) !important;
+  border-color:var(--dhk-border) !important;
+}
+h1,h2,h3,.section-heading h2,.about-section h2 {
+  font-family:var(--dhk-font-head) !important;
+  color:var(--dhk-gold-light);
+}
+p,li,small,figcaption,.hero-desc,.section-heading p,.about-section p {
+  color:var(--dhk-muted);
+}
+.app-section,.service-card,.verse-card,.feature-card,.faq-item,
+.audio-card,.reader-toolbar,.quran-page,.prayer-grid > *,
+.adhkar-list > * {
+  background-color:var(--dhk-bg-card) !important;
+  border-color:var(--dhk-border) !important;
+  border-radius:var(--dhk-card-radius) !important;
+  color:var(--dhk-text);
+  transition:background-color .3s ease,border-color .3s ease,transform .3s ease;
+}
+.verse-card {
+  background:linear-gradient(180deg,var(--dhk-bg-surface),var(--dhk-bg-deep)) !important;
+  border:2px solid var(--dhk-gold) !important;
+  border-radius:var(--dhk-arch-radius) !important;
+  box-shadow:0 20px 50px rgba(0,0,0,.22) !important;
+}
+.service-card:hover,.feature-card:hover,.audio-card:hover {
+  border-color:var(--dhk-gold) !important; transform:translateY(-3px);
+}
+.btn-primary,.dhk-btn.active {
+  background:var(--dhk-gold) !important; color:var(--dhk-bg-deep) !important;
+  border-color:var(--dhk-gold) !important;
+}
+.btn-outline,.reader-toolbar input,.reader-toolbar select {
+  color:var(--dhk-text); border-color:var(--dhk-border);
+}
+.quran-page {
+  background:var(--dhk-bg-card) !important;
+  color:var(--dhk-text) !important;
+}
+#dhker-identity-bar {
+  background:var(--dhk-bg-deep); border-bottom:1px solid var(--dhk-border);
+  padding:.65rem 1rem; font-family:'IBM Plex Sans Arabic',sans-serif;
+  position:relative; z-index:99;
+}
+.dhk-bar-inner {
+  max-width:1180px; margin:0 auto; display:flex; align-items:center;
+  justify-content:space-between; flex-wrap:wrap; gap:.7rem;
+}
+.dhk-style-group {display:flex;align-items:center;flex-wrap:wrap;gap:.4rem}
+.dhk-label {color:var(--dhk-gold);font-weight:700;font-size:.85rem;margin-inline-end:.3rem}
+.dhk-btn,.dhk-theme-btn {
+  background:var(--dhk-bg-card); color:var(--dhk-text);
+  border:1px solid var(--dhk-border); padding:.42rem .85rem;
+  border-radius:99px; font:600 .82rem 'IBM Plex Sans Arabic',sans-serif;
+  cursor:pointer; transition:.2s ease;
+}
+.dhk-btn.active {font-weight:700}
+.dhk-theme-btn {background:var(--dhk-bg-surface);border-color:var(--dhk-gold)}
+.dhk-btn:focus-visible,.dhk-theme-btn:focus-visible {
+  outline:3px solid var(--dhk-accent);outline-offset:2px;
+}
+@media(max-width:700px) {
+  .dhk-bar-inner {justify-content:center}
+  .dhk-style-group {justify-content:center}
+  .dhk-label {width:100%;text-align:center}
+  #dhker-identity-bar {padding:.7rem .5rem}
+}
+@media(prefers-reduced-motion:reduce) {
+  html[data-dhker-style],html[data-dhker-style] *,html[data-dhker-style] *::before,
+  html[data-dhker-style] *::after {transition:none !important;scroll-behavior:auto !important}
+}
