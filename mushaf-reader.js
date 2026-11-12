@@ -131,21 +131,27 @@ document.addEventListener("keydown",event=>{
  if(event.key==="ArrowLeft"){event.preventDefault();nextPage();}
  else if(event.key==="ArrowRight"){event.preventDefault();previousPage();}
 });
-let touchStartX=null,touchStartY=null;
+// Mobile RTL gesture mapping: swipe right-to-left (negative X) = next page.
+let pointerStart=null;
 const fallback=$("mushafFallback");
-fallback.addEventListener("touchstart",event=>{
- if(event.touches.length!==1)return;
- touchStartX=event.touches[0].clientX;touchStartY=event.touches[0].clientY;
-},{passive:true});
-fallback.addEventListener("touchend",event=>{
- if(touchStartX===null||!event.changedTouches.length)return;
- const dx=event.changedTouches[0].clientX-touchStartX;
- const dy=event.changedTouches[0].clientY-touchStartY;
- touchStartX=null;touchStartY=null;
- if(Math.abs(dx)>48&&Math.abs(dx)>Math.abs(dy)*1.2){
-  if(dx<0)nextPage();else previousPage();
- }
-},{passive:true});
+fallback.style.touchAction="pan-y pinch-zoom";
+fallback.addEventListener("pointerdown",event=>{
+ if(event.pointerType==="mouse"&&event.button!==0)return;
+ if(event.isPrimary===false)return;
+ pointerStart={id:event.pointerId,x:event.clientX,y:event.clientY};
+});
+fallback.addEventListener("pointerup",event=>{
+ if(!pointerStart||event.pointerId!==pointerStart.id)return;
+ const dx=event.clientX-pointerStart.x;
+ const dy=event.clientY-pointerStart.y;
+ pointerStart=null;
+ // Ignore taps and vertical scrolling; respond only to a deliberate horizontal swipe.
+ if(Math.abs(dx)<36||Math.abs(dx)<Math.abs(dy)*1.25)return;
+ event.preventDefault();
+ if(dx<0)nextPage();       // finger travels left: advance in the Arabic reading flow
+ else previousPage();      // finger travels right: return to the previous page
+});
+fallback.addEventListener("pointercancel",()=>{pointerStart=null;});
 window.addEventListener("online",()=>{if(fallbackMode)fallbackRender(currentPage);else preloadAround(currentPage,10);});
 startFlipbook();
 if("serviceWorker"in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
