@@ -149,7 +149,7 @@ test("hadith data and grading sources are attributed separately", () => {
   assert.match(html, /الموسوعة الحديثية للدرر السنية/);
 });
 test("service worker refreshes the hadith library interface", () => {
-  assert.match(sw, /dhker-web-v12/);
+  assert.match(sw, /dhker-web-v13/);
 });
 
 test("supplied hadith code is integrated without duplicate screens, globals, or inline handlers", () => {
