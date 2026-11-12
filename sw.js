@@ -1,4 +1,4 @@
-const CACHE_NAME = "dhker-web-v22";
+const CACHE_NAME = "dhker-web-v23";
 const MUSHAF_CACHE = "dhker-mushaf-pages-v1";
 const CORE = [
   "./", "./index.html", "./quran-reader.html",
@@ -51,13 +51,33 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (url.origin !== self.location.origin) return;
-  event.respondWith(
-    caches.match(request).then((cached) => cached || fetch(request).then((response) => {
-      if (response.ok) {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(request, copy)).catch(() => {});
+
+  // Navigation is network-first so deployed HTML is not trapped behind a stale app shell.
+  if (request.mode === "navigate") {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      try {
+        const response = await fetch(request);
+        if (response.ok) await cache.put(request, response.clone());
+        return response;
+      } catch {
+        return (await cache.match(request)) || (await cache.match("./index.html")) || Response.error();
       }
+    })());
+    return;
+  }
+
+  // Versioned local assets are cache-first; the cache is replaced on each release.
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    try {
+      const response = await fetch(request);
+      if (response.ok) await cache.put(request, response.clone());
       return response;
-    }).catch(() => caches.match("./index.html")))
-  );
+    } catch {
+      return (await cache.match("./index.html")) || Response.error();
+    }
+  })());
 });
