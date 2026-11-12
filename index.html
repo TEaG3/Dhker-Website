@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google" content="notranslate">
   <meta name="theme-color" content="#081521">
-  <meta name="description" content="ذِكر — القرآن الكريم والأذكار ومواقيت الصلاة والصوتيات، مع تطبيق Android يعمل دون اتصال في وظائفه الأساسية.">
+  <meta name="description" content="ذِكر — مواقيت الصلاة والأذكار ومكتبة الحديث والأذان في أقسام عربية مستقلة.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ar_AR">
   <meta property="og:title" content="ذِكر — سكينة ترافق يومك">
-  <meta property="og:description" content="اقرأ القرآن، وتابع الأذكار ومواقيت الصلاة، واستمع إلى الأذان.">
+  <meta property="og:description" content="تابع مواقيت الصلاة، وتصفح الأذكار والحديث، واستمع إلى مكتبة الأذان.">
   <meta property="og:url" content="https://teag3.github.io/Dhker-Website/">
   <title>ذِكر — سكينة ترافق يومك</title>
   
@@ -65,27 +65,28 @@
       <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false">☰</button>
       <nav aria-label="التنقل الرئيسي">
         <ul class="nav-list" id="navList">
-          <li><a href="#home">الرئيسية</a></li>
-          <li><a href="#quran">القرآن</a></li>
-          <li><a href="#prayer">المواقيت</a></li>
+          <li><a href="#home" aria-current="page">الرئيسية</a></li>
+          <li><a href="#prayer">مواقيت الصلاة</a></li>
           <li><a href="#adhkar">الأذكار</a></li>
-          <li><a href="#hadith">الحديث</a></li>
-          <li><a href="#audio">الصوتيات</a></li>
+          <li><a href="#hadith">مكتبة الحديث</a></li>
+          <li><a href="#audio">مكتبة الأذان</a></li>
+          <li><a class="nav-quran-link" href="./quran-reader.html">المصحف الورقي</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main id="home">
+  <main id="mainContent">
+    <section id="home" class="tab-panel active">
     <section class="hero container">
       <div class="hero-grid">
         <div class="hero-content">
           <span class="status-badge">منصة ذِكر الرقمية</span>
           <h1>سكينة ترافق <span>يومك</span></h1>
-          <p class="hero-desc">القرآن الكريم، والأذكار، ومواقيت الصلاة، والصوتيات في تجربة عربية هادئة. ويمكن تثبيت الموقع كتطبيق ويب على جهازك.</p>
+          <p class="hero-desc">مواقيت الصلاة، والأذكار، ومكتبة الحديث والأذان في أقسام مستقلة يسهل الوصول إليها.</p>
           <div class="cta-group">
             <a class="btn btn-primary" href="https://github.com/TEaG3/Dhker/releases">تابع إصدار Android</a>
-            <a class="btn btn-outline" href="#quran">ابدأ القراءة</a>
+            <a class="btn btn-outline" href="./quran-reader.html">افتح المصحف الورقي</a>
           </div>
           <p class="small-note">تعمل البيانات المحفوظة مسبقاً دون اتصال. يلزم الإنترنت لجلب محتوى جديد أو تحديث المواقيت.</p>
         </div>
@@ -101,54 +102,15 @@
     <!-- شريط الإفريز المذهب يُحقن تلقائياً بواسطة CSS -->
 
     <section class="container service-grid" aria-label="خدمات ذِكر">
-      <a class="service-card dhk-illuminated-card" href="#quran"><span>۞</span><b>القرآن الكريم</b><small>قراءة بالسور وصفحات المصحف</small></a>
       <a class="service-card dhk-illuminated-card" href="#prayer"><span>◷</span><b>مواقيت الصلاة</b><small>اختر مدينتك وتابع مواقيت اليوم</small></a>
       <a class="service-card dhk-illuminated-card" href="#adhkar"><span>✧</span><b>الأذكار</b><small>الصباح والمساء والنوم</small></a>
       <a class="service-card dhk-illuminated-card" href="#hadith"><span>۞</span><b>كتب الحديث</b><small>تصفح كتب السنة</small></a>
-      <a class="service-card dhk-illuminated-card" href="#audio"><span>♫</span><b>الصوتيات</b><small>معاينة أصوات الأذان</small></a>
+      <a class="service-card dhk-illuminated-card" href="#audio"><span>♫</span><b>مكتبة الأذان</b><small>اختر الأذان واستمع أو أوقفه</small></a>
     </section>
 
-    <section id="quran" class="container app-section">
-      <div class="section-heading"><div><span class="eyebrow">تلاوة وتدبر</span><h2>القرآن الكريم</h2><p>عرض نص القرآن بالرسم العثماني مع حفظ الصفحات التي تفتحها على هذا الجهاز، وإمكانية الاستماع إلى تلاوات السور.</p></div><span class="section-symbol">۞</span></div>
-      
-      <!-- زر الانتقال للمصحف الورقي المستقل -->
-      <p class="source-note"><a class="btn btn-outline btn-small" href="./quran-reader.html">افتح المصحف الورقي بصفحتين</a></p>
-      
-      <div class="reader-toolbar">
-        <label for="quranPage">رقم الصفحة</label>
-        <input id="quranPage" type="number" min="1" max="604" value="1" inputmode="numeric">
-        <button class="btn btn-outline btn-small" id="loadPage">فتح الصفحة</button>
-        <button class="btn btn-outline btn-small nav-prev" id="prevPage" aria-keyshortcuts="ArrowRight" title="السابق — مفتاح السهم الأيمن">→ السابق</button>
-        <button class="btn btn-outline btn-small nav-next" id="nextPage" aria-keyshortcuts="ArrowLeft" title="التالي — مفتاح السهم الأيسر">التالي ←</button>
-      </div>
-      <div class="reader-toolbar recitation-toolbar" aria-label="مشغل تلاوة القرآن">
-        <label for="quranAudioSource">مكتبة الصوتيات</label>
-        <select id="quranAudioSource">
-          <option value="alfurqan">Al Furqan — تلاوات الآيات</option>
-          <option value="alqurancloud">AlQuran Cloud — بث الآيات</option>
-          <option value="mp3quran">MP3Quran.net — السور والروايات</option>
-        </select>
-        <label for="quranSurah">السورة</label>
-        <input id="quranSurah" type="number" min="1" max="114" value="1" inputmode="numeric">
-        <label for="quranReciter">القارئ / الرواية</label>
-        <select id="quranReciter"><option>جارٍ تحميل القراء…</option></select>
-        <button class="btn btn-primary btn-small" id="playQuranRecitation">استمع للسورة</button>
-      </div>
-      <audio id="quranPlayer" controls preload="none" aria-label="مشغل تلاوة القرآن"></audio>
-      <p class="source-note" id="quranAudioStatus" role="status">جارٍ تحميل فهارس مكتبات الصوتيات…</p>
-      <p class="source-note" id="quranAudioComparison">مقارنة المصادر: Al Furqan يوفّر 44 قارئاً وبثاً آية بآية؛ AlQuran Cloud يوفّر فهارس إصدارات صوتية وبثاً عبر CDN؛ MP3Quran.net يوفّر القراء والمصاحف الصوتية بحسب الرواية وقائمة السور المتاحة. اختر المصدر من القائمة لمقارنة القراء والتشغيل.</p>
-      <p class="source-note">مصادر الصوت: <a href="https://alfurqan.online/docs" target="_blank" rel="noopener">Al Furqan API</a> · <a href="https://alquran.cloud/cdn" target="_blank" rel="noopener">AlQuran Cloud CDN</a> · <a href="https://www.mp3quran.net/ar/api" target="_blank" rel="noopener">MP3Quran API v3</a>. تُبث الملفات عند الطلب ولا تُضمّن في ملفات الموقع.</p>
-      <div class="reader-status" id="quranStatus" role="status">اختر صفحة لبدء القراءة. تُحفظ الصفحات التي تفتحها محلياً لهذا المتصفح.</div>
-      
-      <!-- حاوية القرآن (سيتم تحويلها لورق مصحف 3D عبر islamic-identity.css) -->
-      <article class="quran-page dhk-parchment-quran-surface" id="quranContent" lang="ar" translate="no" aria-live="polite">
-        <p class="reader-placeholder">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-      </article>
-      
-      <p class="source-note">مصدر النص: AlQuran Cloud API — النص العثماني. <a href="https://alquran.cloud/terms-and-conditions" target="_blank" rel="noopener">شروط الاستخدام والإسناد</a>. لا يتم تغيير نص الآيات.</p>
     </section>
 
-    <section id="prayer" class="container app-section">
+    <section id="prayer" class="container app-section tab-panel" hidden>
       <div class="section-heading"><div><span class="eyebrow">على مدار اليوم</span><h2>مواقيت الصلاة</h2><p>تُجلب مواقيت اليوم حسب المدينة وطريقة الحساب، ويُحتفظ بآخر نتيجة على هذا الجهاز.</p></div><span class="section-symbol">◷</span></div>
       <div class="reader-toolbar">
         <label for="citySelect">المدينة</label><select id="citySelect"></select>
@@ -159,32 +121,60 @@
       <p class="source-note">مصدر الحساب: AlAdhan API. قد تختلف النتائج بحسب طريقة الحساب وإعدادات الجهة الدينية المحلية.</p>
     </section>
 
-    <section id="adhkar" class="container app-section">
+    <section id="adhkar" class="container app-section tab-panel" hidden>
       <div class="section-heading"><div><span class="eyebrow">وردك اليومي</span><h2>الأذكار</h2><p>اختر القسم، واقرأ الذكر، واستخدم العداد لحفظ تقدمك على هذا الجهاز.</p></div><span class="section-symbol">✧</span></div>
       <div class="category-tabs" id="adhkarCategories" role="group" aria-label="أقسام الأذكار"></div>
       <div class="adhkar-list" id="adhkarList"></div>
       <p class="source-note">تُعرض المراجع المتاحة مع الأذكار. يُرجى مراجعة المصادر العلمية عند اعتماد المحتوى للنشر الموسع.</p>
     </section>
 
-    <section id="hadith" class="container app-section">
+    <section id="hadith" class="container app-section tab-panel" hidden>
       <div class="section-heading"><div><span class="eyebrow">السنة النبوية</span><h2>مكتبة الحديث</h2><p>اختر كتاب الحديث ثم الباب لقراءة الأحاديث العربية.</p></div><span class="section-symbol">۞</span></div>
-      <div class="reader-toolbar"><label for="hadithBook">الكتاب</label><select id="hadithBook"></select><label for="hadithChapter">الباب</label><select id="hadithChapter" disabled></select></div>
-      <div class="reader-status" id="hadithStatus" role="status">جارٍ تحميل فهرس كتب الحديث…</div><div class="adhkar-list" id="hadithList"></div>
+      <div id="hadithBooks" class="library-grid" aria-label="كتب الحديث">
+        <p class="source-note">جارٍ تحميل كتب الحديث…</p>
+      </div>
+      <div id="hadithChaptersWrap" hidden>
+        <div class="library-subheading">
+          <h3 id="hadithSelectedBook">أبواب الكتاب</h3>
+          <button class="btn btn-outline btn-small" id="backHadithBooks" type="button">العودة إلى الكتب</button>
+        </div>
+        <div class="category-tabs" id="hadithChapters" role="tablist" aria-label="أبواب الحديث"></div>
+      </div>
+      <div class="reader-status" id="hadithStatus" role="status">اختر كتاباً لعرض أبوابه وأحاديثه.</div>
+      <div class="adhkar-list" id="hadithList"></div>
       <p class="source-note">المصدر: Hadith-JSON عبر Al Furqan API. تُعرض بيانات الكتاب والباب مع النص العربي المتاح.</p>
     </section>
-    <section id="audio" class="container app-section">
-      <div class="section-heading"><div><span class="eyebrow">استمع</span><h2>مكتبة الأذان</h2><p>تلاوات القرآن والأذان في مشغلين منفصلين. اختر القارئ والسورة من قسم القرآن، أو استمع إلى أحد نماذج الأذان هنا.</p></div><span class="section-symbol">♫</span></div>
-      <div class="audio-list">
-        <div class="audio-card dhk-illuminated-card"><div><b>الأذان الأساسي</b><small>Beautiful adhan — CC0 1.0</small></div><button class="btn btn-outline btn-small audio-play" data-audio="default">استمع</button></div>
-        <div class="audio-card dhk-illuminated-card"><div><b>أذان الفجر</b><small>Adhan — CC0 1.0</small></div><button class="btn btn-outline btn-small audio-play" data-audio="fajr">استمع</button></div>
+    <section id="audio" class="container app-section tab-panel" hidden>
+      <div class="section-heading"><div><span class="eyebrow">استمع</span><h2>مكتبة الأذان</h2><p>اختر نوع الأذان من التبويبات، ثم شغّل التسجيل أو أوقفه في أي وقت.</p></div><span class="section-symbol">♫</span></div>
+      <div class="category-tabs" id="adhanCategories" role="tablist" aria-label="أقسام مكتبة الأذان">
+        <button class="category-tab active" type="button" role="tab" aria-selected="true" data-adhan-tab="default">الأذان الأساسي</button>
+        <button class="category-tab" type="button" role="tab" aria-selected="false" data-adhan-tab="fajr">أذان الفجر</button>
+        <button class="category-tab" type="button" role="tab" aria-selected="false" data-adhan-tab="library">مكتبة التسجيلات</button>
       </div>
-      <audio id="adhanPlayer" controls preload="none"></audio>
-      <p class="source-note" id="adhanAudioStatus" role="status">المصادر: <a href="https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg" target="_blank" rel="noopener">Beautiful_adhan.ogg</a> و<a href="https://commons.wikimedia.org/wiki/File:Adhan.ogg" target="_blank" rel="noopener">Adhan.ogg</a>. تشغيل الصوت عبر الموقع يحتاج اتصالاً بالإنترنت.</p>
+      <div class="adhan-tab-panel" id="adhanPanel-default">
+        <div class="audio-card dhk-illuminated-card">
+          <div><b>الأذان الأساسي</b><small>Beautiful adhan — CC0 1.0</small></div>
+          <button class="btn btn-outline btn-small adhan-play" type="button" data-audio="default" aria-pressed="false">استمع</button>
+        </div>
+      </div>
+      <div class="adhan-tab-panel" id="adhanPanel-fajr" hidden>
+        <div class="audio-card dhk-illuminated-card">
+          <div><b>أذان الفجر</b><small>Adhan — CC0 1.0</small></div>
+          <button class="btn btn-outline btn-small adhan-play" type="button" data-audio="fajr" aria-pressed="false">استمع</button>
+        </div>
+      </div>
+      <div class="adhan-tab-panel" id="adhanPanel-library" hidden>
+        <div class="audio-list" id="adhanLibraryList">
+          <p class="source-note">جارٍ تحميل مكتبة الأذان…</p>
+        </div>
+      </div>
+      <div class="adhan-player-controls">
+        <audio id="adhanPlayer" preload="none"></audio>
+        <button class="btn btn-primary btn-small" id="stopAdhan" type="button" disabled>إيقاف صوت الأذان</button>
+      </div>
+      <p class="source-note" id="adhanAudioStatus" role="status">المصادر: <a href="https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg" target="_blank" rel="noopener">Beautiful_adhan.ogg</a> و<a href="https://commons.wikimedia.org/wiki/File:Adhan.ogg" target="_blank" rel="noopener">Adhan.ogg</a>، إضافة إلى مكتبة Al Furqan. يلزم الاتصال بالإنترنت لتشغيل التسجيلات.</p>
     </section>
 
-    <section id="about" class="container app-section about-section">
-      <div><span class="eyebrow">مشروعان متكاملان</span><h2>ذِكر معك على كل جهاز</h2><p>الموقع يقدم الخدمات الأساسية من المتصفح، وتطبيق Android يحتفظ بموارده المحلية لتعمل وظائفه الأساسية دون اتصال. موضع القراءة والإعدادات على الموقع تُحفظ في متصفح الجهاز، ولا تتم مزامنتها تلقائياً مع التطبيق.</p></div>
-      <a class="btn btn-primary" href="https://github.com/TEaG3/Dhker/releases">كل إصدارات التطبيق</a>
     </section>
   </main>
 
