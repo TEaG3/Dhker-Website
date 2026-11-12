@@ -57,12 +57,23 @@ try {
       const img = document.querySelector('#mushafBook img[data-page="1"]');
       return img && img.complete && img.naturalWidth > 0;
     }, { timeout: 30000 });
+    const nextExpected = viewport.width < 600 ? "2" : "3";
     await page.locator("#next").click();
-    await page.waitForFunction(() => document.querySelector("#pageNumber")?.value === "2", null, { timeout: 10000 });
-    assert.equal(await page.locator("#pageNumber").inputValue(), "2");
+    await page.waitForFunction(expected => document.querySelector("#pageNumber")?.value === expected, nextExpected, { timeout: 10000 });
+    assert.equal(await page.locator("#pageNumber").inputValue(), nextExpected);
     await page.locator("#previous").click();
     await page.waitForFunction(() => document.querySelector("#pageNumber")?.value === "1", null, { timeout: 10000 });
     assert.equal(await page.locator("#pageNumber").inputValue(), "1");
+    if (viewport.width < 600) {
+      const book = await page.locator("#mushafBook").boundingBox();
+      const y = book.y + book.height / 2;
+      await page.mouse.move(book.x + book.width * 0.86, y);
+      await page.mouse.down();
+      await page.mouse.move(book.x + book.width * 0.14, y, { steps: 10 });
+      await page.mouse.up();
+      await page.waitForFunction(() => document.querySelector("#pageNumber")?.value === "2", null, { timeout: 10000 });
+      assert.equal(await page.locator("#pageNumber").inputValue(), "2");
+    }
     await context.close();
   }
 
