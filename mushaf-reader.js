@@ -63,25 +63,22 @@ function buildPages(){
  $("mushafBook").append(fragment);
 }
 async function startFlipbook(){
- // Phones use a lightweight one-page reader: avoid building 604 DOM pages and
- // loading a third-party flip engine on constrained/mobile browsers.
- if(window.matchMedia("(max-width: 767px)").matches){
-  fallbackRender(currentPage);
-  setStatus("قارئ الهاتف جاهز — اسحب الصفحة يميناً أو يساراً للتنقل.");
-  return;
- }
+ const isMobile=window.matchMedia("(max-width: 767px)").matches;
+ const preloadRadius=isMobile?2:8;
+ // One PageFlip engine is used on every device; only performance settings vary.
  buildPages();
- preloadAround(currentPage,8);
+ preloadAround(currentPage,preloadRadius);
  try{
   const module=await import("https://esm.sh/@gullabs/flipbook-core@3.2.2");
   if(typeof module.PageFlip!=="function")throw new Error("PageFlip export missing");
   const PageFlip=module.PageFlip;
   pageFlip=new PageFlip($("mushafBook"),{
-   width:560,height:790,sizing:"responsive",
-   minWidth:300,maxWidth:1220,minHeight:420,maxHeight:900,
+   width:isMobile?420:560,height:isMobile?594:790,sizing:"responsive",
+   minWidth:isMobile?260:300,maxWidth:isMobile?560:1220,
+   minHeight:isMobile?360:420,maxHeight:isMobile?820:900,
    usePortrait:true,initialPage:currentPage-1,
-   readingDirection:"rtl",flippingTime:850,
-   pageBackground:"#fffaf0",drawShadow:true,maxShadowOpacity:.68,
+   readingDirection:"rtl",flippingTime:isMobile?620:850,
+   pageBackground:"#fffaf0",drawShadow:true,maxShadowOpacity:isMobile?.28:.68,
    allowTouchScroll:false,respectInteractiveContent:true,
    respectReducedMotion:true,foldCornerOnHover:true,
    flipOnClick:"corners"
@@ -89,7 +86,7 @@ async function startFlipbook(){
   pageFlip.on("loaded",updateControls);
   pageFlip.on("flip",updateControls);
   pageFlip.on("changeOrientation",updateControls);
-  pageFlip.on("changeState",()=>preloadAround(currentPage,10));
+  pageFlip.on("changeState",()=>preloadAround(currentPage,isMobile?3:10));
   pageFlip.on("turnRejected",event=>{
    updateControls();
    const reason=event.data?.reason;
