@@ -10,6 +10,7 @@ const script = await readFile(new URL("../script.js", import.meta.url), "utf8");
 const reader = await readFile(new URL("../quran-reader.html", import.meta.url), "utf8");
 const mushaf = await readFile(new URL("../mushaf-reader.js", import.meta.url), "utf8");
 const sw = await readFile(new URL("../sw.js", import.meta.url), "utf8");
+const manifest = await readFile(new URL("../manifest.webmanifest", import.meta.url), "utf8");
 const notices = await readFile(new URL("../THIRD-PARTY-NOTICES.md", import.meta.url), "utf8");
 const flipLicense = await readFile(new URL("../licenses/flipbook-core-MPL-2.0.txt", import.meta.url), "utf8");
 const upstreamLicense = await readFile(new URL("../licenses/stpageflip-MIT.txt", import.meta.url), "utf8");
