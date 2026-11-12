@@ -460,7 +460,6 @@ async function setupQuranAudio() {
 }
 async function setupHadithLibrary() {
   const API = "https://alfurqan.online/api/v1/hadith";
-  const DORAR_API = "https://dorar.net/dorar_api.json";
   const $h = (id) => document.getElementById(id);
 
   const booksView = $h("hadithBooksView");
@@ -497,7 +496,6 @@ async function setupHadithLibrary() {
   let chapterHadiths = [];
   let visibleHadiths = [];
   let renderedCount = 0;
-  let dorarRequestId = 0;
 
   const normalizeArabic = (value) => String(value || "")
     .normalize("NFD")
@@ -603,98 +601,6 @@ async function setupHadithLibrary() {
     }
   }
 
-  function renderDorarResults(container, results, message) {
-    container.replaceChildren();
-    if (!results.length) {
-      const empty = document.createElement("p");
-      empty.className = "dorar-empty";
-      empty.textContent = message || "لم تظهر نتائج مطابقة. جرّب البحث بعبارة أقصر من متن الحديث.";
-      container.append(empty);
-      return;
-    }
-
-    const note = document.createElement("p");
-    note.className = "dorar-caution";
-    note.textContent = "نتائج بحث من الدرر السنية. طابق نص الحديث والراوي والمرجع قبل اعتماد التخريج أو الدرجة.";
-    container.append(note);
-
-    for (const item of results.slice(0, 8)) {
-      const card = document.createElement("article");
-      card.className = "dorar-result-card";
-      const text = document.createElement("p");
-      text.className = "dorar-result-text";
-      text.textContent = item.th || item.hadith || item.text || item.hadithText || "نص الحديث غير متاح في نتيجة البحث.";
-      const metadata = [];
-      const narrator = item.rawi || item.narrator || item.sahabi;
-      const scholar = item.mohdith || item.muhaddith || item.scholar;
-      const book = item.book || item.source || item.collection;
-      const number = item.numberOrPage || item.number || item.page || item.reference;
-      const grade = item.grade || item.hukm || item.hukmText || item.grading;
-      if (narrator) metadata.push("الراوي: " + narrator);
-      if (scholar) metadata.push("المحدّث: " + scholar);
-      if (book) metadata.push("المصدر: " + book);
-      if (number) metadata.push("الرقم/الصفحة: " + number);
-      if (grade) metadata.push("الدرجة: " + grade);
-      const meta = makeMetaLine(metadata);
-      card.append(text);
-      if (metadata.length) card.append(meta);
-      container.append(card);
-    }
-  }
-
-  function searchDorar(hadith, container, button) {
-    const originalText = String(hadith.arabic || hadith.text_ar || hadith.text || "").replace(/\s+/g, " ").trim();
-    const query = originalText.slice(0, 160);
-    if (!query) {
-      container.textContent = "لا يوجد نص عربي متاح للبحث عنه.";
-      return;
-    }
-
-    const requestId = ++dorarRequestId;
-    button.disabled = true;
-    button.textContent = "جارٍ البحث…";
-    container.replaceChildren();
-    const loading = document.createElement("p");
-    loading.className = "dorar-empty";
-    loading.textContent = "يجري البحث عن النص في الموسوعة الحديثية…";
-    container.append(loading);
-
-    const callbackName = "dhkerDorarCallback" + requestId + "_" + Date.now();
-    const scriptTag = document.createElement("script");
-    let finished = false;
-    let timeoutId;
-
-    const cleanup = () => {
-      scriptTag.remove();
-      if (timeoutId) clearTimeout(timeoutId);
-      try { delete window[callbackName]; } catch { window[callbackName] = undefined; }
-      button.disabled = false;
-      button.textContent = "ابحث عن التخريج والدرجة";
-    };
-
-    const finish = (results, errorMessage) => {
-      if (finished) return;
-      finished = true;
-      cleanup();
-      if (errorMessage) {
-        renderDorarResults(container, [], errorMessage);
-        return;
-      }
-      renderDorarResults(container, Array.isArray(results) ? results : [], "لم تظهر نتائج مطابقة في الدرر السنية.");
-    };
-
-    window[callbackName] = (data) => {
-      if (requestId !== dorarRequestId) return finish([], "تم تجاوز نتيجة بحث قديمة.");
-      finish(data?.ahadith || data?.results || [], "");
-    };
-
-    timeoutId = setTimeout(() => finish([], "لم يصل رد من خدمة الدرر السنية. حاول مرة أخرى لاحقاً."), 18000);
-    scriptTag.async = true;
-    scriptTag.onerror = () => finish([], "تعذر الاتصال بواجهة الدرر السنية حالياً.");
-    scriptTag.src = DORAR_API + "?skey=" + encodeURIComponent(query) + "&callback=" + encodeURIComponent(callbackName);
-    document.head.append(scriptTag);
-  }
-
   function createHadithCard(hadith, index) {
     const card = document.createElement("article");
     card.className = "dhikr-card hadith-entry-card";
@@ -734,15 +640,20 @@ async function setupHadithLibrary() {
 
     const actions = document.createElement("div");
     actions.className = "hadith-entry-actions";
-    const takhrijButton = document.createElement("button");
-    takhrijButton.type = "button";
-    takhrijButton.className = "btn btn-outline btn-small";
-    takhrijButton.textContent = "ابحث عن التخريج والدرجة";
-    const resultBox = document.createElement("div");
-    resultBox.className = "dorar-results";
-    takhrijButton.addEventListener("click", () => searchDorar(hadith, resultBox, takhrijButton));
-    actions.append(takhrijButton);
-    card.append(actions, resultBox);
+    const originalText = String(hadith.arabic || hadith.text_ar || hadith.text || "").replace(/\s+/g, " ").trim();
+    if (originalText) {
+      const takhrijLink = document.createElement("a");
+      takhrijLink.className = "btn btn-outline btn-small";
+      takhrijLink.href = "https://dorar.net/hadith/search?q=" + encodeURIComponent(originalText.slice(0, 160));
+      takhrijLink.target = "_blank";
+      takhrijLink.rel = "noopener noreferrer";
+      takhrijLink.textContent = "ابحث عن التخريج والدرجة في الدرر السنية";
+      actions.append(takhrijLink);
+    }
+    const sourceNote = document.createElement("small");
+    sourceNote.className = "hadith-takhrij-note";
+    sourceNote.textContent = "يفتح البحث في موقع الدرر السنية الرسمي في تبويب جديد. راجع مطابقة نص الحديث والراوي والمرجع قبل اعتماد الحكم.";
+    card.append(actions, sourceNote);
     return card;
   }
 
