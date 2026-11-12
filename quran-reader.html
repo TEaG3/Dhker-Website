@@ -4,68 +4,47 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07130f">
-<meta name="description" content="اقرأ المصحف الشريف بصفحاته المصورة مع تقليب الصفحات وحفظ موضع القراءة.">
+<meta name="description" content="اقرأ المصحف الشريف بصفحات مصوّرة وتقليب ورقي حقيقي باللمس والماوس، مع حفظ موضع القراءة.">
 <title>المصحف الشريف | ذِكر</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="stylesheet" href="./styles.css">
-<link rel="stylesheet" href="./islamic-identity.css?v=5">
+<link rel="stylesheet" href="./islamic-identity.css?v=8">
 <style>
-:root{--m-ink:#172c22;--m-paper:#faf6ee;--m-gold:#b18a45}
+:root{--m-paper:#fffaf0;--m-gold:#b18a45}
 *{box-sizing:border-box}
 body.mushaf-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0,#173d30 0,#0a1b15 48%,#050b09 100%);color:#f5ead0;font-family:'IBM Plex Sans Arabic','Amiri',serif}
-.mushaf-header{max-width:1400px;margin:auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #b18a4566}
+.mushaf-header{position:sticky;top:0;z-index:20;max-width:1500px;margin:auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(5,15,11,.94);backdrop-filter:blur(14px);border-bottom:1px solid #b18a4566;box-shadow:0 8px 24px #0003}
 .mushaf-brand{display:flex;align-items:center;gap:14px}.brand-mark{width:42px;height:42px;border:1px solid var(--m-gold);border-radius:50%;display:grid;place-items:center;color:#e8d3a4;font-size:22px}.mushaf-brand h1{font-family:'Amiri',serif;font-size:1.5rem;margin:0;color:#f2dfb6}.mushaf-brand p{margin:0;color:#c9b98f;font-size:.82rem}
 .header-link{color:#e8d3a4;text-decoration:none;border:1px solid #b18a4577;border-radius:30px;padding:8px 15px}
-.reader-shell{max-width:1400px;margin:0 auto;padding:18px 24px 34px}
-.reader-toolbar{display:flex;justify-content:center;align-items:center;gap:9px;flex-wrap:wrap;margin:4px auto 14px}
-.reader-toolbar button,.reader-toolbar input{font:inherit;border:1px solid #b18a45;border-radius:8px;padding:8px 13px}
-.reader-toolbar button{background:#173b2e;color:#f6e9ca;cursor:pointer}.reader-toolbar button:hover{background:#b18a45;color:#101b14}
-.reader-toolbar button:focus-visible,.reader-toolbar input:focus-visible{outline:3px solid #e4c77e;outline-offset:2px}\n.reader-toolbar button:disabled{opacity:.38;cursor:not-allowed;transform:none;box-shadow:none}
-.reader-toolbar input{width:82px;background:#fffaf0;color:#102c22;text-align:center}
+.reader-shell{max-width:1500px;margin:0 auto;padding:18px 24px 34px}
+.reader-toolbar{display:flex;justify-content:center;align-items:center;gap:9px;flex-wrap:wrap;margin:4px auto 14px;padding:12px;border:1px solid #c9a45b55;border-radius:18px;background:linear-gradient(135deg,#143b2cdd,#091c16ee);box-shadow:0 12px 30px #0003}
+.reader-toolbar button,.reader-toolbar input{font:inherit;border:1px solid #b18a45;border-radius:999px;padding:9px 15px}
+.reader-toolbar button{background:#173b2e;color:#f6e9ca;cursor:pointer;min-width:90px;transition:transform .2s,background .2s,box-shadow .2s}
+.reader-toolbar button:hover:not(:disabled){transform:translateY(-2px);background:#b18a45;color:#101b14;box-shadow:0 7px 18px #0004}
+.reader-toolbar button:focus-visible,.reader-toolbar input:focus-visible{outline:3px solid #e4c77e;outline-offset:2px}
+.reader-toolbar button:disabled{opacity:.38;cursor:not-allowed;transform:none;box-shadow:none}
+.reader-toolbar input{width:82px;background:#fffaf0;color:#102c22;text-align:center;font-weight:700}
 .reader-toolbar label{color:#e8d8b5}
-.reader-status{text-align:center;min-height:28px;color:#d6c49b;margin:6px 0 14px}
+.reader-status{text-align:center;min-height:28px;color:#f0d9a6;margin:8px 0 14px;font-size:.98rem;font-weight:600}
 .reader-status.error{color:#ffd0c5}
-.mushaf-stage{width:100%;min-height: min(78vh,900px);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:8px}
-.mushaf-book{display:flex;direction:ltr;align-items:stretch;justify-content:center;width:min(100%,1120px);perspective:1800px;transform-style:preserve-3d;transition:transform .48s ease,opacity .25s ease;filter:drop-shadow(0 16px 26px #0008)}
-.mushaf-book.turn-next{transform:rotateY(-7deg) scale(.985);opacity:.84}
-.mushaf-book.turn-prev{transform:rotateY(7deg) scale(.985);opacity:.84}
-.mushaf-leaf{position:relative;width:50%;height:min(76vh,850px);min-height:450px;background:var(--m-paper);border:1px solid #a78348;overflow:hidden;backface-visibility:hidden}
-.mushaf-leaf img{display:block;width:100%;height:100%;object-fit:contain;background:var(--m-paper)}
-.mushaf-leaf.left{border-inline-start:5px solid #8a6a38;box-shadow:inset 8px 0 14px #4b351b22}
-.mushaf-leaf.right{border-inline-end:5px solid #8a6a38;box-shadow:inset -8px 0 14px #4b351b22}
-.mushaf-leaf img.loading{opacity:.35}
-.mushaf-mobile-page{display:none}
-.reader-help{text-align:center;color:#c6b58d;font-size:.86rem;margin:10px 0}
-.source-credit{text-align:center;color:#b9aa89;font-size:.78rem;margin:18px auto 0;max-width:850px}
-@media(max-width:767px){
- .mushaf-header{padding:12px 15px}.mushaf-brand p{display:none}.reader-shell{padding:12px 10px 24px}
- .mushaf-stage{min-height:0;padding:0}.mushaf-book{display:none}
- .mushaf-mobile-page{display:block;position:relative;width:min(100%,520px);height:min(72vh,780px);min-height:430px;margin:0 auto;background:var(--m-paper);border:8px solid #76532d;border-radius:5px;box-shadow:0 14px 35px #0008;overflow:hidden}
- .mushaf-mobile-page:before{content:"";position:absolute;inset:8px;border:3px double var(--m-gold);pointer-events:none;z-index:1}
- .mushaf-mobile-page img{width:100%;height:100%;object-fit:contain;display:block;background:var(--m-paper)}
- .reader-toolbar{gap:6px}.reader-toolbar button{padding:8px 10px;font-size:.88rem}
-}
-@media(prefers-reduced-motion:reduce){.mushaf-book{transition:none}}
-/* Dhker reader refresh: clearer reading controls and tactile page-turn feedback */
-.mushaf-header{position:sticky;top:0;z-index:20;background:rgba(5,15,11,.94);backdrop-filter:blur(14px);box-shadow:0 8px 24px #0003}
-.reader-shell{max-width:1500px}
-.reader-toolbar{padding:12px;border:1px solid #c9a45b55;border-radius:18px;background:linear-gradient(135deg,#143b2cdd,#091c16ee);box-shadow:0 12px 30px #0003}
-.reader-toolbar button{min-width:88px;border-radius:999px;padding:10px 17px;transition:transform .2s,background .2s,box-shadow .2s}
-.reader-toolbar button:hover{transform:translateY(-2px);box-shadow:0 7px 18px #0004}
-.reader-toolbar input{border-radius:999px;font-weight:700}
-.mushaf-stage{position:relative;isolation:isolate;padding:22px 10px 30px;border:1px solid #d0ac6555;border-radius:28px;background:radial-gradient(ellipse at center,#d4b87918,transparent 65%),linear-gradient(135deg,#102b20,#07130f);box-shadow:inset 0 0 50px #0004,0 20px 50px #0005}
-.mushaf-book{filter:drop-shadow(0 25px 35px #0009);transform-style:preserve-3d}
-.mushaf-leaf{border:1px solid #b58d4d;background:linear-gradient(90deg,#eee2c8,#fffaf0 8%,#fffaf0 92%,#e8d9b9);box-shadow:inset 0 0 22px #98774720}
-.mushaf-book.turn-next{transform:perspective(1600px) rotateY(-13deg) rotateX(1deg) scale(.975);filter:drop-shadow(0 28px 42px #000b)}
-.mushaf-book.turn-prev{transform:perspective(1600px) rotateY(13deg) rotateX(1deg) scale(.975);filter:drop-shadow(0 28px 42px #000b)}
-.reader-status{font-size:.98rem;font-weight:600;color:#f0d9a6}
-.reader-help{padding:10px 16px;border-radius:999px;background:#ffffff0a;display:table;margin:14px auto}
-@media(max-width:767px){.mushaf-stage{padding:12px 8px 18px;border-radius:20px}.mushaf-mobile-page{height:min(75vh,820px);min-height:420px;border:9px solid #8a6737;box-shadow:0 22px 45px #0009}.reader-toolbar{justify-content:space-around}.reader-toolbar button{min-width:72px;padding:9px 12px}}
+.mushaf-stage{width:100%;min-height:min(78vh,900px);display:flex;align-items:center;justify-content:center;overflow:visible;padding:22px 10px 30px;border:1px solid #d0ac6555;border-radius:28px;background:radial-gradient(ellipse at center,#d4b87918,transparent 65%),linear-gradient(135deg,#102b20,#07130f);box-shadow:inset 0 0 50px #0004,0 20px 50px #0005}
+.mushaf-flipbook{position:relative;width:100%;max-width:1220px;height:min(76vh,860px);min-height:460px;margin:auto;overflow:visible}
+.mushaf-page{box-sizing:border-box;overflow:hidden}
+.mushaf-page-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:5px;background:var(--m-paper)}
+.mushaf-page img{display:block;width:100%;height:100%;object-fit:contain;background:var(--m-paper);user-select:none;-webkit-user-drag:none}
+.mushaf-fallback{display:none;width:min(100%,520px);height:min(76vh,820px);min-height:430px;margin:auto;background:var(--m-paper);border:9px solid #8a6737;box-shadow:0 22px 45px #0009;overflow:hidden}
+.mushaf-fallback img{display:block;width:100%;height:100%;object-fit:contain}
+.reader-help{text-align:center;color:#c6b58d;font-size:.88rem;margin:14px auto;padding:10px 16px;border-radius:999px;background:#ffffff0a;max-width:1100px}
+.source-credit{text-align:center;color:#b9aa89;font-size:.78rem;margin:18px auto 0;max-width:1000px;line-height:1.9}
+.source-credit a{color:#e5c986}
+.mushaf-spine{position:absolute;z-index:15;top:0;bottom:0;right:50%;width:12px;transform:translateX(50%);pointer-events:none;background:linear-gradient(90deg,transparent,rgba(47,30,12,.22),rgba(255,255,255,.22),transparent);filter:blur(.2px)}
+@media(max-width:767px){.mushaf-header{padding:12px 15px}.mushaf-brand p{display:none}.reader-shell{padding:12px 10px 24px}.mushaf-stage{min-height:0;padding:16px 8px;border-radius:20px}.mushaf-flipbook{height:min(74vh,820px);min-height:430px;max-width:560px}.reader-toolbar{gap:6px;justify-content:space-around}.reader-toolbar button{min-width:76px;padding:8px 11px;font-size:.88rem}.reader-help{border-radius:16px}}
+@media(prefers-reduced-motion:reduce){.reader-toolbar button{transition:none}}
 </style>
 </head>
 <body class="mushaf-body">
 <header class="mushaf-header">
- <div class="mushaf-brand"><div class="brand-mark" aria-hidden="true">۞</div><div><h1>المصحف الشريف</h1><p>قارئ ذِكر — صفحات مصوّرة</p></div></div>
+ <div class="mushaf-brand"><div class="brand-mark" aria-hidden="true">۞</div><div><h1>المصحف الشريف</h1><p>قارئ ذِكر — تقليب صفحات تفاعلي</p></div></div>
  <a class="header-link" href="./index.html">العودة إلى ذِكر</a>
 </header>
 <main class="reader-shell">
@@ -76,90 +55,14 @@ body.mushaf-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at
   <button id="next" type="button" aria-label="الصفحة التالية" aria-keyshortcuts="ArrowLeft" title="التالي — مفتاح السهم الأيسر">التالي ←</button>
   <button id="bookmark" type="button">حفظ الموضع</button>
  </div>
- <p id="readerStatus" class="reader-status" role="status" aria-live="polite">جارٍ تجهيز المصحف…</p>
- <section class="mushaf-stage" aria-label="صفحتا المصحف">
-  <div class="mushaf-book" id="mushafBook">
-   <div class="mushaf-leaf left"><img id="leftPage" alt="صفحة المصحف اليسرى" decoding="async"></div>
-   <div class="mushaf-leaf right"><img id="rightPage" alt="صفحة المصحف اليمنى" decoding="async"></div>
-  </div>
-  <div class="mushaf-mobile-page"><img id="mobilePageImage" alt="صفحة المصحف" decoding="async"></div>
+ <p id="readerStatus" class="reader-status" role="status" aria-live="polite">جارٍ تجهيز المصحف التفاعلي…</p>
+ <section class="mushaf-stage" aria-label="المصحف بصفحات قابلة للتقليب">
+  <div id="mushafBook" class="mushaf-flipbook" role="group" aria-label="كتاب المصحف الشريف"></div>
+  <div id="mushafFallback" class="mushaf-fallback"><img id="fallbackPageImage" alt="صفحة المصحف" decoding="async"></div>
  </section>
- <p class="reader-help">على الكمبيوتر تظهر صفحتان متقابلتان. على الهاتف تظهر صفحة واحدة. استخدم زر «التالي ←» أو مفتاح ← للانتقال، وزر «→ السابق» أو مفتاح → للعودة. على الهاتف يمكنك السحب يميناً ويساراً.</p>
- <p class="source-credit">صور الصفحات من مشروع <a href="https://github.com/Zizwar/mushaf-mauri" target="_blank" rel="noopener">Mushaf Mauri</a> — رواية حفص مع التجويد. تُحمّل الصفحات عند الطلب وتُخزّن مؤقتاً على جهازك بعد فتحها، حسب مساحة المتصفح.</p>
+ <p class="reader-help">اسحب حافة الورقة بالماوس أو بإصبعك لتقليبها. استخدم «التالي ←» أو السهم الأيسر للانتقال، و«→ السابق» أو السهم الأيمن للعودة. على الكمبيوتر تظهر صفحتان، وعلى الهاتف صفحة واحدة.</p>
+ <p class="source-credit">صور المصحف: <a href="https://github.com/Zizwar/mushaf-mauri" target="_blank" rel="noopener">Mushaf Mauri</a> — 604 صفحة برواية حفص والتجويد. محرك التقليب: <a href="https://github.com/gul-labs/flipbook" target="_blank" rel="noopener">@gullabs/flipbook-core 3.2.2</a>، مرخّص MPL-2.0 مع الاحتفاظ بإشعارات المصدر. <a href="./THIRD-PARTY-NOTICES.md">إشعارات التراخيص والمصادر</a>.</p>
 </main>
-<script>
-(()=>{"use strict";
-const IMAGE_BASE="https://raw.githubusercontent.com/Zizwar/mushaf-mauri/expo55/_archive/assets/pages/hafsTajweed/page";
-// Source: Zizwar/mushaf-mauri (604 Hafs/Tajweed page scans). Images load on demand.
-const $=id=>document.getElementById(id);
-const MAX_PAGE=604;
-let current=Number(localStorage.getItem("dhker-mushaf-mauri-bookmark")||1);
-let busy=false;
-let navigationBusy=false;
-let renderToken=0;
-const isMobile=()=>matchMedia("(max-width:767px)").matches;
-const pageUrl=n=>IMAGE_BASE+n+".png";
-function setStatus(message,error=false){const el=$("readerStatus");el.textContent=message;el.classList.toggle("error",error);}
-function loadImage(img,n){
- return new Promise(resolve=>{
-  img.classList.add("loading");
-  img.onload=()=>{img.classList.remove("loading");resolve(true);};
-  img.onerror=()=>{img.classList.remove("loading");img.removeAttribute("src");resolve(false);};
-  img.src=pageUrl(n);
- });
-}
-async function render(){
- if(busy)return;busy=true;
- const token=++renderToken;
- current=Math.max(1,Math.min(MAX_PAGE,Math.floor(Number(current)||1)));
- $("pageNumber").value=current;
- const step=isMobile()?1:2;
- $("previous").disabled=current<=(isMobile()?1:2);
- $("next").disabled=current>=(MAX_PAGE-1);
- setStatus("جارٍ تحميل صفحة "+current+"…");
- let ok;
- if(isMobile()){
-  ok=await loadImage($("mobilePageImage"),current);
- }else{
-  const first=current%2===0?current-1:current;
-  const second=Math.min(MAX_PAGE,first+1);
-  const results=await Promise.all([loadImage($("rightPage"),first),loadImage($("leftPage"),second)]);
-  ok=results.every(Boolean);
-  // الصفحة الأخيرة ليس لها ورقة مقابلة.
-  if(second>MAX_PAGE)$("leftPage").removeAttribute("src");
- }
- if(token!==renderToken){busy=false;return;}
- if(ok){setStatus("المصحف جاهز — الصفحة "+current+(isMobile()?"":" وما يقابلها"));}
- else{setStatus("تعذر تحميل صورة الصفحة. تحقق من الاتصال ثم أعد المحاولة.",true);}
- busy=false;
-}
-async function go(n,direction){
- if(navigationBusy||busy)return;
- const next=Math.max(1,Math.min(MAX_PAGE,Math.floor(Number(n)||1)));
- if(next===current){$("pageNumber").value=current;return;}
- navigationBusy=true;
- const book=$("mushafBook");
- if(!isMobile()){book.classList.remove("turn-next","turn-prev");void book.offsetWidth;book.classList.add(direction==="prev"?"turn-prev":"turn-next");}
- current=next;$("pageNumber").value=current;
- try{await new Promise(resolve=>setTimeout(resolve,220));await render();}
- finally{setTimeout(()=>book.classList.remove("turn-next","turn-prev"),320);navigationBusy=false;}
-}
-$("previous").addEventListener("click",()=>go(current-(isMobile()?1:2),"prev"));
-$("next").addEventListener("click",()=>go(current+(isMobile()?1:2),"next"));
-$("goPage").addEventListener("click",()=>go($("pageNumber").value,"next"));
-$("pageNumber").addEventListener("keydown",e=>{if(e.key==="Enter")go($("pageNumber").value,"next");});
-$("bookmark").addEventListener("click",()=>{localStorage.setItem("dhker-mushaf-mauri-bookmark",String(current));setStatus("تم حفظ موضع القراءة عند الصفحة "+current);});
-document.addEventListener("keydown",e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.target.closest("input,button,a,select,textarea,[contenteditable=true]"))return;const step=isMobile()?1:2;if(e.key==="ArrowLeft"){e.preventDefault();go(current+step,"next");}else if(e.key==="ArrowRight"){e.preventDefault();go(current-step,"prev");}});
-let touchX=0;
-$("mushafBook").addEventListener("touchstart",e=>{touchX=e.changedTouches[0].clientX;},{passive:true});
-$("mushafBook").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45)go(current+(dx<0?2:-2),dx<0?"next":"prev");},{passive:true});
-$("mobilePageImage").addEventListener("touchstart",e=>{touchX=e.changedTouches[0].clientX;},{passive:true});
-$("mobilePageImage").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45)go(current+(dx<0?1:-1),dx<0?"next":"prev");},{passive:true});
-window.addEventListener("online",render);
-window.addEventListener("resize",()=>{clearTimeout(window.__mushafResize);window.__mushafResize=setTimeout(render,180);});
-render();
-if("serviceWorker"in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
-})();
-</script>
+<script src="./mushaf-reader.js?v=9" defer></script>
 </body>
 </html>

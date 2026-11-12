@@ -223,53 +223,81 @@ async function setupQuranAudio() {
   if (!player || !button || !status || !sourceSelect || !reciterSelect) return;
   const ALFURQAN = "https://alfurqan.online/api/v1";
   const ALQURAN = "https://api.alquran.cloud/v1";
-  const MP3QURAN = "https://www.mp3quran.net/api/v3";
-  const caches = Object.create(null);
+  // Official API base (no www redirect) documented by MP3Quran.net.
+  const MP3QURAN = "https://mp3quran.net/api/v3";
+  const memoryCatalogs = Object.create(null);
+  const CACHE_TTL = 12 * 60 * 60 * 1000;
   let selectedItems = [];
   let playback = null;
   let requestToken = 0;
-  const fetchJson = async (url) => { const response = await fetch(url, {headers:{Accept:"application/json"}}); if (!response.ok) throw new Error("HTTP " + response.status); return response.json(); };
+  const fetchJson = async url => {
+    const response = await fetch(url, {headers:{Accept:"application/json"}, cache:"no-cache"});
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    return response.json();
+  };
   const option = (value, label) => { const el = document.createElement("option"); el.value = value; el.textContent = label; return el; };
-  function stopPlayback(message) { requestToken++; playback = null; player.pause(); player.removeAttribute("src"); player.load(); button.textContent = "استمع للسورة"; if (message) status.textContent = message; }
+  function stopPlayback(message) {
+    requestToken++; playback = null; player.pause(); player.removeAttribute("src"); player.load();
+    button.textContent = "استمع للسورة"; if (message) status.textContent = message;
+  }
+  function readStoredCatalog(provider) {
+    try {
+      const saved = JSON.parse(localStorage.getItem("dhker-audio-catalog-" + provider) || "null");
+      return saved && Array.isArray(saved.items) && saved.items.length ? saved : null;
+    } catch { return null; }
+  }
   async function loadCatalog(provider) {
-    if (caches[provider]) return caches[provider];
-    let items = [];
-    if (provider === "alfurqan") {
-      const data = await fetchJson(ALFURQAN + "/reciters");
-      items = (data.reciters || []).map(item => ({id:item.id, label:item.arabicName || item.name || item.id, provider:"alfurqan"}));
-    } else if (provider === "alqurancloud") {
-      const data = await fetchJson(ALQURAN + "/edition/format/audio");
-      items = (data.data || []).filter(item => item.format === "audio" && item.language === "ar").map(item => ({id:item.identifier, label:item.name || item.englishName || item.identifier, provider:"alqurancloud"}));
-    } else if (provider === "mp3quran") {
-      const data = await fetchJson(MP3QURAN + "/reciters?language=ar");
-      for (const reciter of data.reciters || []) {
-        for (const moshaf of reciter.moshaf || []) {
-          if (!moshaf.server || !moshaf.id) continue;
-          items.push({id:String(moshaf.id), label:(reciter.name || "قارئ") + " — " + (moshaf.name || "رواية غير محددة"), server:moshaf.server, surahList:String(moshaf.surah_list || ""), provider:"mp3quran"});
+    if (memoryCatalogs[provider]) return memoryCatalogs[provider];
+    const stored = readStoredCatalog(provider);
+    if (stored && Date.now() - Number(stored.savedAt || 0) < CACHE_TTL) {
+      memoryCatalogs[provider] = stored.items;
+      return {items:stored.items,cached:true,stale:false};
+    }
+    try {
+      let items = [];
+      if (provider === "alfurqan") {
+        const data = await fetchJson(ALFURQAN + "/reciters");
+        items = (data.reciters || []).map(item => ({id:item.id,label:item.arabicName || item.name || item.id,provider:"alfurqan"}));
+      } else if (provider === "alqurancloud") {
+        const data = await fetchJson(ALQURAN + "/edition?format=audio&language=ar");
+        items = (data.data || []).filter(item => item.identifier).map(item => ({id:item.identifier,label:item.name || item.englishName || item.identifier,provider:"alqurancloud"}));
+      } else if (provider === "mp3quran") {
+        const data = await fetchJson(MP3QURAN + "/reciters?language=ar");
+        for (const reciter of data.reciters || []) {
+          for (const moshaf of reciter.moshaf || []) {
+            if (!moshaf.server || !moshaf.id) continue;
+            items.push({id:String(moshaf.id),label:(reciter.name || "قارئ") + " — " + (moshaf.name || "رواية غير محددة"),server:moshaf.server,surahList:String(moshaf.surah_list || ""),provider:"mp3quran"});
+          }
         }
       }
+      if (!items.length) throw new Error("لم يُرجع المصدر أي قراء صالحين");
+      memoryCatalogs[provider] = items;
+      try { localStorage.setItem("dhker-audio-catalog-" + provider, JSON.stringify({savedAt:Date.now(),items:items})); } catch {}
+      return {items:items,cached:false,stale:false};
+    } catch (error) {
+      if (stored) {
+        memoryCatalogs[provider] = stored.items;
+        return {items:stored.items,cached:true,stale:true};
+      }
+      throw error;
     }
-    if (!items.length) throw new Error("لم يُرجع المصدر أي قراء صالحين");
-    caches[provider] = items;
-    return items;
   }
   async function refreshCatalog() {
     stopPlayback();
     const provider = sourceSelect.value;
     status.textContent = "جارٍ تحميل فهرس القراء من المصدر المختار…";
-    reciterSelect.disabled = true;
-    button.disabled = true;
-    reciterSelect.replaceChildren();
+    reciterSelect.disabled = true; button.disabled = true; reciterSelect.replaceChildren();
     try {
-      selectedItems = await loadCatalog(provider);
-      for (const item of selectedItems) reciterSelect.append(option(item.id, item.label));
-      reciterSelect.disabled = false;
-      button.disabled = false;
+      const catalog = await loadCatalog(provider);
+      selectedItems = catalog.items;
+      for (const item of selectedItems) reciterSelect.append(option(item.id,item.label));
+      reciterSelect.disabled = false; button.disabled = false;
       const sourceNames = {alfurqan:"Al Furqan",alqurancloud:"AlQuran Cloud",mp3quran:"MP3Quran.net"};
-      status.textContent = sourceNames[provider] + " — " + selectedItems.length + " خياراً صوتياً متاحاً. اختر القارئ ثم السورة.";
+      const cacheNote = catalog.stale ? " — نسخة محفوظة مؤقتاً؛ تعذر تحديث المصدر" : catalog.cached ? " — من الذاكرة المؤقتة" : " — تم تحديث الفهرس";
+      status.textContent = sourceNames[provider] + " — " + selectedItems.length + " خياراً صوتياً متاحاً" + cacheNote + ". اختر القارئ ثم السورة.";
     } catch (error) {
-      reciterSelect.append(option("", "تعذر تحميل القراء"));
-      status.textContent = "تعذر الاتصال بالمكتبة المختارة. جرّب مكتبة أخرى أو أعد المحاولة.";
+      selectedItems = []; reciterSelect.append(option("","تعذر تحميل القراء"));
+      status.textContent = "تعذر تحميل مكتبة الصوتيات. جرّب مصدراً آخر أو أعد المحاولة عند توفر الاتصال.";
       button.disabled = true;
     }
   }
@@ -280,7 +308,7 @@ async function setupQuranAudio() {
     if (!url) { stopPlayback("اكتملت تلاوة السورة."); return; }
     player.src = url;
     try { await player.play(); status.textContent = "تلاوة السورة " + playback.surah + " — الآية " + (playback.index + 1) + " من " + playback.queue.length; }
-    catch (error) { stopPlayback("تعذر تشغيل الملف الصوتي. تحقق من الاتصال أو اختر مصدراً آخر."); }
+    catch { stopPlayback("تعذر تشغيل الملف الصوتي. تحقق من الاتصال أو اختر مصدراً آخر."); }
   }
   player.addEventListener("ended", () => {
     if (!playback) return;
@@ -290,43 +318,37 @@ async function setupQuranAudio() {
   });
   player.addEventListener("error", () => { if (playback) stopPlayback("تعذر تحميل هذا التسجيل. جرّب قارئاً أو مكتبة أخرى."); });
   sourceSelect.addEventListener("change", refreshCatalog);
+  reciterSelect.addEventListener("change", () => { if (playback) stopPlayback("تم تغيير القارئ."); });
   button.addEventListener("click", async () => {
     if (playback) { stopPlayback("تم إيقاف التلاوة."); return; }
-    const item = currentItem();
-    if (!item) { status.textContent = "اختر قارئاً أولاً."; return; }
-    const surah = Math.min(114, Math.max(1, Number($("quranSurah").value) || 1));
-    $("quranSurah").value = String(surah);
-    const token = ++requestToken;
-    button.disabled = true; button.textContent = "جارٍ التجهيز…"; status.textContent = "جارٍ تجهيز السورة من " + sourceSelect.selectedOptions[0].textContent + "…";
+    const item = currentItem(); if (!item) { status.textContent = "اختر قارئاً أولاً."; return; }
+    const surah = Math.min(114,Math.max(1,Number($("quranSurah").value)||1)); $("quranSurah").value=String(surah);
+    const token=++requestToken; button.disabled=true; button.textContent="جارٍ التجهيز…";
+    status.textContent="جارٍ تجهيز السورة من "+sourceSelect.selectedOptions[0].textContent+"…";
     try {
-      if (item.provider === "mp3quran") {
-        const available = item.surahList.split(",").map(Number).filter(Number.isFinite);
-        if (available.length && !available.includes(surah)) throw new Error("هذه السورة غير متاحة لهذا المصحف الصوتي");
-        playback = {provider:item.provider, surah:surah};
-        player.src = item.server.replace(/\/$/, "") + "/" + String(surah).padStart(3, "0") + ".mp3";
-        await player.play();
-        status.textContent = item.label + " — السورة " + surah;
-      } else if (item.provider === "alqurancloud") {
-        const data = await fetchJson(ALQURAN + "/surah/" + surah + "/" + encodeURIComponent(item.id));
-        const ayahs = data.data?.ayahs || [];
-        const queue = ayahs.map(ayah => ayah.audio).filter(Boolean);
-        if (!queue.length || queue.length !== ayahs.length) throw new Error("ملفات هذه السورة غير مكتملة لهذا الإصدار الصوتي");
-        playback = {provider:item.provider, surah:surah, queue:queue, index:0};
-        await playAyahQueue(token);
+      if(item.provider==="mp3quran"){
+        const available=item.surahList.split(",").map(Number).filter(Number.isFinite);
+        if(available.length&&!available.includes(surah))throw new Error("هذه السورة غير متاحة لهذا المصحف الصوتي");
+        playback={provider:item.provider,surah:surah};
+        player.src=item.server.replace(/\/$/,"")+"/"+String(surah).padStart(3,"0")+".mp3";
+        await player.play(); status.textContent=item.label+" — السورة "+surah;
+      } else if(item.provider==="alqurancloud"){
+        const data=await fetchJson(ALQURAN+"/surah/"+surah+"/"+encodeURIComponent(item.id));
+        const ayahs=data.data?.ayahs||[]; const queue=ayahs.map(ayah=>ayah.audio).filter(Boolean);
+        if(!queue.length||queue.length!==ayahs.length)throw new Error("ملفات هذه السورة غير مكتملة لهذا الإصدار الصوتي");
+        playback={provider:item.provider,surah:surah,queue:queue,index:0}; await playAyahQueue(token);
       } else {
-        const data = await fetchJson(ALFURQAN + "/surahs/" + surah);
-        const total = data.surah?.ayahCount || data.ayahCount || data.data?.ayahCount;
-        if (!Number.isInteger(total) || total < 1) throw new Error("تعذر معرفة عدد آيات السورة");
-        const queue = Array.from({length:total}, (_, index) => ALFURQAN + "/audio/" + encodeURIComponent(item.id) + "/surah/" + surah + "/ayah/" + (index + 1));
-        playback = {provider:item.provider, surah:surah, queue:queue, index:0};
-        await playAyahQueue(token);
+        const data=await fetchJson(ALFURQAN+"/surahs/"+surah);
+        const total=data.surah?.ayahCount||data.ayahCount||data.data?.ayahCount;
+        if(!Number.isInteger(total)||total<1)throw new Error("تعذر معرفة عدد آيات السورة");
+        const queue=Array.from({length:total},(_,index)=>ALFURQAN+"/audio/"+encodeURIComponent(item.id)+"/surah/"+surah+"/ayah/"+(index+1));
+        playback={provider:item.provider,surah:surah,queue:queue,index:0}; await playAyahQueue(token);
       }
-      if (playback) button.textContent = "إيقاف التلاوة";
-    } catch (error) {
-      playback = null; player.pause(); player.removeAttribute("src");
-      status.textContent = error.message && error.message.startsWith("هذه السورة") ? error.message : "لم نتمكن من تشغيل هذا الخيار. غيّر المكتبة أو القارئ وحاول مجدداً.";
-      button.textContent = "استمع للسورة";
-    } finally { button.disabled = false; }
+      if(playback)button.textContent="إيقاف التلاوة";
+    } catch(error) {
+      playback=null; player.pause(); player.removeAttribute("src"); button.textContent="استمع للسورة";
+      status.textContent=error.message&&error.message.startsWith("هذه السورة")?error.message:"لم نتمكن من تشغيل هذا الخيار. غيّر المكتبة أو القارئ وحاول مجدداً.";
+    } finally { button.disabled=false; }
   });
   await refreshCatalog();
 }
