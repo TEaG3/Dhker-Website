@@ -70,6 +70,7 @@
           <li><a href="#adhkar">الأذكار</a></li>
           <li><a href="#hadith">مكتبة الحديث</a></li>
           <li><a href="#audio">مكتبة الأذان</a></li>
+          <li><a href="#recitations">مشغل التلاوات</a></li>
           <li><a class="nav-quran-link" href="./quran-reader.html">المصحف الورقي</a></li>
         </ul>
       </nav>
@@ -106,6 +107,7 @@
       <a class="service-card dhk-illuminated-card" href="#adhkar"><span>✧</span><b>الأذكار</b><small>الصباح والمساء والنوم</small></a>
       <a class="service-card dhk-illuminated-card" href="#hadith"><span>۞</span><b>كتب الحديث</b><small>تصفح كتب السنة</small></a>
       <a class="service-card dhk-illuminated-card" href="#audio"><span>♫</span><b>مكتبة الأذان</b><small>اختر الأذان واستمع أو أوقفه</small></a>
+      <a class="service-card dhk-illuminated-card" href="#recitations"><span>♪</span><b>مشغل التلاوات</b><small>اختر القارئ والسورة ومصدر الصوت</small></a>
     </section>
 
     </section>
@@ -173,6 +175,26 @@
         <button class="btn btn-primary btn-small" id="stopAdhan" type="button" disabled>إيقاف صوت الأذان</button>
       </div>
       <p class="source-note" id="adhanAudioStatus" role="status">المصادر: <a href="https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg" target="_blank" rel="noopener">Beautiful_adhan.ogg</a> و<a href="https://commons.wikimedia.org/wiki/File:Adhan.ogg" target="_blank" rel="noopener">Adhan.ogg</a>، إضافة إلى مكتبة Al Furqan. يلزم الاتصال بالإنترنت لتشغيل التسجيلات.</p>
+    </section>
+
+    <section id="recitations" class="container app-section tab-panel" hidden>
+      <div class="section-heading"><div><span class="eyebrow">استمع للقرآن الكريم</span><h2>مشغل التلاوات</h2><p>اختر مصدر الصوت والقارئ والسورة، واستمع إلى التلاوة دون عرض صفحات القرآن هنا.</p></div><span class="section-symbol">♪</span></div>
+      <div class="reader-toolbar recitation-toolbar">
+        <label for="quranAudioSource">مصدر الصوت</label>
+        <select id="quranAudioSource">
+          <option value="alfurqan">Al Furqan</option>
+          <option value="alqurancloud">AlQuran Cloud</option>
+          <option value="mp3quran">MP3Quran.net</option>
+        </select>
+        <label for="quranReciter">القارئ / الرواية</label>
+        <select id="quranReciter" disabled><option value="">جارٍ تحميل القراء…</option></select>
+        <label for="quranSurah">السورة</label>
+        <input id="quranSurah" type="number" min="1" max="114" value="1" inputmode="numeric" aria-label="رقم السورة">
+        <button class="btn btn-primary btn-small" id="playQuranRecitation" type="button" disabled>استمع للسورة</button>
+      </div>
+      <audio id="quranPlayer" controls preload="none" aria-label="مشغل تلاوة القرآن الكريم"></audio>
+      <div class="reader-status" id="quranAudioStatus" role="status" aria-live="polite">جارٍ تحميل فهرس القراء…</div>
+      <p class="source-note">تتوفر مصادر صوتية متعددة. قد يختلف عدد القراء والسور المتاحة بحسب المصدر المختار والاتصال بالإنترنت.</p>
     </section>
 
     </section>
