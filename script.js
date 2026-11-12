@@ -465,7 +465,10 @@ async function setupQuranAudio() {
         const total=data.surah?.ayahCount||data.ayahCount||data.data?.ayahCount;
         if(!Number.isInteger(total)||total<1)throw new Error("تعذر معرفة عدد آيات السورة");
         const queue=Array.from({length:total},(_,index)=>ALFURQAN+"/audio/"+encodeURIComponent(item.id)+"/surah/"+surah+"/ayah/"+(index+1));
-        playback={provider:item.provider,surah:surah,queue:queue,index:0}; await playAyahQueue(token);
+        pendingPlayback={provider:item.provider,surah:surah,queue:queue,index:0};
+        status.textContent="السورة جاهزة. اضغط زر التشغيل مرة أخرى لبدء التلاوة.";
+        button.textContent="اضغط للتشغيل";
+        return;
       }
       if(playback)button.textContent="إيقاف التلاوة";
     } catch(error) {
