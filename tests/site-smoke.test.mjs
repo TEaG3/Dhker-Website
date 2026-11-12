@@ -39,17 +39,34 @@ test("site script implements offline Quran cache and service worker registration
   assert.ok(script.includes('status=$("adhanAudioStatus")'));
   assert.ok(script.includes("api.alquran.cloud"));
 });
-test("Quran recitation player offers multiple reciters", () => {
+test("Quran recitation player offers multiple independent audio libraries", () => {
   assert.ok(html.includes('id="quranPlayer"'));
   assert.ok(html.includes('id="quranReciter"'));
+  assert.ok(html.includes('id="quranAudioSource"'));
+  assert.ok(html.includes("AlQuran Cloud"));
+  assert.ok(html.includes("MP3Quran.net"));
   assert.ok(html.includes('id="quranSurah"'));
   assert.ok(script.includes('api+"/audio/"'));
+  assert.ok(script.includes("https://api.alquran.cloud/v1"));
+  assert.ok(script.includes("https://www.mp3quran.net/api/v3"));
+  assert.ok(script.includes("moshaf"));
+  assert.ok(script.includes("surah_list"));
   assert.ok(script.includes("setupHadithLibrary"));
   assert.ok(script.includes('api+"/athan/"'));
   assert.ok(script.includes("setupHadithLibrary"));
   assert.ok(script.includes('api+"/athan/"'));
   assert.ok(html.includes("alfurqan.online/docs"));
 });
+test("Mushaf navigation buttons and keyboard arrows share the same RTL mapping", () => {
+  assert.match(reader, /aria-keyshortcuts="ArrowRight"/);
+  assert.match(reader, /aria-keyshortcuts="ArrowLeft"/);
+  assert.ok(reader.includes('e.key==="ArrowLeft"{e.preventDefault();go(current+step,"next")'));
+  assert.ok(reader.includes('e.key==="ArrowRight"){e.preventDefault();go(current-step,"prev")'));
+  assert.ok(reader.includes("navigationBusy"));
+  assert.ok(reader.includes("التالي ←"));
+  assert.ok(reader.includes("→ السابق"));
+});
+
 test("standalone mushaf uses scanned 604-page images with responsive navigation", () => {
   assert.match(reader, /Zizwar\/mushaf-mauri/);
   assert.ok(reader.includes('IMAGE_BASE+n+".png"'));
