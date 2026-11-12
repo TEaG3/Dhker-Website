@@ -151,3 +151,30 @@ test("hadith data and grading sources are attributed separately", () => {
 test("service worker refreshes the hadith library interface", () => {
   assert.match(sw, /dhker-web-v11/);
 });
+
+test("supplied hadith code is integrated without duplicate screens, globals, or inline handlers", () => {
+  assert.match(html, /id="hadithLoader"/);
+  assert.ok(script.includes('const API = "https://alfurqan.online/api/v1/hadith"'));
+  assert.equal((script.match(/async function setupHadithLibrary\(\)/g) || []).length, 1);
+  assert.doesNotMatch(html, /id="hadith-books-screen"|id="hadith-chapters-screen"|id="hadith-content-screen"/);
+  assert.doesNotMatch(script, /HADITH_BASE_URL|currentBookData|currentBookId|showBooksScreen\(|showChaptersScreen\(/);
+  assert.doesNotMatch(html, /onclick=["'](?:loadBook|loadChapter|showBooksScreen|showChaptersScreen)/);
+  const start = script.indexOf("async function setupHadithLibrary()");
+  const end = script.indexOf("function setupNavigation()", start);
+  const libraryScript = script.slice(start, end);
+  assert.doesNotMatch(libraryScript, /\.innerHTML\s*=/);
+  assert.ok(libraryScript.includes("setStatus(message, loading = false)"));
+  assert.ok(libraryScript.includes('setStatus("جارٍ تحميل فهرس الكتب السبعة عشر…", true)'));
+  assert.ok(libraryScript.includes('setStatus("جارٍ تحميل أحاديث هذا الباب…", true)'));
+});
+test("hadith data is fetched by book and chapter instead of downloading whole book JSON files", () => {
+  assert.ok(script.includes('fetchJson(API + "/list")'));
+  assert.ok(script.includes('fetchJson(API + "/" + encodeURIComponent(book.id))'));
+  assert.ok(script.includes('"/chapter/" + encodeURIComponent(chapterId)'));
+  assert.doesNotMatch(script, /raw\.githubusercontent\.com\/AhmedBaset\/hadith-json/);
+});
+test("hadith loader styles are scoped and respect reduced motion", () => {
+  assert.match(css, /\.hadith-loader\[hidden\]/);
+  assert.match(css, /\.hadith-spinner/);
+  assert.match(css, /prefers-reduced-motion:reduce/);
+});
