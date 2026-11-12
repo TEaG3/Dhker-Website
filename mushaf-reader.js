@@ -67,6 +67,7 @@ async function startFlipbook(){
  // loading a third-party flip engine on constrained/mobile browsers.
  if(window.matchMedia("(max-width: 767px)").matches){
   fallbackRender(currentPage);
+  setStatus("قارئ الهاتف جاهز — اسحب الصفحة يميناً أو يساراً للتنقل.");
   return;
  }
  buildPages();
