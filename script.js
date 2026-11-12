@@ -227,6 +227,16 @@ async function setupQuranAudio() {
   button.addEventListener("click",async()=>{if(current){current=null;player.pause();player.removeAttribute("src");button.textContent="استمع للسورة";status.textContent="تم إيقاف التلاوة.";return;}const surah=Math.min(114,Math.max(1,Number($("quranSurah").value)||1));button.textContent="إيقاف التلاوة";status.textContent="جارٍ تجهيز السورة…";try{const r=await fetch(api+"/surahs/"+surah);if(!r.ok)throw Error();const d=await r.json(),total=d.surah?.ayahCount||d.ayahCount;if(!Number.isInteger(total)||total<1)throw Error();current={surah:surah,reciter:select.value,ayah:1,total:total};await nextAyah();}catch{current=null;button.textContent="استمع للسورة";status.textContent="تعذر جلب بيانات السورة. حاول مجدداً.";}});
   player.addEventListener("error",()=>{if(current){current=null;button.textContent="استمع للسورة";status.textContent="تعذر تحميل ملف التلاوة. اختر قارئاً آخر.";}});
 }
+async function setupHadithLibrary(){
+ const booksEl=$("hadithBook"),chaptersEl=$("hadithChapter"),list=$("hadithList"),status=$("hadithStatus");if(!booksEl||!chaptersEl||!list||!status)return;
+ const api="https://alfurqan.online/api/v1/hadith";
+ try{const r=await fetch(api+"/list");if(!r.ok)throw Error();const d=await r.json(),books=d.books||d.items||d.data||[];if(!books.length)throw Error();booksEl.replaceChildren();
+  for(const b of books){const o=document.createElement("option");o.value=b.id;o.textContent=b.name_ar||b.name||b.name_en||b.id;booksEl.append(o);}
+  async function loadBook(){status.textContent="جارٍ تحميل أبواب الكتاب…";list.replaceChildren();chaptersEl.disabled=true;try{const r=await fetch(api+"/"+encodeURIComponent(booksEl.value));if(!r.ok)throw Error();const d=await r.json(),chapters=d.chapters||d.book?.chapters||[];chaptersEl.replaceChildren();for(const c of chapters){const o=document.createElement("option");o.value=c.id??c.chapterId;o.textContent=c.name_ar||c.name||c.title||("الباب "+o.value);chaptersEl.append(o);}chaptersEl.disabled=!chapters.length;if(chapters.length)await loadChapter();else status.textContent="لا توجد أبواب متاحة.";}catch{status.textContent="تعذر تحميل أبواب الكتاب.";}}
+  async function loadChapter(){if(!chaptersEl.value)return;status.textContent="جارٍ تحميل الأحاديث…";list.replaceChildren();try{const r=await fetch(api+"/"+encodeURIComponent(booksEl.value)+"/chapter/"+encodeURIComponent(chaptersEl.value));if(!r.ok)throw Error();const d=await r.json(),items=d.hadiths||d.chapter?.hadiths||[];for(const item of items){const card=document.createElement("article");card.className="dhikr-card";const n=document.createElement("small");n.className="source-note";n.textContent="حديث رقم "+(item.idInBook||item.id||"");const p=document.createElement("p");p.className="dhikr-text";p.textContent=item.arabic||item.text_ar||item.text||"النص العربي غير متاح";card.append(n,p);list.append(card);}status.textContent="الأحاديث المعروضة: "+items.length;}catch{status.textContent="تعذر تحميل أحاديث هذا الباب.";}}
+  booksEl.addEventListener("change",loadBook);chaptersEl.addEventListener("change",loadChapter);await loadBook();
+ }catch{status.textContent="تعذر تحميل فهرس كتب الحديث حالياً. تحقق من الاتصال.";}
+}
 function setupNavigation() {
   const toggle = $("menuToggle");
   const nav = $("navList");
@@ -243,6 +253,7 @@ function setupNavigation() {
 document.addEventListener("DOMContentLoaded", async () => {
   setupNavigation();
   setupAudio();
+  setupHadithLibrary();
   setupQuranAudio();
   $("loadPage").addEventListener("click", () => loadQuranPage($("quranPage").value));
   $("prevPage").addEventListener("click", () => loadQuranPage(Number($("quranPage").value) - 1));
