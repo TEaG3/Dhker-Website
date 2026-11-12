@@ -116,3 +116,38 @@ test("Mushaf header is opaque and does not overlay the page with the global iden
   assert.match(reader, /\.mushaf-header::before,.mushaf-header::after\{content:none!important/);
   assert.match(reader, /position:relative;top:auto/);
 });
+
+test("hadith library uses the documented 17-book API with book, chapter and hadith browsing", () => {
+  assert.match(html, /id="hadithBooksView"/);
+  assert.match(html, /id="hadithBookSearch"/);
+  assert.match(html, /id="hadithBookCategories"/);
+  assert.match(html, /id="hadithChaptersView"/);
+  assert.match(html, /id="hadithChapterSearch"/);
+  assert.match(html, /id="hadithReadView"/);
+  assert.match(html, /id="hadithTextSearch"/);
+  assert.match(html, /id="hadithLoadMore"/);
+  assert.ok(script.includes('fetchJson(API + "/list")'));
+  assert.ok(script.includes('fetchJson(API + "/" + encodeURIComponent(book.id))'));
+  assert.ok(script.includes('"/chapter/" + encodeURIComponent(chapterId)'));
+  assert.ok(script.includes("book.total_hadiths"));
+  assert.ok(script.includes("chapter.hadith_count"));
+  assert.ok(script.includes("hadith.english"));
+  assert.ok(script.includes("PAGE_SIZE = 20"));
+});
+test("hadith takhrij search uses Dorar's documented JSONP API and renders results as text", () => {
+  assert.match(html, /dorar\.net/);
+  assert.ok(script.includes('const DORAR_API = "https://dorar.net/dorar_api.json"'));
+  assert.ok(script.includes('"&callback=" + encodeURIComponent(callbackName)'));
+  assert.ok(script.includes('data?.ahadith || data?.results || []'));
+  assert.ok(script.includes("item.th"));
+  assert.ok(script.includes("item.grade || item.hukm"));
+  assert.ok(script.includes("textContent = item.th"));
+});
+test("hadith data and grading sources are attributed separately", () => {
+  assert.match(html, /Al Furqan Hadith API/);
+  assert.match(html, /Hadith-JSON/);
+  assert.match(html, /الموسوعة الحديثية للدرر السنية/);
+});
+test("service worker refreshes the hadith library interface", () => {
+  assert.match(sw, /dhker-web-v11/);
+});
