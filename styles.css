@@ -688,3 +688,17 @@ ul { list-style: none; }
 @media(prefers-reduced-motion:reduce) {
   .hadith-spinner { animation-duration: 2s; }
 }
+
+
+/* Android/mobile usability hardening */
+@media (max-width: 768px) {
+  .site-header { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .header-inner { min-width: 0; gap: .6rem; }
+  .nav-list { max-height: min(72vh, 560px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  .nav-list a { display: block; min-height: 42px; padding: .45rem .8rem; }
+  .app-section, .hero, .service-grid, .reader-toolbar, .section-heading { min-width: 0; }
+  .reader-toolbar { gap: .65rem; }
+  .reader-toolbar button, .btn { min-height: 42px; touch-action: manipulation; }
+  audio { max-width: 100%; }
+  .recitation-toolbar select, .recitation-toolbar input { min-width: 0; width: 100%; }
+}
