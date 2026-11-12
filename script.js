@@ -803,7 +803,7 @@ function setupNavigation() {
       panel.hidden = !active;
       panel.classList.toggle("active", active);
     });
-    nav.querySelectorAll('a[href^="#"]').forEach((link) => {
+    document.querySelectorAll('.nav-list a[href^="#"], .mobile-app-nav a[href^="#"]').forEach((link) => {
       if (link.getAttribute("href") === "#" + id) link.setAttribute("aria-current", "page");
       else link.removeAttribute("aria-current");
     });
