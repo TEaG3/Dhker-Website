@@ -19,6 +19,8 @@ jobs:
         run: |
           node -e "for (const f of ['data/adhkar.json','data/references.json','data/cities.json','manifest.webmanifest']) JSON.parse(require('fs').readFileSync(f,'utf8'))"
       - name: Check JavaScript syntax
-        run: node --check script.js
+        run: |
+          node --check script.js
+          node --check mushaf-reader.js
       - name: Run website smoke tests
         run: node --test tests/site-smoke.test.mjs
