@@ -212,7 +212,7 @@ test("mobile-first app shell provides bottom navigation without replacing servic
 });
 
 test("Mushaf leftward swipe advances the ascending Quran page sequence", () => {
-  assert.match(mushaf, /readingDirection:"rtl"/);
+  assert.match(mushaf, /readingDirection:isMobile\?"ltr":"rtl"/);
   assert.match(mushaf, /for\(let n=1;n<=TOTAL_PAGES;n\+\+\)/);
   assert.match(reader, /mushaf-reader\.js\?v=14/);
   assert.match(sw, /dhker-web-v23/);
@@ -251,4 +251,11 @@ test("mobile service panels remove decorative header strips and reserve space fo
   assert.match(mobileCss, /dhker-service-view #dhker-identity-bar/);
   assert.match(mobileCss, /dhker-service-view \.ayah-ribbon/);
   assert.match(mobileCss, /padding-bottom:calc\(var\(--dhker-nav-height\) \+ 20px\)/);
+});
+
+
+test("Mushaf keeps Arabic desktop binding while preserving left-swipe advance in one-page mobile mode", () => {
+  assert.match(mushaf, /readingDirection:isMobile\?"ltr":"rtl"/);
+  assert.match(mushaf, /usePortrait:true/);
+  assert.match(mushaf, /if\(dx<0\)nextPage\(\)/);
 });
