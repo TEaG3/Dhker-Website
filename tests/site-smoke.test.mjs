@@ -235,7 +235,7 @@ test("service navigation hides fixed decorative lanterns from content panels", (
 
 test("PWA metadata supports standalone installation on mobile browsers", () => {
   assert.match(html, /apple-mobile-web-app-capable/);
-  assert.match(html, /mobile-app-capable/);
+  assert.match(html, /mobile-web-app-capable/);
   assert.match(html, /apple-touch-icon/);
   assert.match(manifest, /"display_override":\["standalone","minimal-ui"\]/);
 });
