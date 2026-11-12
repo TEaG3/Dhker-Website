@@ -223,7 +223,9 @@ function setupAudio() {
         await player.play();
         button.textContent = "إيقاف";
       } catch {
-        $("audio").querySelector(".source-note").textContent = "تعذر تشغيل التسجيل من المصدر حالياً. تحقق من الاتصال أو افتح صفحة المصدر.";
+        const status = $("adhanAudioStatus");
+        if (status) status.textContent = "تعذر تشغيل التسجيل من المصدر حالياً. تحقق من الاتصال ثم حاول مجدداً.";
+        button.textContent = "استمع";
       }
     });
   });
