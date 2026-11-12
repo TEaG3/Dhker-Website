@@ -795,6 +795,7 @@ function setupNavigation() {
   function showTab(id, updateHistory = true) {
     const panels = Array.from(document.querySelectorAll(".tab-panel"));
     if (!panels.some((panel) => panel.id === id)) id = "home";
+    document.body.classList.toggle("dhker-service-view", id !== "home");
     panels.forEach((panel) => {
       const active = panel.id === id;
       panel.hidden = !active;
