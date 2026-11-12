@@ -64,3 +64,23 @@
 @media(prefers-reduced-motion:reduce){
  .mobile-app-nav a,.nav-list{transition:none}
 }
+
+/* Keep the service workspace focused on small screens. */
+@media(max-width:768px){
+ .dhker-service-view #dhker-identity-bar,
+ .dhker-service-view .ayah-ribbon{display:none!important}
+ .dhker-service-view .site-header{position:sticky;top:0;z-index:180;background:rgba(5,17,26,.97);backdrop-filter:blur(16px)}
+ .dhker-service-view .header-inner{min-height:54px;padding:6px 12px}
+ .dhker-service-view .brand .dhk-injected-logo{width:34px!important;height:34px!important}
+ .dhker-service-view .brand b{font-size:1.18rem!important}
+ .dhker-service-view .app-section{min-height:calc(100dvh - 130px);padding-top:12px;padding-bottom:calc(var(--dhker-nav-height) + 20px)}
+ .dhker-service-view .section-heading{margin-bottom:12px}
+ .dhker-service-view .section-heading h2{font-size:1.35rem}
+ .dhker-service-view .container{width:min(100% - 20px,680px)}
+ .dhker-service-view .site-footer{padding-bottom:calc(var(--dhker-nav-height) + env(safe-area-inset-bottom,0px) + 16px)}
+}
+@media(min-width:769px){
+ .site-header .container{max-width:1320px}
+ .app-section .container{max-width:1240px}
+ .mobile-app-nav{display:none!important}
+}
