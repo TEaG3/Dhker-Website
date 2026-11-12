@@ -11,7 +11,7 @@ const refs = JSON.parse(await readFile(new URL("../data/references.json", import
 const cities = JSON.parse(await readFile(new URL("../data/cities.json", import.meta.url), "utf8"));
 
 test("site includes all four primary services", () => {
-  for (const id of ["quran", "prayer", "adhkar", "audio"]) assert.match(html, new RegExp('id="' + id + '"'));
+  for (const id of ["quran", "prayer", "adhkar", "audio", "hadith"]) assert.match(html, new RegExp('id="' + id + '"'));
 });
 test("site links to official Android releases without exposing an unverified APK", () => {
   assert.match(html, /TEaG3\/Dhker\/releases/);
@@ -43,8 +43,10 @@ test("Quran recitation player offers multiple reciters", () => {
   assert.ok(html.includes('id="quranPlayer"'));
   assert.ok(html.includes('id="quranReciter"'));
   assert.ok(html.includes('id="quranSurah"'));
-  assert.ok(script.includes("cdn.islamic.network/quran/audio-surah/128/"));
-  for (const reciter of ["ar.alafasy", "ar.husary", "ar.minshawi", "ar.abdulbasit"]) assert.ok(html.includes(reciter));
+  assert.ok(script.includes("alfurqan.online/api/v1/audio/"));
+  assert.ok(script.includes("setupHadithLibrary"));
+  assert.ok(script.includes("alfurqan.online/api/v1/athan/"));
+  assert.ok(html.includes("alfurqan.online/docs"));
 });
 test("standalone mushaf uses scanned 604-page images with responsive navigation", () => {
   assert.match(reader, /Zizwar\/mushaf-mauri/);
