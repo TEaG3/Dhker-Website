@@ -377,3 +377,10 @@ h1, h2, h3 {
   45%  { transform: perspective(1800px) rotateY(-22deg) skewY(1.5deg); box-shadow: 35px 0 50px rgba(0,0,0,0.45); }
   100% { transform: perspective(1800px) rotateY(0deg); }
 }
+
+
+/* Decorative lanterns belong to the landing screen; never cover service content. */
+.dhker-service-view .dhk-3d-lantern-stage {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
