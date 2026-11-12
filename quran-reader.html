@@ -134,7 +134,7 @@ async function render(){
  busy=false;
 }
 async function go(n,direction){
- if(navigationBusy)return;
+ if(navigationBusy||busy)return;
  const next=Math.max(1,Math.min(MAX_PAGE,Math.floor(Number(n)||1)));
  if(next===current){$("pageNumber").value=current;return;}
  navigationBusy=true;
