@@ -238,7 +238,7 @@ test("PWA metadata supports standalone installation on mobile browsers", () => {
   assert.match(html, /apple-mobile-web-app-capable/);
   assert.match(html, /mobile-web-app-capable/);
   assert.match(html, /apple-touch-icon/);
-  assert.match(manifest, /"display_override":\["standalone","minimal-ui"\]/);
+  assert.match(manifest, /"display_override":\s*\[\s*"standalone",\s*"minimal-ui"\s*\]/);
 });
 
 test("service worker uses network-first navigation and versioned cache for app shell", () => {
