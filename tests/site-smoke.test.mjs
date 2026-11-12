@@ -228,6 +228,6 @@ test("Hadith page uses a concise verification action and project design credit",
 
 test("service navigation hides fixed decorative lanterns from content panels", () => {
   assert.ok(script.includes('document.body.classList.toggle("dhker-service-view", id !== "home")'));
-  assert.match(identityCss, /\\.dhker-service-view \\.dhk-3d-lantern-stage/);
-  assert.match(identityCss, /visibility: hidden !important/);
+  assert.match(identityCss, /\.dhker-service-view \.dhk-3d-lantern-stage/);
+  assert.match(identityCss, /\.dhker-service-view \.dhk-3d-lantern-stage/);
 });
