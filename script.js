@@ -335,6 +335,7 @@ async function setupQuranAudio() {
   const CACHE_TTL = 12 * 60 * 60 * 1000;
   let selectedItems = [];
   let playback = null;
+  let pendingPlayback = null;
   let requestToken = 0;
   const fetchJson = async url => {
     const response = await fetch(url, {headers:{Accept:"application/json"}, cache:"no-cache"});
@@ -343,7 +344,7 @@ async function setupQuranAudio() {
   };
   const option = (value, label) => { const el = document.createElement("option"); el.value = value; el.textContent = label; return el; };
   function stopPlayback(message) {
-    requestToken++; playback = null; player.pause(); player.removeAttribute("src"); player.load();
+    requestToken++; playback = null; pendingPlayback = null; player.pause(); player.removeAttribute("src"); player.load();
     button.textContent = "استمع للسورة"; if (message) status.textContent = message;
   }
   function readStoredCatalog(provider) {
@@ -427,6 +428,19 @@ async function setupQuranAudio() {
   reciterSelect.addEventListener("change", () => { if (playback) stopPlayback("تم تغيير القارئ."); });
   button.addEventListener("click", async () => {
     if (playback) { stopPlayback("تم إيقاف التلاوة."); return; }
+    // Network preparation may outlive Android's transient user activation.
+    // A second explicit tap starts playback inside a fresh user gesture.
+    if (pendingPlayback) {
+      playback = pendingPlayback;
+      pendingPlayback = null;
+      const token = ++requestToken;
+      button.disabled = true;
+      button.textContent = "جارٍ التشغيل…";
+      await playAyahQueue(token);
+      if (playback) button.textContent = "إيقاف التلاوة";
+      button.disabled = false;
+      return;
+    }
     const item = currentItem(); if (!item) { status.textContent = "اختر قارئاً أولاً."; return; }
     const surah = Math.min(114,Math.max(1,Number($("quranSurah").value)||1)); $("quranSurah").value=String(surah);
     const token=++requestToken; button.disabled=true; button.textContent="جارٍ التجهيز…";
@@ -442,13 +456,19 @@ async function setupQuranAudio() {
         const data=await fetchJson(ALQURAN+"/surah/"+surah+"/"+encodeURIComponent(item.id));
         const ayahs=data.data?.ayahs||[]; const queue=ayahs.map(ayah=>ayah.audio).filter(Boolean);
         if(!queue.length||queue.length!==ayahs.length)throw new Error("ملفات هذه السورة غير مكتملة لهذا الإصدار الصوتي");
-        playback={provider:item.provider,surah:surah,queue:queue,index:0}; await playAyahQueue(token);
+        pendingPlayback={provider:item.provider,surah:surah,queue:queue,index:0};
+        status.textContent="السورة جاهزة. اضغط زر التشغيل مرة أخرى لبدء التلاوة.";
+        button.textContent="اضغط للتشغيل";
+        return;
       } else {
         const data=await fetchJson(ALFURQAN+"/surahs/"+surah);
         const total=data.surah?.ayahCount||data.ayahCount||data.data?.ayahCount;
         if(!Number.isInteger(total)||total<1)throw new Error("تعذر معرفة عدد آيات السورة");
         const queue=Array.from({length:total},(_,index)=>ALFURQAN+"/audio/"+encodeURIComponent(item.id)+"/surah/"+surah+"/ayah/"+(index+1));
-        playback={provider:item.provider,surah:surah,queue:queue,index:0}; await playAyahQueue(token);
+        pendingPlayback={provider:item.provider,surah:surah,queue:queue,index:0};
+        status.textContent="السورة جاهزة. اضغط زر التشغيل مرة أخرى لبدء التلاوة.";
+        button.textContent="اضغط للتشغيل";
+        return;
       }
       if(playback)button.textContent="إيقاف التلاوة";
     } catch(error) {

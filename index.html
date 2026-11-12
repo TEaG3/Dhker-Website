@@ -223,7 +223,7 @@
         </div>
       </div>
       <div class="adhan-player-controls">
-        <audio id="adhanPlayer" preload="none"></audio>
+        <audio id="adhanPlayer" preload="none" playsinline webkit-playsinline></audio>
         <button class="btn btn-primary btn-small" id="stopAdhan" type="button" disabled>إيقاف صوت الأذان</button>
       </div>
       <p class="source-note" id="adhanAudioStatus" role="status">المصادر: <a href="https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg" target="_blank" rel="noopener">Beautiful_adhan.ogg</a> و<a href="https://commons.wikimedia.org/wiki/File:Adhan.ogg" target="_blank" rel="noopener">Adhan.ogg</a>، إضافة إلى مكتبة Al Furqan. يلزم الاتصال بالإنترنت لتشغيل التسجيلات.</p>
@@ -244,7 +244,7 @@
         <input id="quranSurah" type="number" min="1" max="114" value="1" inputmode="numeric" aria-label="رقم السورة">
         <button class="btn btn-primary btn-small" id="playQuranRecitation" type="button" disabled>استمع للسورة</button>
       </div>
-      <audio id="quranPlayer" controls preload="none" aria-label="مشغل تلاوة القرآن الكريم"></audio>
+      <audio id="quranPlayer" controls preload="none" playsinline webkit-playsinline aria-label="مشغل تلاوة القرآن الكريم"></audio>
       <div class="reader-status" id="quranAudioStatus" role="status" aria-live="polite">جارٍ تحميل فهرس القراء…</div>
       <p class="source-note">تتوفر مصادر صوتية متعددة. قد يختلف عدد القراء والسور المتاحة بحسب المصدر المختار والاتصال بالإنترنت.</p>
     </section>

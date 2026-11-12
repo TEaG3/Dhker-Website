@@ -64,7 +64,7 @@ test("prayer city catalog includes Baghdad and valid calculation methods", () =>
   for (const city of cities) assert.ok(city.city && city.country && Number.isInteger(city.method));
 });
 test("standalone Mushaf uses the real RTL page-curl engine", () => {
-  assert.ok(reader.includes('src="./mushaf-reader.js?v=9"'));
+  assert.ok(reader.includes('src="./mushaf-reader.js?v=10"'));
   assert.ok(reader.includes('id="mushafBook"'));
   assert.ok(mushaf.includes('https://esm.sh/@gullabs/flipbook-core@3.2.2'));
   assert.ok(mushaf.includes('readingDirection:"rtl"'));
@@ -92,7 +92,7 @@ test("third-party source and license notices remain included", () => {
   assert.ok(upstreamLicense.startsWith("MIT License"));
 });
 test("service worker refreshes the new tabbed homepage and standalone Mushaf", () => {
-  assert.match(sw, /dhker-web-v14/);
+  assert.match(sw, /dhker-web-v15/);
   assert.match(sw, /quran-reader\.html/);
   assert.match(sw, /mushaf-reader\.js/);
   assert.match(sw, /MUSHAF_CACHE/);
@@ -149,7 +149,7 @@ test("hadith data and grading sources are attributed separately", () => {
   assert.match(html, /الموسوعة الحديثية للدرر السنية/);
 });
 test("service worker refreshes the hadith library interface", () => {
-  assert.match(sw, /dhker-web-v14/);
+  assert.match(sw, /dhker-web-v15/);
 });
 
 test("supplied hadith code is integrated without duplicate screens, globals, or inline handlers", () => {
