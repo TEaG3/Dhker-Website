@@ -1,0 +1,66 @@
+/* Dhker mobile-first web-app shell. Service engines remain in their existing files. */
+:root{--dhker-nav-height:68px}
+.mobile-app-nav{display:none}
+@media(max-width:768px){
+ html{scroll-padding-top:76px}
+ body{padding-bottom:calc(var(--dhker-nav-height) + env(safe-area-inset-bottom,0px));overflow-x:hidden}
+ #dhker-identity-bar{position:relative;z-index:30;padding:5px 10px;background:rgba(5,17,26,.94);border-bottom:1px solid var(--gold-border)}
+ #dhker-identity-bar .dhk-bar-inner{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+ #dhker-identity-bar .dhk-bar-inner::-webkit-scrollbar{display:none}
+ #dhker-identity-bar .dhk-style-group{display:flex;align-items:center;gap:6px;white-space:nowrap;flex:0 0 auto}
+ #dhker-identity-bar .dhk-label{font-size:.72rem}
+ #dhker-identity-bar .dhk-btn,#dhker-identity-bar .dhk-theme-btn{font-size:.72rem;padding:6px 9px;white-space:nowrap}
+ .ayah-ribbon{margin:8px 10px 4px;min-height:44px;padding:8px 12px;border-radius:13px;font-size:.9rem;display:flex;align-items:center;justify-content:center;text-align:center}
+ .site-header{top:0}
+ .header-inner{padding:9px 12px;min-height:62px;gap:10px}
+ .brand{display:flex;align-items:center;min-width:0}
+ .brand .dhk-injected-logo{width:38px!important;height:38px!important}
+ .brand b{font-size:1.35rem!important}
+ .menu-toggle{font-size:1.15rem;padding:7px 11px;min-width:42px}
+ .nav-list{z-index:120;top:100%;max-height:calc(100dvh - 140px);overflow:auto;padding:12px 0;gap:0;border-radius:0 0 18px 18px;clip-path:none;visibility:hidden;opacity:0;pointer-events:none;transform:translateY(-8px);transition:opacity .18s ease,transform .18s ease,visibility .18s}
+ .nav-list.active{visibility:visible;opacity:1;pointer-events:auto;transform:translateY(0);clip-path:none}
+ .nav-list li{width:100%}
+ .nav-list a{display:block;padding:13px 22px;border-bottom:1px solid rgba(212,175,55,.10)}
+ .hero{padding:1.35rem 0 1rem}
+ .hero-grid{gap:1rem}
+ .hero-content{text-align:center}
+ .status-badge{margin-bottom:.7rem;font-size:.76rem;padding:6px 12px}
+ .hero h1{font-size:clamp(2rem,8vw,2.7rem);line-height:1.25;margin:.2rem 0 .55rem}
+ .hero-desc{font-size:.94rem;line-height:1.8;max-width:36rem}
+ .cta-group{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+ .cta-group .btn{justify-content:center;text-align:center;padding:11px 8px;font-size:.82rem}
+ .small-note{font-size:.75rem;line-height:1.7}
+ .verse-card{min-height:150px;margin:8px 0 0;padding:24px 14px}
+ .service-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px;margin-bottom:20px}
+ .service-card{min-width:0;padding:15px 12px;border-radius:16px;gap:6px}
+ .service-card>span{font-size:1.55rem}
+ .service-card b{font-size:.91rem}
+ .service-card small{font-size:.73rem;line-height:1.6}
+ .app-section{padding-top:18px;padding-bottom:18px}
+ .section-heading{gap:10px;margin-bottom:15px}
+ .section-heading h2{font-size:1.55rem}
+ .section-heading p{font-size:.83rem;line-height:1.7}
+ .reader-toolbar{flex-wrap:wrap;gap:8px}
+ .reader-toolbar>*{max-width:100%}
+ .prayer-grid,.library-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .adhkar-list{gap:10px}
+ .site-footer{padding-bottom:18px}
+ .footer-grid{gap:12px}
+ .mobile-app-nav{position:fixed;z-index:300;inset:auto 0 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:stretch;min-height:var(--dhker-nav-height);padding:7px 5px calc(7px + env(safe-area-inset-bottom,0px));background:rgba(5,17,26,.96);border-top:1px solid rgba(212,175,55,.42);box-shadow:0 -8px 28px rgba(0,0,0,.3);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+ .mobile-app-nav a{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#b9c9c3;text-decoration:none;font-size:.66rem;font-weight:600;border-radius:12px;padding:3px 1px;transition:color .18s ease,background .18s ease}
+ .mobile-app-nav a .nav-icon{font-size:1.25rem;line-height:1.2}
+ .mobile-app-nav a[aria-current=page]{color:#ffe7a2;background:rgba(212,175,55,.12)}
+ .mobile-app-nav a.nav-quran{color:#64dfc0}
+ .mobile-app-nav a:focus-visible{outline:2px solid var(--gold-primary);outline-offset:-2px}
+}
+@media(min-width:769px){
+ .mobile-app-nav{display:none!important}
+}
+@media(max-width:380px){
+ .cta-group{grid-template-columns:1fr}
+ .prayer-grid,.library-grid{grid-template-columns:1fr}
+ .mobile-app-nav a{font-size:.61rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .mobile-app-nav a,.nav-list{transition:none}
+}
