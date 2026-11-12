@@ -8,6 +8,7 @@ const clampPage=n=>Math.max(1,Math.min(TOTAL_PAGES,Math.floor(Number(n)||1)));
 let currentPage=clampPage(localStorage.getItem(bookmarkKey)||localStorage.getItem("dhker-last-mushaf-page")||1);
 let pageFlip=null;
 let fallbackMode=false;
+let mobileMode=false;
 let pageElements=[];
 
 function setStatus(message,error=false){const el=$("readerStatus");el.textContent=message;el.classList.toggle("error",error);}
@@ -43,7 +44,7 @@ function updateControls(){
  const label=visible.length>1?"الصفحات "+visible[0]+"–"+visible[visible.length-1]:"الصفحة "+currentPage;
  setStatus("المصحف جاهز — "+label+" من "+TOTAL_PAGES);
  localStorage.setItem("dhker-last-mushaf-page",String(currentPage));
- preloadAround(currentPage,8);
+ preloadAround(currentPage,mobileMode?2:8);
 }
 function fallbackRender(page){
  fallbackMode=true;currentPage=clampPage(page);
@@ -64,6 +65,7 @@ function buildPages(){
 }
 async function startFlipbook(){
  const isMobile=window.matchMedia("(max-width: 767px)").matches;
+ mobileMode=isMobile;
  const preloadRadius=isMobile?2:8;
  // One PageFlip engine is used on every device; only performance settings vary.
  buildPages();
@@ -149,7 +151,7 @@ fallback.addEventListener("pointerup",event=>{
  else previousPage();      // finger travels right: return to the previous page
 });
 fallback.addEventListener("pointercancel",()=>{pointerStart=null;});
-window.addEventListener("online",()=>{if(fallbackMode)fallbackRender(currentPage);else preloadAround(currentPage,10);});
+window.addEventListener("online",()=>{if(fallbackMode)fallbackRender(currentPage);else preloadAround(currentPage,mobileMode?3:10);});
 startFlipbook();
 if("serviceWorker"in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
 })();
