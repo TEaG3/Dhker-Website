@@ -1,8 +1,8 @@
-const CACHE_NAME = "dhker-web-v18";
+const CACHE_NAME = "dhker-web-v19";
 const MUSHAF_CACHE = "dhker-mushaf-pages-v1";
 const CORE = [
   "./", "./index.html", "./quran-reader.html",
-  "./styles.css", "./islamic-identity.css", "./islamic-identity.js",
+  "./styles.css", "./mobile-app.css", "./islamic-identity.css", "./islamic-identity.js",
   "./script.js", "./mushaf-reader.js", "./THIRD-PARTY-NOTICES.md", "./manifest.webmanifest",
   "./licenses/flipbook-core-MPL-2.0.txt", "./licenses/stpageflip-MIT.txt",
   "./data/adhkar.json", "./data/references.json", "./data/cities.json"
