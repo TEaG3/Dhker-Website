@@ -63,6 +63,24 @@ function buildPages(){
  for(let n=1;n<=TOTAL_PAGES;n++){const page=makePage(n);pageElements.push(page);fragment.append(page);}
  $("mushafBook").append(fragment);
 }
+async function loadPageFlipModule(){
+ const sources=[
+  "https://esm.sh/@gullabs/flipbook-core@3.2.2",
+  "https://cdn.jsdelivr.net/npm/@gullabs/flipbook-core@3.2.2/+esm"
+ ];
+ let lastError=null;
+ for(const source of sources){
+  try{
+   const module=await import(source);
+   if(typeof module.PageFlip!=="function")throw new Error("PageFlip export missing from "+source);
+   return module;
+  }catch(error){
+   lastError=error;
+   console.warn("Dhker Mushaf engine source failed:",source,error);
+  }
+ }
+ throw lastError||new Error("No page-flip engine source could be loaded");
+}
 async function startFlipbook(){
  const isMobile=window.matchMedia("(max-width: 767px)").matches;
  mobileMode=isMobile;
@@ -71,8 +89,7 @@ async function startFlipbook(){
  buildPages();
  preloadAround(currentPage,preloadRadius);
  try{
-  const module=await import("https://esm.sh/@gullabs/flipbook-core@3.2.2");
-  if(typeof module.PageFlip!=="function")throw new Error("PageFlip export missing");
+  const module=await loadPageFlipModule();
   const PageFlip=module.PageFlip;
   pageFlip=new PageFlip($("mushafBook"),{
    width:isMobile?420:560,height:isMobile?594:790,sizing:"responsive",
@@ -100,6 +117,7 @@ async function startFlipbook(){
   console.error("Dhker Mushaf PageFlip initialization failed:",error);
   pageFlip=null;pageElements=[];
   fallbackRender(currentPage);
+  setStatus("تعذر تشغيل محرك تقليب الورق: "+(error?.message||"خطأ غير معروف"),true);
  }
 }
 function nextPage(){
