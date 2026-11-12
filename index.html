@@ -131,20 +131,68 @@
     </section>
 
     <section id="hadith" class="container app-section tab-panel" hidden>
-      <div class="section-heading"><div><span class="eyebrow">السنة النبوية</span><h2>مكتبة الحديث</h2><p>اختر كتاب الحديث ثم الباب لقراءة الأحاديث العربية.</p></div><span class="section-symbol">۞</span></div>
-      <div id="hadithBooks" class="library-grid" aria-label="كتب الحديث">
-        <p class="source-note">جارٍ تحميل كتب الحديث…</p>
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">السنة النبوية</span>
+          <h2>مكتبة الحديث</h2>
+          <p>تصفّح كتب الحديث السبعة عشر، وانتقل إلى الأبواب ثم نصوص الأحاديث، وابحث عن التخريج والدرجة في الموسوعة الحديثية للدرر السنية.</p>
+        </div>
+        <span class="section-symbol">۞</span>
       </div>
-      <div id="hadithChaptersWrap" hidden>
+
+      <section id="hadithBooksView" aria-label="فهرس كتب الحديث">
+        <div class="reader-toolbar hadith-search-toolbar">
+          <label for="hadithBookSearch">ابحث عن كتاب</label>
+          <input id="hadithBookSearch" type="search" placeholder="اسم الكتاب أو المؤلف…" autocomplete="off">
+        </div>
+        <div class="category-tabs" id="hadithBookCategories" role="group" aria-label="تصنيف كتب الحديث">
+          <button class="category-tab active" type="button" data-hadith-category="all" aria-pressed="true">كل الكتب</button>
+          <button class="category-tab" type="button" data-hadith-category="the_9_books" aria-pressed="false">الكتب التسعة</button>
+          <button class="category-tab" type="button" data-hadith-category="forties" aria-pressed="false">الأربعينات</button>
+          <button class="category-tab" type="button" data-hadith-category="other_books" aria-pressed="false">كتب أخرى</button>
+        </div>
+        <p class="source-note" id="hadithCatalogMeta" role="status">جارٍ تحميل فهرس الكتب…</p>
+        <div id="hadithBooks" class="library-grid" aria-label="كتب الحديث"></div>
+      </section>
+
+      <section id="hadithChaptersView" hidden aria-label="أبواب الكتاب">
         <div class="library-subheading">
-          <h3 id="hadithSelectedBook">أبواب الكتاب</h3>
+          <div>
+            <h3 id="hadithSelectedBook">أبواب الكتاب</h3>
+            <p class="source-note" id="hadithBookMeta"></p>
+          </div>
           <button class="btn btn-outline btn-small" id="backHadithBooks" type="button">العودة إلى الكتب</button>
         </div>
-        <div class="category-tabs" id="hadithChapters" role="tablist" aria-label="أبواب الحديث"></div>
-      </div>
-      <div class="reader-status" id="hadithStatus" role="status">اختر كتاباً لعرض أبوابه وأحاديثه.</div>
-      <div class="adhkar-list" id="hadithList"></div>
-      <p class="source-note">المصدر: Hadith-JSON عبر Al Furqan API. تُعرض بيانات الكتاب والباب مع النص العربي المتاح.</p>
+        <div class="reader-toolbar hadith-search-toolbar">
+          <label for="hadithChapterSearch">ابحث عن باب</label>
+          <input id="hadithChapterSearch" type="search" placeholder="اسم الباب…" autocomplete="off">
+        </div>
+        <div id="hadithChapters" class="library-grid" aria-label="أبواب الحديث"></div>
+      </section>
+
+      <section id="hadithReadView" hidden aria-label="أحاديث الباب">
+        <div class="library-subheading">
+          <div>
+            <h3 id="hadithSelectedChapter">الأحاديث</h3>
+            <p class="source-note" id="hadithChapterMeta"></p>
+          </div>
+          <button class="btn btn-outline btn-small" id="backHadithChapters" type="button">العودة إلى الأبواب</button>
+        </div>
+        <div class="reader-toolbar hadith-search-toolbar">
+          <label for="hadithTextSearch">ابحث في أحاديث هذا الباب</label>
+          <input id="hadithTextSearch" type="search" placeholder="كلمة من نص الحديث…" autocomplete="off">
+        </div>
+        <div id="hadithList" class="adhkar-list"></div>
+        <div class="hadith-more-wrap" id="hadithMoreWrap" hidden>
+          <button class="btn btn-outline" id="hadithLoadMore" type="button">عرض المزيد من الأحاديث</button>
+        </div>
+      </section>
+
+      <p class="reader-status" id="hadithStatus" role="status" aria-live="polite">اختر كتاباً لبدء التصفح.</p>
+      <p class="source-note hadith-attribution">
+        مصدر النصوص والفهارس: <a href="https://alfurqan.online/docs" target="_blank" rel="noopener">Al Furqan Hadith API</a>، الذي يعرّف بمصدر البيانات <a href="https://github.com/AhmedBaset/hadith-json/tree/v1.2.0" target="_blank" rel="noopener">Hadith-JSON</a>.
+        نتائج التخريج والدرجة تُبحث بشكل منفصل عبر <a href="https://dorar.net/" target="_blank" rel="noopener">الموسوعة الحديثية للدرر السنية</a>. لا تُعرض درجة للحديث ما لم ترجعها نتيجة بحث من المصدر.
+      </p>
     </section>
     <section id="audio" class="container app-section tab-panel" hidden>
       <div class="section-heading"><div><span class="eyebrow">استمع</span><h2>مكتبة الأذان</h2><p>اختر نوع الأذان من التبويبات، ثم شغّل التسجيل أو أوقفه في أي وقت.</p></div><span class="section-symbol">♫</span></div>

@@ -459,118 +459,403 @@ async function setupQuranAudio() {
   await refreshCatalog();
 }
 async function setupHadithLibrary() {
-  const booksEl = $("hadithBooks");
-  const chaptersWrap = $("hadithChaptersWrap");
-  const chaptersEl = $("hadithChapters");
-  const selectedBookEl = $("hadithSelectedBook");
-  const backButton = $("backHadithBooks");
-  const list = $("hadithList");
-  const status = $("hadithStatus");
-  if (!booksEl || !chaptersWrap || !chaptersEl || !selectedBookEl || !backButton || !list || !status) return;
+  const API = "https://alfurqan.online/api/v1/hadith";
+  const DORAR_API = "https://dorar.net/dorar_api.json";
+  const $h = (id) => document.getElementById(id);
 
-  const api = "https://alfurqan.online/api/v1/hadith";
+  const booksView = $h("hadithBooksView");
+  const chaptersView = $h("hadithChaptersView");
+  const readView = $h("hadithReadView");
+  const booksGrid = $h("hadithBooks");
+  const chaptersGrid = $h("hadithChapters");
+  const hadithList = $h("hadithList");
+  const status = $h("hadithStatus");
+  const catalogMeta = $h("hadithCatalogMeta");
+  const bookSearch = $h("hadithBookSearch");
+  const chapterSearch = $h("hadithChapterSearch");
+  const textSearch = $h("hadithTextSearch");
+  const categoryBar = $h("hadithBookCategories");
+  const selectedBookTitle = $h("hadithSelectedBook");
+  const selectedBookMeta = $h("hadithBookMeta");
+  const selectedChapterTitle = $h("hadithSelectedChapter");
+  const selectedChapterMeta = $h("hadithChapterMeta");
+  const moreWrap = $h("hadithMoreWrap");
+  const moreButton = $h("hadithLoadMore");
+  const backBooks = $h("backHadithBooks");
+  const backChapters = $h("backHadithChapters");
 
-  function showBooks() {
-    booksEl.hidden = false;
-    chaptersWrap.hidden = true;
-    list.replaceChildren();
-    status.textContent = "اختر كتاباً لعرض أبوابه وأحاديثه.";
+  if (!booksView || !chaptersView || !readView || !booksGrid || !chaptersGrid || !hadithList || !status) return;
+
+  const PAGE_SIZE = 20;
+  let books = [];
+  let selectedCategory = "all";
+  let selectedBook = null;
+  let selectedBookInfo = null;
+  let chapters = [];
+  let activeChapter = null;
+  let chapterHadiths = [];
+  let visibleHadiths = [];
+  let renderedCount = 0;
+  let dorarRequestId = 0;
+
+  const normalizeArabic = (value) => String(value || "")
+    .normalize("NFD")
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, "")
+    .replace(/[أإآ]/g, "ا")
+    .replace(/ى/g, "ي")
+    .replace(/ة/g, "ه")
+    .toLowerCase()
+    .trim();
+
+  async function fetchJson(url) {
+    const response = await fetch(url, { headers: { Accept: "application/json" } });
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    return response.json();
   }
 
-  async function loadChapter(bookId, chapterId, activeTab) {
-    chaptersEl.querySelectorAll(".category-tab").forEach((tab) => {
-      const selected = tab === activeTab;
-      tab.classList.toggle("active", selected);
-      tab.setAttribute("aria-selected", String(selected));
+  function setStatus(message) {
+    status.textContent = message;
+  }
+
+  function showView(view) {
+    booksView.hidden = view !== "books";
+    chaptersView.hidden = view !== "chapters";
+    readView.hidden = view !== "read";
+  }
+
+  function makeMetaLine(parts) {
+    const line = document.createElement("small");
+    line.className = "source-note hadith-meta-line";
+    line.textContent = parts.filter(Boolean).join(" • ");
+    return line;
+  }
+
+  function renderBooks() {
+    booksGrid.replaceChildren();
+    const query = normalizeArabic(bookSearch?.value);
+    const filtered = books.filter((book) => {
+      const categoryMatch = selectedCategory === "all" || book.category === selectedCategory;
+      const haystack = normalizeArabic([book.name_ar, book.name_en, book.author_ar, book.author_en].join(" "));
+      return categoryMatch && (!query || haystack.includes(query));
     });
-    status.textContent = "جارٍ تحميل الأحاديث…";
-    list.replaceChildren();
-    try {
-      const response = await fetch(api + "/" + encodeURIComponent(bookId) + "/chapter/" + encodeURIComponent(chapterId));
-      if (!response.ok) throw new Error("Hadith chapter request failed");
-      const data = await response.json();
-      const items = data.hadiths || data.chapter?.hadiths || [];
-      for (const item of items) {
-        const card = document.createElement("article");
-        card.className = "dhikr-card";
-        const number = document.createElement("small");
-        number.className = "source-note";
-        number.textContent = "حديث رقم " + (item.idInBook || item.id || "");
-        const text = document.createElement("p");
-        text.className = "dhikr-text";
-        text.textContent = item.arabic || item.text_ar || item.text || "النص العربي غير متاح";
-        card.append(number, text);
-        list.append(card);
-      }
-      status.textContent = items.length ? "الأحاديث المعروضة: " + items.length : "لا توجد أحاديث متاحة في هذا الباب.";
-    } catch {
-      status.textContent = "تعذر تحميل أحاديث هذا الباب. حاول اختيار باب آخر.";
-    }
-  }
 
-  async function loadBook(book) {
-    status.textContent = "جارٍ تحميل أبواب " + (book.name_ar || book.name || "الكتاب") + "…";
-    list.replaceChildren();
-    chaptersEl.replaceChildren();
-    booksEl.hidden = true;
-    chaptersWrap.hidden = false;
-    selectedBookEl.textContent = book.name_ar || book.name || book.name_en || "أبواب الكتاب";
-    try {
-      const response = await fetch(api + "/" + encodeURIComponent(book.id));
-      if (!response.ok) throw new Error("Hadith book request failed");
-      const data = await response.json();
-      const chapters = data.chapters || data.book?.chapters || [];
-      if (!chapters.length) {
-        status.textContent = "لا توجد أبواب متاحة لهذا الكتاب.";
-        return;
-      }
-      for (const chapter of chapters) {
-        const chapterId = chapter.id ?? chapter.chapterId;
-        if (chapterId === undefined || chapterId === null) continue;
-        const tab = document.createElement("button");
-        tab.type = "button";
-        tab.className = "category-tab";
-        tab.setAttribute("role", "tab");
-        tab.setAttribute("aria-selected", "false");
-        tab.textContent = chapter.name_ar || chapter.name || chapter.title || ("الباب " + chapterId);
-        tab.addEventListener("click", () => loadChapter(book.id, chapterId, tab));
-        chaptersEl.append(tab);
-      }
-      const firstTab = chaptersEl.querySelector(".category-tab");
-      if (firstTab) firstTab.click();
-      else status.textContent = "لم يتم العثور على أبواب قابلة للعرض.";
-    } catch {
-      status.textContent = "تعذر تحميل أبواب الكتاب. تحقق من الاتصال.";
-    }
-  }
-
-  backButton.addEventListener("click", showBooks);
-
-  try {
-    const response = await fetch(api + "/list");
-    if (!response.ok) throw new Error("Hadith books request failed");
-    const data = await response.json();
-    const books = data.books || data.items || data.data || [];
-    if (!books.length) throw new Error("Empty hadith catalog");
-    booksEl.replaceChildren();
-    for (const book of books) {
-      if (!book.id) continue;
+    for (const book of filtered) {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = "library-entry";
+      button.className = "library-entry hadith-book-entry";
       const title = document.createElement("b");
-      const detail = document.createElement("small");
-      title.textContent = book.name_ar || book.name || book.name_en || book.id;
-      detail.textContent = book.name_en || "اضغط لعرض الأبواب والأحاديث";
-      button.append(title, detail);
-      button.addEventListener("click", () => loadBook(book));
-      booksEl.append(button);
+      title.textContent = book.name_ar || book.name_en || book.id;
+      const description = document.createElement("small");
+      description.textContent = [book.author_ar || book.author_en, book.total_hadiths ? Number(book.total_hadiths).toLocaleString("ar") + " حديثاً" : "", book.total_chapters ? Number(book.total_chapters).toLocaleString("ar") + " باباً" : ""].filter(Boolean).join(" • ");
+      const category = document.createElement("span");
+      category.className = "hadith-book-tag";
+      category.textContent = book.category === "the_9_books" ? "الكتب التسعة" : book.category === "forties" ? "الأربعينات" : "كتب أخرى";
+      button.append(title, description, category);
+      button.addEventListener("click", () => openBook(book));
+      booksGrid.append(button);
     }
-    if (!booksEl.children.length) throw new Error("No usable books");
-    status.textContent = "اختر كتاباً لعرض أبوابه وأحاديثه.";
+
+    if (catalogMeta) {
+      catalogMeta.textContent = filtered.length
+        ? "المعروض " + filtered.length.toLocaleString("ar") + " من أصل " + books.length.toLocaleString("ar") + " كتاباً."
+        : "لا توجد كتب تطابق عبارة البحث.";
+    }
+  }
+
+  function updateCategoryButtons() {
+    categoryBar?.querySelectorAll("[data-hadith-category]").forEach((button) => {
+      const active = button.dataset.hadithCategory === selectedCategory;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+  }
+
+  function renderChapters() {
+    chaptersGrid.replaceChildren();
+    const query = normalizeArabic(chapterSearch?.value);
+    const filtered = chapters.filter((chapter) => {
+      const title = normalizeArabic([chapter.arabic, chapter.name_ar, chapter.english, chapter.name].join(" "));
+      return !query || title.includes(query);
+    });
+
+    for (const chapter of filtered) {
+      const chapterId = chapter.id ?? chapter.chapterId;
+      if (chapterId === undefined || chapterId === null) continue;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "library-entry hadith-chapter-entry";
+      const title = document.createElement("b");
+      title.textContent = chapter.arabic || chapter.name_ar || chapter.name || ("الباب " + chapterId);
+      const detail = document.createElement("small");
+      const range = Array.isArray(chapter.hadith_range) ? "الأحاديث " + chapter.hadith_range[0] + "–" + chapter.hadith_range[1] : "";
+      detail.textContent = [chapter.hadith_count ? Number(chapter.hadith_count).toLocaleString("ar") + " حديثاً" : "", range].filter(Boolean).join(" • ");
+      button.append(title, detail);
+      button.addEventListener("click", () => loadChapter(chapter, button));
+      chaptersGrid.append(button);
+    }
+    if (!filtered.length) {
+      const empty = document.createElement("p");
+      empty.className = "source-note";
+      empty.textContent = "لا توجد أبواب مطابقة للبحث.";
+      chaptersGrid.append(empty);
+    }
+  }
+
+  function renderDorarResults(container, results, message) {
+    container.replaceChildren();
+    if (!results.length) {
+      const empty = document.createElement("p");
+      empty.className = "dorar-empty";
+      empty.textContent = message || "لم تظهر نتائج مطابقة. جرّب البحث بعبارة أقصر من متن الحديث.";
+      container.append(empty);
+      return;
+    }
+
+    const note = document.createElement("p");
+    note.className = "dorar-caution";
+    note.textContent = "نتائج بحث من الدرر السنية. طابق نص الحديث والراوي والمرجع قبل اعتماد التخريج أو الدرجة.";
+    container.append(note);
+
+    for (const item of results.slice(0, 8)) {
+      const card = document.createElement("article");
+      card.className = "dorar-result-card";
+      const text = document.createElement("p");
+      text.className = "dorar-result-text";
+      text.textContent = item.th || item.hadith || item.text || item.hadithText || "نص الحديث غير متاح في نتيجة البحث.";
+      const metadata = [];
+      const narrator = item.rawi || item.narrator || item.sahabi;
+      const scholar = item.mohdith || item.muhaddith || item.scholar;
+      const book = item.book || item.source || item.collection;
+      const number = item.numberOrPage || item.number || item.page || item.reference;
+      const grade = item.grade || item.hukm || item.hukmText || item.grading;
+      if (narrator) metadata.push("الراوي: " + narrator);
+      if (scholar) metadata.push("المحدّث: " + scholar);
+      if (book) metadata.push("المصدر: " + book);
+      if (number) metadata.push("الرقم/الصفحة: " + number);
+      if (grade) metadata.push("الدرجة: " + grade);
+      const meta = makeMetaLine(metadata);
+      card.append(text);
+      if (metadata.length) card.append(meta);
+      container.append(card);
+    }
+  }
+
+  function searchDorar(hadith, container, button) {
+    const originalText = String(hadith.arabic || hadith.text_ar || hadith.text || "").replace(/\s+/g, " ").trim();
+    const query = originalText.slice(0, 160);
+    if (!query) {
+      container.textContent = "لا يوجد نص عربي متاح للبحث عنه.";
+      return;
+    }
+
+    const requestId = ++dorarRequestId;
+    button.disabled = true;
+    button.textContent = "جارٍ البحث…";
+    container.replaceChildren();
+    const loading = document.createElement("p");
+    loading.className = "dorar-empty";
+    loading.textContent = "يجري البحث عن النص في الموسوعة الحديثية…";
+    container.append(loading);
+
+    const callbackName = "dhkerDorarCallback" + requestId + "_" + Date.now();
+    const scriptTag = document.createElement("script");
+    let finished = false;
+    let timeoutId;
+
+    const cleanup = () => {
+      scriptTag.remove();
+      if (timeoutId) clearTimeout(timeoutId);
+      try { delete window[callbackName]; } catch { window[callbackName] = undefined; }
+      button.disabled = false;
+      button.textContent = "ابحث عن التخريج والدرجة";
+    };
+
+    const finish = (results, errorMessage) => {
+      if (finished) return;
+      finished = true;
+      cleanup();
+      if (errorMessage) {
+        renderDorarResults(container, [], errorMessage);
+        return;
+      }
+      renderDorarResults(container, Array.isArray(results) ? results : [], "لم تظهر نتائج مطابقة في الدرر السنية.");
+    };
+
+    window[callbackName] = (data) => {
+      if (requestId !== dorarRequestId) return finish([], "تم تجاوز نتيجة بحث قديمة.");
+      finish(data?.ahadith || data?.results || [], "");
+    };
+
+    timeoutId = setTimeout(() => finish([], "لم يصل رد من خدمة الدرر السنية. حاول مرة أخرى لاحقاً."), 18000);
+    scriptTag.async = true;
+    scriptTag.onerror = () => finish([], "تعذر الاتصال بواجهة الدرر السنية حالياً.");
+    scriptTag.src = DORAR_API + "?skey=" + encodeURIComponent(query) + "&callback=" + encodeURIComponent(callbackName);
+    document.head.append(scriptTag);
+  }
+
+  function createHadithCard(hadith, index) {
+    const card = document.createElement("article");
+    card.className = "dhikr-card hadith-entry-card";
+
+    const bookName = selectedBook?.name_ar || selectedBookInfo?.name_ar;
+    const chapterName = activeChapter?.arabic || activeChapter?.name_ar;
+    const number = hadith.idInBook ?? hadith.id ?? (index + 1);
+    const header = makeMetaLine([bookName, chapterName, "الحديث رقم " + number]);
+    const arabic = document.createElement("p");
+    arabic.className = "dhikr-text hadith-arabic-text";
+    arabic.textContent = hadith.arabic || hadith.text_ar || hadith.text || "النص العربي غير متاح.";
+
+    card.append(header, arabic);
+
+    const english = hadith.english;
+    if (english && (english.narrator || english.text)) {
+      const details = document.createElement("details");
+      details.className = "hadith-translation";
+      const summary = document.createElement("summary");
+      summary.textContent = "عرض الترجمة الإنجليزية";
+      const translation = document.createElement("div");
+      translation.className = "hadith-translation-body";
+      if (english.narrator) {
+        const narrator = document.createElement("p");
+        narrator.textContent = english.narrator;
+        narrator.className = "hadith-english-narrator";
+        translation.append(narrator);
+      }
+      if (english.text) {
+        const text = document.createElement("p");
+        text.textContent = english.text;
+        translation.append(text);
+      }
+      details.append(summary, translation);
+      card.append(details);
+    }
+
+    const actions = document.createElement("div");
+    actions.className = "hadith-entry-actions";
+    const takhrijButton = document.createElement("button");
+    takhrijButton.type = "button";
+    takhrijButton.className = "btn btn-outline btn-small";
+    takhrijButton.textContent = "ابحث عن التخريج والدرجة";
+    const resultBox = document.createElement("div");
+    resultBox.className = "dorar-results";
+    takhrijButton.addEventListener("click", () => searchDorar(hadith, resultBox, takhrijButton));
+    actions.append(takhrijButton);
+    card.append(actions, resultBox);
+    return card;
+  }
+
+  function renderHadiths(reset = false) {
+    if (reset) {
+      hadithList.replaceChildren();
+      renderedCount = 0;
+    }
+
+    const query = normalizeArabic(textSearch?.value);
+    visibleHadiths = chapterHadiths.filter((hadith) => {
+      const english = hadith.english || {};
+      const content = normalizeArabic([hadith.arabic, hadith.text_ar, hadith.text, english.narrator, english.text].join(" "));
+      return !query || content.includes(query);
+    });
+
+    const nextItems = visibleHadiths.slice(renderedCount, renderedCount + PAGE_SIZE);
+    nextItems.forEach((hadith) => hadithList.append(createHadithCard(hadith, chapterHadiths.indexOf(hadith))));
+    renderedCount += nextItems.length;
+    moreWrap.hidden = renderedCount >= visibleHadiths.length;
+    if (reset) {
+      setStatus(visibleHadiths.length
+        ? "عدد الأحاديث في هذا الباب: " + visibleHadiths.length.toLocaleString("ar") + " — يُعرض " + Math.min(PAGE_SIZE, visibleHadiths.length).toLocaleString("ar") + " أولاً."
+        : "لا توجد أحاديث تطابق عبارة البحث.");
+    } else if (!visibleHadiths.length) {
+      setStatus("لا توجد أحاديث تطابق عبارة البحث.");
+    }
+  }
+
+  async function loadChapter(chapter, activeButton) {
+    activeChapter = chapter;
+    chaptersGrid.querySelectorAll(".library-entry").forEach((button) => button.classList.toggle("selected", button === activeButton));
+    showView("read");
+    selectedChapterTitle.textContent = chapter.arabic || chapter.name_ar || chapter.name || "أحاديث الباب";
+    selectedChapterMeta.textContent = selectedBook?.name_ar || "";
+    if (textSearch) textSearch.value = "";
+    hadithList.replaceChildren();
+    moreWrap.hidden = true;
+    setStatus("جارٍ تحميل أحاديث هذا الباب…");
+
+    try {
+      const chapterId = chapter.id ?? chapter.chapterId;
+      const data = await fetchJson(API + "/" + encodeURIComponent(selectedBook.id) + "/chapter/" + encodeURIComponent(chapterId));
+      chapterHadiths = data.hadiths || data.chapter?.hadiths || [];
+      activeChapter = data.chapter || chapter;
+      selectedChapterTitle.textContent = activeChapter.arabic || activeChapter.name_ar || activeChapter.name || "أحاديث الباب";
+      const declaredCount = data.hadith_count || chapter.hadith_count || chapterHadiths.length;
+      selectedChapterMeta.textContent = [selectedBook.name_ar, Number(declaredCount).toLocaleString("ar") + " حديثاً"].filter(Boolean).join(" • ");
+      renderHadiths(true);
+    } catch {
+      chapterHadiths = [];
+      selectedChapterMeta.textContent = "";
+      setStatus("تعذر تحميل أحاديث هذا الباب من المصدر. تحقق من الاتصال ثم حاول مرة أخرى.");
+    }
+  }
+
+  async function openBook(book) {
+    selectedBook = book;
+    selectedBookInfo = book;
+    chapters = [];
+    chapterHadiths = [];
+    if (chapterSearch) chapterSearch.value = "";
+    chaptersGrid.replaceChildren();
+    showView("chapters");
+    selectedBookTitle.textContent = book.name_ar || book.name_en || "أبواب الكتاب";
+    selectedBookMeta.textContent = [book.author_ar || book.author_en, book.total_hadiths ? Number(book.total_hadiths).toLocaleString("ar") + " حديثاً" : "", book.total_chapters ? Number(book.total_chapters).toLocaleString("ar") + " باباً" : ""].filter(Boolean).join(" • ");
+    setStatus("جارٍ تحميل فهرس الأبواب…");
+
+    try {
+      const data = await fetchJson(API + "/" + encodeURIComponent(book.id));
+      selectedBookInfo = data.book || book;
+      chapters = Array.isArray(data.chapters) ? data.chapters : [];
+      if (!chapters.length) {
+        setStatus("لا توجد أبواب متاحة لهذا الكتاب حالياً.");
+        return;
+      }
+      renderChapters();
+      setStatus("اختر باباً لعرض أحاديثه.");
+    } catch {
+      setStatus("تعذر تحميل أبواب الكتاب. تحقق من الاتصال ثم حاول مرة أخرى.");
+    }
+  }
+
+  categoryBar?.querySelectorAll("[data-hadith-category]").forEach((button) => {
+    button.addEventListener("click", () => {
+      selectedCategory = button.dataset.hadithCategory || "all";
+      updateCategoryButtons();
+      renderBooks();
+    });
+  });
+  bookSearch?.addEventListener("input", renderBooks);
+  chapterSearch?.addEventListener("input", renderChapters);
+  textSearch?.addEventListener("input", () => renderHadiths(true));
+  moreButton?.addEventListener("click", () => renderHadiths(false));
+
+  backBooks?.addEventListener("click", () => {
+    showView("books");
+    setStatus("اختر كتاباً لعرض أبوابه.");
+  });
+  backChapters?.addEventListener("click", () => {
+    showView("chapters");
+    setStatus("اختر باباً من " + (selectedBook?.name_ar || "الكتاب") + ".");
+  });
+
+  try {
+    setStatus("جارٍ تحميل فهرس الكتب السبعة عشر…");
+    const data = await fetchJson(API + "/list");
+    books = data.books || data.items || data.data || [];
+    if (!books.length) throw new Error("Empty hadith catalog");
+    books = books.filter((book) => book.id);
+    renderBooks();
+    setStatus("المكتبة جاهزة — " + books.length.toLocaleString("ar") + " كتاباً. اختر كتاباً للبدء.");
   } catch {
-    booksEl.replaceChildren();
-    status.textContent = "تعذر تحميل فهرس كتب الحديث حالياً. تحقق من الاتصال.";
+    catalogMeta.textContent = "تعذر تحميل فهرس الكتب.";
+    setStatus("تعذر تحميل فهرس كتب الحديث حالياً. تحقق من الاتصال ثم أعد المحاولة.");
   }
 }
 function setupNavigation() {
