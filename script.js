@@ -470,6 +470,7 @@ async function setupHadithLibrary() {
   const chaptersGrid = $h("hadithChapters");
   const hadithList = $h("hadithList");
   const status = $h("hadithStatus");
+  const loader = $h("hadithLoader");
   const catalogMeta = $h("hadithCatalogMeta");
   const bookSearch = $h("hadithBookSearch");
   const chapterSearch = $h("hadithChapterSearch");
@@ -513,8 +514,9 @@ async function setupHadithLibrary() {
     return response.json();
   }
 
-  function setStatus(message) {
+  function setStatus(message, loading = false) {
     status.textContent = message;
+    if (loader) loader.hidden = !loading;
   }
 
   function showView(view) {
@@ -779,7 +781,7 @@ async function setupHadithLibrary() {
     if (textSearch) textSearch.value = "";
     hadithList.replaceChildren();
     moreWrap.hidden = true;
-    setStatus("جارٍ تحميل أحاديث هذا الباب…");
+    setStatus("جارٍ تحميل أحاديث هذا الباب…", true);
 
     try {
       const chapterId = chapter.id ?? chapter.chapterId;
@@ -807,7 +809,7 @@ async function setupHadithLibrary() {
     showView("chapters");
     selectedBookTitle.textContent = book.name_ar || book.name_en || "أبواب الكتاب";
     selectedBookMeta.textContent = [book.author_ar || book.author_en, book.total_hadiths ? Number(book.total_hadiths).toLocaleString("ar") + " حديثاً" : "", book.total_chapters ? Number(book.total_chapters).toLocaleString("ar") + " باباً" : ""].filter(Boolean).join(" • ");
-    setStatus("جارٍ تحميل فهرس الأبواب…");
+    setStatus("جارٍ تحميل فهرس الأبواب…", true);
 
     try {
       const data = await fetchJson(API + "/" + encodeURIComponent(book.id));
@@ -846,7 +848,7 @@ async function setupHadithLibrary() {
   });
 
   try {
-    setStatus("جارٍ تحميل فهرس الكتب السبعة عشر…");
+    setStatus("جارٍ تحميل فهرس الكتب السبعة عشر…", true);
     const data = await fetchJson(API + "/list");
     books = data.books || data.items || data.data || [];
     if (!books.length) throw new Error("Empty hadith catalog");
