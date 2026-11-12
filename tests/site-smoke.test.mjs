@@ -149,7 +149,7 @@ test("hadith library uses the documented 17-book API with book, chapter and hadi
   assert.ok(script.includes("PAGE_SIZE = 20"));
 });
 test("hadith takhrij opens official Dorar search in a new tab without client-side API tokens or JSONP", () => {
-  assert.match(html, /https:\/\/dorar\.net\/hadith/);
+  assert.match(script, /https:\/\/dorar\.net\/hadith\/search/);
   assert.ok(script.includes('"https://dorar.net/hadith/search?q=" + encodeURIComponent(originalText.slice(0, 160))'));
   assert.ok(script.includes('takhrijLink.target = "_blank"'));
   assert.ok(script.includes('takhrijLink.rel = "noopener noreferrer"'));
@@ -213,13 +213,13 @@ test("mobile-first app shell provides bottom navigation without replacing servic
 test("Mushaf leftward swipe advances the ascending Quran page sequence", () => {
   assert.match(mushaf, /readingDirection:"ltr"/);
   assert.match(mushaf, /for\(let n=1;n<=TOTAL_PAGES;n\+\+\)/);
-  assert.match(html, /mushaf-reader\.js\?v=14/);
+  assert.match(reader, /mushaf-reader\.js\?v=14/);
   assert.match(sw, /dhker-web-v22/);
 });
 
 test("Hadith page uses a concise verification action and project design credit", () => {
   assert.doesNotMatch(html, /مصدر النصوص والفهارس|Hadith-JSON/);
-  assert.match(html, /سنة الإنشاء 2026 \| تصميم أبو عبّد المهيمن العراقي/);
+  assert.ok(html.includes("© 2026 ذِكر  | تصميم أبو عبّد المهيمن العراقي"));
   assert.match(script, /التحقق من صحة الحديث والتخريج/);
   assert.doesNotMatch(script, /يفتح البحث في موقع الدرر السنية الرسمي/);
   assert.match(sw, /dhker-web-v22/);
