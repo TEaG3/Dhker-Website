@@ -215,7 +215,7 @@ test("mobile-first app shell provides bottom navigation without replacing servic
 test("Mushaf leftward swipe advances the ascending Quran page sequence", () => {
   assert.match(mushaf, /readingDirection:isMobile\?"ltr":"rtl"/);
   assert.match(mushaf, /for\(let n=1;n<=TOTAL_PAGES;n\+\+\)/);
-  assert.match(reader, /mushaf-reader\\.js\\?v=15/);
+  assert.ok(reader.includes("mushaf-reader.js?v=15"));
   assert.match(sw, /dhker-web-v24/);
 });
 
