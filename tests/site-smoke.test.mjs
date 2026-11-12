@@ -67,7 +67,7 @@ test("prayer city catalog includes Baghdad and valid calculation methods", () =>
   for (const city of cities) assert.ok(city.city && city.country && Number.isInteger(city.method));
 });
 test("standalone Mushaf uses the page-curl engine with ascending Arabic page order", () => {
-  assert.ok(reader.includes('src="./mushaf-reader.js?v=14"'));
+  assert.ok(reader.includes('src="./mushaf-reader.js?v=15"'));
   assert.ok(reader.includes('id="mushafBook"'));
   assert.ok(mushaf.includes('import("./vendor/flipbook-core/index.js")'));
   assert.doesNotMatch(mushaf, /esm\\.sh|cdn\\.jsdelivr\\.net/);
@@ -163,7 +163,7 @@ test("hadith data and grading sources are attributed separately", () => {
   assert.ok(script.includes("https://dorar.net/hadith/search?q="));
 });
 test("service worker refreshes the hadith library interface", () => {
-  assert.match(sw, /dhker-web-v23/);
+  assert.match(sw, /dhker-web-v24/);
 });
 
 test("supplied hadith code is integrated without duplicate screens, globals, or inline handlers", () => {
@@ -208,7 +208,7 @@ test("mobile-first app shell provides bottom navigation without replacing servic
   assert.match(html, /href="\.\/quran-reader\.html"/);
   assert.match(mobileCss, /mobile-app-nav/);
   assert.ok(script.includes('.mobile-app-nav a[href^="#"]'));
-  assert.match(sw, /dhker-web-v23/);
+  assert.match(sw, /dhker-web-v24/);
   assert.match(sw, /mobile-app\.css/);
 });
 
@@ -216,7 +216,7 @@ test("Mushaf leftward swipe advances the ascending Quran page sequence", () => {
   assert.match(mushaf, /readingDirection:isMobile\?"ltr":"rtl"/);
   assert.match(mushaf, /for\(let n=1;n<=TOTAL_PAGES;n\+\+\)/);
   assert.match(reader, /mushaf-reader\.js\?v=14/);
-  assert.match(sw, /dhker-web-v23/);
+  assert.match(sw, /dhker-web-v24/);
 });
 
 test("Hadith page uses a concise verification action and project design credit", () => {
@@ -224,7 +224,7 @@ test("Hadith page uses a concise verification action and project design credit",
   assert.ok(html.includes("© 2026 ذِكر  | تصميم أبو عبّد المهيمن العراقي"));
   assert.match(script, /التحقق من صحة الحديث والتخريج/);
   assert.doesNotMatch(script, /يفتح البحث في موقع الدرر السنية الرسمي/);
-  assert.match(sw, /dhker-web-v23/);
+  assert.match(sw, /dhker-web-v24/);
 });
 
 
@@ -245,7 +245,7 @@ test("PWA metadata supports standalone installation on mobile browsers", () => {
 test("service worker uses network-first navigation and versioned cache for app shell", () => {
   assert.match(sw, /request\.mode === "navigate"/);
   assert.match(sw, /await fetch\(request\)/);
-  assert.match(sw, /dhker-web-v23/);
+  assert.match(sw, /dhker-web-v24/);
 });
 
 test("mobile service panels remove decorative header strips and reserve space for bottom navigation", () => {
