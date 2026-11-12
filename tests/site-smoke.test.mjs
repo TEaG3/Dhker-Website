@@ -97,3 +97,22 @@ test("service worker refreshes the new tabbed homepage and standalone Mushaf", (
   assert.match(sw, /MUSHAF_CACHE/);
   assert.match(sw, /raw\.githubusercontent\.com/);
 });
+
+test("recitation player remains available in its own tab without embedded Quran pages", () => {
+  assert.match(html, /id="recitations"/);
+  assert.match(html, /href="#recitations"/);
+  assert.match(html, /id="quranAudioSource"/);
+  assert.match(html, /id="quranReciter"/);
+  assert.match(html, /id="quranSurah"/);
+  assert.match(html, /id="playQuranRecitation"/);
+  assert.match(html, /id="quranPlayer"/);
+  assert.match(html, /id="quranAudioStatus"/);
+  assert.ok(script.includes("setupQuranAudio();"));
+  assert.ok(script.includes("async function setupQuranAudio()"));
+  assert.doesNotMatch(html, /id="quranContent"|id="quranStatus"|id="quranPage"/);
+});
+test("Mushaf header is opaque and does not overlay the page with the global identity frieze", () => {
+  assert.match(reader, /background:#07130f!important/);
+  assert.match(reader, /\.mushaf-header::before,.mushaf-header::after\{content:none!important/);
+  assert.match(reader, /position:relative;top:auto/);
+});
