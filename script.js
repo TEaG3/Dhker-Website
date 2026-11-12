@@ -361,6 +361,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   $("quranPage").addEventListener("keydown", (event) => {
     if (event.key === "Enter") loadQuranPage($("quranPage").value);
   });
+  document.addEventListener("keydown", (event) => {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.target.closest("input,select,textarea,button,a,[contenteditable=true]")) return;
+    const section = $("quran");
+    const bounds = section?.getBoundingClientRect();
+    if (!bounds || bounds.bottom <= 0 || bounds.top >= window.innerHeight) return;
+    if (event.key === "ArrowLeft") { event.preventDefault(); loadQuranPage(Number($("quranPage").value) + 1); }
+    else if (event.key === "ArrowRight") { event.preventDefault(); loadQuranPage(Number($("quranPage").value) - 1); }
+  });
   loadQuranPage(Number(localStorage.getItem("dhker-last-quran-page") || 1));
   try { await loadCities(); } catch { $("prayerStatus").textContent = "تعذر تحميل المدن. تحقق من الاتصال ثم أعد تحميل الصفحة."; }
   try { await loadAdhkar(); } catch { $("adhkarList").textContent = "تعذر تحميل الأذكار."; }
