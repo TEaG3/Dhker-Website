@@ -1,4 +1,4 @@
-const CACHE_NAME = "dhker-web-v9";
+const CACHE_NAME = "dhker-web-v10";
 const MUSHAF_CACHE = "dhker-mushaf-pages-v1";
 const CORE = [
   "./", "./index.html", "./quran-reader.html",
