@@ -9,7 +9,7 @@ Used by the standalone Mushaf reader for HTML page-curl animation and right-to-l
 - License: Mozilla Public License 2.0 (MPL-2.0)
 - License text: licenses/flipbook-core-MPL-2.0.txt
 
-The unmodified package is loaded from the npm distribution through esm.sh. Its source form is available from the linked public repository. This website does not copy or modify the engine source.
+The unmodified version 3.2.2 browser bundle and stylesheet are vendored locally at `vendor/flipbook-core/` and served from this website. The original MPL-2.0 license text is included above at `licenses/flipbook-core-MPL-2.0.txt`. The upstream source form is available from the linked public repository. The vendored files are unmodified.
 
 ## Upstream StPageFlip notice
 
