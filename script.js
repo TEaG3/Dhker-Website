@@ -75,6 +75,8 @@ async function loadQuranPage(page) {
     if (payload.code !== 200 || !payload.data?.ayahs?.length) throw new Error("استجابة غير مكتملة");
     await cachePage(number, payload.data);
     localStorage.setItem("dhker-last-quran-page", String(number));
+    $("prevPage").disabled = number <= 1;
+    $("nextPage").disabled = number >= 604;
     renderQuranPage(payload.data, false);
   } catch (error) {
     const cached = await readCachedPage(number);
@@ -281,7 +283,8 @@ async function setupQuranAudio() {
     catch (error) { stopPlayback("تعذر تشغيل الملف الصوتي. تحقق من الاتصال أو اختر مصدراً آخر."); }
   }
   player.addEventListener("ended", () => {
-    if (!playback || !playback.queue) return;
+    if (!playback) return;
+    if (!playback.queue) { stopPlayback("انتهت التلاوة."); return; }
     if (playback.index + 1 < playback.queue.length) { playback.index += 1; playAyahQueue(requestToken); }
     else stopPlayback("اكتملت تلاوة السورة.");
   });
