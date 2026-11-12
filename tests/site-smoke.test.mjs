@@ -54,9 +54,9 @@ test("hadith library provides book tiles, chapter tabs, and a back control", () 
   assert.match(html, /id="hadithBooks"/);
   assert.match(html, /id="hadithChapters"/);
   assert.match(html, /id="backHadithBooks"/);
-  assert.ok(script.includes('button.addEventListener("click", () => loadBook(book))'));
-  assert.ok(script.includes('tab.addEventListener("click", () => loadChapter(book.id, chapterId, tab))'));
-  assert.ok(script.includes('backButton.addEventListener("click", showBooks)'));
+  assert.ok(script.includes('button.addEventListener("click", () => openBook(book))'));
+  assert.ok(script.includes('button.addEventListener("click", () => loadChapter(chapter, button))'));
+  assert.ok(script.includes('backBooks?.addEventListener("click", () => {'));
 });
 test("prayer city catalog includes Baghdad and valid calculation methods", () => {
   assert.ok(cities.some((city) => city.id === "baghdad"));
@@ -91,7 +91,7 @@ test("third-party source and license notices remain included", () => {
   assert.ok(upstreamLicense.startsWith("MIT License"));
 });
 test("service worker refreshes the new tabbed homepage and standalone Mushaf", () => {
-  assert.match(sw, /dhker-web-v10/);
+  assert.match(sw, /dhker-web-v11/);
   assert.match(sw, /quran-reader\.html/);
   assert.match(sw, /mushaf-reader\.js/);
   assert.match(sw, /MUSHAF_CACHE/);
