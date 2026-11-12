@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const css = await readFile(new URL("../styles.css", import.meta.url), "utf8");
 const mobileCss = await readFile(new URL("../mobile-app.css", import.meta.url), "utf8");
+const identityCss = await readFile(new URL("../islamic-identity.css", import.meta.url), "utf8");
 const script = await readFile(new URL("../script.js", import.meta.url), "utf8");
 const reader = await readFile(new URL("../quran-reader.html", import.meta.url), "utf8");
 const mushaf = await readFile(new URL("../mushaf-reader.js", import.meta.url), "utf8");
@@ -104,7 +105,7 @@ test("third-party source and license notices remain included", () => {
   assert.ok(upstreamLicense.startsWith("MIT License"));
 });
 test("service worker refreshes the new tabbed homepage and standalone Mushaf", () => {
-  assert.match(sw, /dhker-web-v20/);
+  assert.match(sw, /dhker-web-v22/);
   assert.match(sw, /quran-reader\.html/);
   assert.match(sw, /mushaf-reader\.js/);
   assert.match(sw, /MUSHAF_CACHE/);
@@ -152,16 +153,15 @@ test("hadith takhrij opens official Dorar search in a new tab without client-sid
   assert.ok(script.includes('"https://dorar.net/hadith/search?q=" + encodeURIComponent(originalText.slice(0, 160))'));
   assert.ok(script.includes('takhrijLink.target = "_blank"'));
   assert.ok(script.includes('takhrijLink.rel = "noopener noreferrer"'));
-  assert.ok(script.includes("ابحث عن التخريج والدرجة في الدرر السنية"));
+  assert.ok(script.includes("التحقق من صحة الحديث والتخريج"));
   assert.doesNotMatch(script, /dorar_api\.json|DORAR_API|callbackName|searchDorar/);
 });
 test("hadith data and grading sources are attributed separately", () => {
-  assert.match(html, /Al Furqan Hadith API/);
-  assert.match(html, /Hadith-JSON/);
-  assert.match(html, /الموسوعة الحديثية للدرر السنية/);
+  assert.doesNotMatch(html, /Al Furqan Hadith API|Hadith-JSON|الموسوعة الحديثية للدرر السنية/);
+  assert.ok(script.includes("https://dorar.net/hadith/search?q="));
 });
 test("service worker refreshes the hadith library interface", () => {
-  assert.match(sw, /dhker-web-v20/);
+  assert.match(sw, /dhker-web-v22/);
 });
 
 test("supplied hadith code is integrated without duplicate screens, globals, or inline handlers", () => {
@@ -206,7 +206,7 @@ test("mobile-first app shell provides bottom navigation without replacing servic
   assert.match(html, /href="\.\/quran-reader\.html"/);
   assert.match(mobileCss, /mobile-app-nav/);
   assert.ok(script.includes('.mobile-app-nav a[href^="#"]'));
-  assert.match(sw, /dhker-web-v20/);
+  assert.match(sw, /dhker-web-v22/);
   assert.match(sw, /mobile-app\.css/);
 });
 
@@ -214,7 +214,7 @@ test("Mushaf leftward swipe advances the ascending Quran page sequence", () => {
   assert.match(mushaf, /readingDirection:"ltr"/);
   assert.match(mushaf, /for\(let n=1;n<=TOTAL_PAGES;n\+\+\)/);
   assert.match(html, /mushaf-reader\.js\?v=14/);
-  assert.match(sw, /dhker-web-v20/);
+  assert.match(sw, /dhker-web-v22/);
 });
 
 test("Hadith page uses a concise verification action and project design credit", () => {
@@ -222,5 +222,12 @@ test("Hadith page uses a concise verification action and project design credit",
   assert.match(html, /سنة الإنشاء 2026 \| تصميم أبو عبّد المهيمن العراقي/);
   assert.match(script, /التحقق من صحة الحديث والتخريج/);
   assert.doesNotMatch(script, /يفتح البحث في موقع الدرر السنية الرسمي/);
-  assert.match(sw, /dhker-web-v21/);
+  assert.match(sw, /dhker-web-v22/);
+});
+
+
+test("service navigation hides fixed decorative lanterns from content panels", () => {
+  assert.ok(script.includes('document.body.classList.toggle("dhker-service-view", id !== "home")'));
+  assert.match(identityCss, /\\.dhker-service-view \\.dhk-3d-lantern-stage/);
+  assert.match(identityCss, /visibility: hidden !important/);
 });
