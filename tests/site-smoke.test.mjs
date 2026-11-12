@@ -13,9 +13,14 @@ const cities = JSON.parse(await readFile(new URL("../data/cities.json", import.m
 test("site includes all four primary services", () => {
   for (const id of ["quran", "prayer", "adhkar", "audio"]) assert.match(html, new RegExp('id="' + id + '"'));
 });
-test("site points to the Android release and repository", () => {
+test("site links to official Android releases without exposing an unverified APK", () => {
   assert.match(html, /TEaG3\/Dhker\/releases/);
-  assert.match(html, /app-release\.apk/);
+  assert.match(html, /تابع إصدار Android/);
+  assert.doesNotMatch(html, /releases\/download\/[^"']+\.apk/);
+});
+test("adhan playback errors have a valid status target", () => {
+  assert.match(html, /id="adhanAudioStatus"/);
+  assert.match(script, /const status = \$("adhanAudioStatus"\)/);
 });
 test("offline adhkar data is populated and references resolve", () => {
   const ids = new Set(refs.references.map((ref) => ref.id));
