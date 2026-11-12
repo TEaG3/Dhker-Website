@@ -91,7 +91,7 @@ test("third-party source and license notices remain included", () => {
   assert.ok(upstreamLicense.startsWith("MIT License"));
 });
 test("service worker refreshes the new tabbed homepage and standalone Mushaf", () => {
-  assert.match(sw, /dhker-web-v9/);
+  assert.match(sw, /dhker-web-v10/);
   assert.match(sw, /quran-reader\.html/);
   assert.match(sw, /mushaf-reader\.js/);
   assert.match(sw, /MUSHAF_CACHE/);
