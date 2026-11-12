@@ -103,7 +103,7 @@ test("third-party source and license notices remain included", () => {
   assert.ok(upstreamLicense.startsWith("MIT License"));
 });
 test("service worker refreshes the new tabbed homepage and standalone Mushaf", () => {
-  assert.match(sw, /dhker-web-v18/);
+  assert.match(sw, /dhker-web-v19/);
   assert.match(sw, /quran-reader\.html/);
   assert.match(sw, /mushaf-reader\.js/);
   assert.match(sw, /MUSHAF_CACHE/);
@@ -160,7 +160,7 @@ test("hadith data and grading sources are attributed separately", () => {
   assert.match(html, /الموسوعة الحديثية للدرر السنية/);
 });
 test("service worker refreshes the hadith library interface", () => {
-  assert.match(sw, /dhker-web-v18/);
+  assert.match(sw, /dhker-web-v19/);
 });
 
 test("supplied hadith code is integrated without duplicate screens, globals, or inline handlers", () => {
@@ -196,4 +196,15 @@ test("Mushaf uses locally bundled page images and caches them on demand", () => 
   assert.match(sw, /url\.pathname\.includes\("\/assets\/mushaf\/hafsTajweed\/"\)/);
   assert.match(sw, /const MUSHAF_CACHE = "dhker-mushaf-pages-v1"/);
   assert.match(sw, /url\.origin === self\.location\.origin/);
+});
+
+test("mobile-first app shell provides bottom navigation without replacing service panels", () => {
+  assert.match(html, /mobile-app\.css/);
+  assert.match(html, /class="mobile-app-nav"/);
+  for (const id of ["home", "prayer", "adhkar", "hadith"]) assert.match(html, new RegExp('href="#' + id + '"'));
+  assert.match(html, /href="\.\/quran-reader\.html"/);
+  assert.match(css, /mobile-app-nav/);
+  assert.match(script, /\.mobile-app-nav a\[href\^="# "\]/);
+  assert.match(sw, /dhker-web-v19/);
+  assert.match(sw, /mobile-app\.css/);
 });
