@@ -456,7 +456,10 @@ async function setupQuranAudio() {
         const data=await fetchJson(ALQURAN+"/surah/"+surah+"/"+encodeURIComponent(item.id));
         const ayahs=data.data?.ayahs||[]; const queue=ayahs.map(ayah=>ayah.audio).filter(Boolean);
         if(!queue.length||queue.length!==ayahs.length)throw new Error("ملفات هذه السورة غير مكتملة لهذا الإصدار الصوتي");
-        playback={provider:item.provider,surah:surah,queue:queue,index:0}; await playAyahQueue(token);
+        pendingPlayback={provider:item.provider,surah:surah,queue:queue,index:0};
+        status.textContent="السورة جاهزة. اضغط زر التشغيل مرة أخرى لبدء التلاوة.";
+        button.textContent="اضغط للتشغيل";
+        return;
       } else {
         const data=await fetchJson(ALFURQAN+"/surahs/"+surah);
         const total=data.surah?.ayahCount||data.ayahCount||data.data?.ayahCount;
