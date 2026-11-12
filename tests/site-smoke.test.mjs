@@ -92,7 +92,7 @@ test("third-party source and license notices remain included", () => {
   assert.ok(upstreamLicense.startsWith("MIT License"));
 });
 test("service worker refreshes the new tabbed homepage and standalone Mushaf", () => {
-  assert.match(sw, /dhker-web-v13/);
+  assert.match(sw, /dhker-web-v14/);
   assert.match(sw, /quran-reader\.html/);
   assert.match(sw, /mushaf-reader\.js/);
   assert.match(sw, /MUSHAF_CACHE/);
@@ -177,4 +177,12 @@ test("hadith loader styles are scoped and respect reduced motion", () => {
   assert.match(css, /\.hadith-loader\[hidden\]/);
   assert.match(css, /\.hadith-spinner/);
   assert.match(css, /prefers-reduced-motion:reduce/);
+});
+
+test("Mushaf uses locally bundled page images and caches them on demand", () => {
+  assert.ok(mushafScript.includes('const IMAGE_BASE="./assets/mushaf/hafsTajweed/page";'));
+  assert.doesNotMatch(mushafScript, /raw\.githubusercontent\.com\/Zizwar\/mushaf-mauri/);
+  assert.match(sw, /url\.pathname\.includes\("\/assets\/mushaf\/hafsTajweed\/"\)/);
+  assert.match(sw, /const MUSHAF_CACHE = "dhker-mushaf-pages-v1"/);
+  assert.match(sw, /url\.origin === self\.location\.origin/);
 });
