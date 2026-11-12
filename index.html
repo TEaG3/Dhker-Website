@@ -69,6 +69,7 @@
           <li><a href="#quran">القرآن</a></li>
           <li><a href="#prayer">المواقيت</a></li>
           <li><a href="#adhkar">الأذكار</a></li>
+          <li><a href="#hadith">الحديث</a></li>
           <li><a href="#audio">الصوتيات</a></li>
         </ul>
       </nav>
@@ -103,6 +104,7 @@
       <a class="service-card dhk-illuminated-card" href="#quran"><span>۞</span><b>القرآن الكريم</b><small>قراءة بالسور وصفحات المصحف</small></a>
       <a class="service-card dhk-illuminated-card" href="#prayer"><span>◷</span><b>مواقيت الصلاة</b><small>اختر مدينتك وتابع مواقيت اليوم</small></a>
       <a class="service-card dhk-illuminated-card" href="#adhkar"><span>✧</span><b>الأذكار</b><small>الصباح والمساء والنوم</small></a>
+      <a class="service-card dhk-illuminated-card" href="#hadith"><span>۞</span><b>كتب الحديث</b><small>تصفح كتب السنة</small></a>
       <a class="service-card dhk-illuminated-card" href="#audio"><span>♫</span><b>الصوتيات</b><small>معاينة أصوات الأذان</small></a>
     </section>
 
@@ -123,22 +125,12 @@
         <label for="quranSurah">السورة</label>
         <input id="quranSurah" type="number" min="1" max="114" value="1" inputmode="numeric">
         <label for="quranReciter">القارئ</label>
-        <select id="quranReciter">
-          <option value="ar.alafasy">مشاري راشد العفاسي</option>
-          <option value="ar.husary">محمود خليل الحصري</option>
-          <option value="ar.minshawi">محمد صديق المنشاوي</option>
-          <option value="ar.sudais">عبدالرحمن السديس</option>
-          <option value="ar.shuraim">سعود الشريم</option>
-          <option value="ar.abdulbasit">عبدالباسط عبدالصمد</option>
-          <option value="ar.ajamy">أحمد العجمي</option>
-          <option value="ar.muhammadayoub">محمد أيوب</option>
-          <option value="ar.hudhaify">علي الحذيفي</option>
-        </select>
+        <select id="quranReciter"><option>جارٍ تحميل القراء…</option></select>
         <button class="btn btn-primary btn-small" id="playQuranRecitation">استمع للسورة</button>
       </div>
       <audio id="quranPlayer" controls preload="none" aria-label="مشغل تلاوة القرآن"></audio>
-      <p class="source-note" id="quranAudioStatus" role="status">اختر السورة والقارئ لتشغيل التلاوة عبر شبكة AlQuran Cloud.</p>
-      <p class="source-note">مصدر التلاوات: <a href="https://alquran.cloud/cdn" target="_blank" rel="noopener">AlQuran Cloud CDN</a> — بث عند الطلب للاستخدام الشخصي والتعليمي وفق شروط المصدر. لا تُضمّن ملفات التلاوة داخل الموقع.</p>
+      <p class="source-note" id="quranAudioStatus" role="status">اختر السورة والقارئ لتشغيل التلاوة عبر مكتبة Al Furqan الصوتية.</p>
+      <p class="source-note">مصدر التلاوات: <a href="https://alfurqan.online/docs" target="_blank" rel="noopener">Al Furqan API</a> — 44 قارئاً وتلاوات آيات تُبث عند الطلب دون تضمين الملفات في الموقع.</p>
       <div class="reader-status" id="quranStatus" role="status">اختر صفحة لبدء القراءة. تُحفظ الصفحات التي تفتحها محلياً لهذا المتصفح.</div>
       
       <!-- حاوية القرآن (سيتم تحويلها لورق مصحف 3D عبر islamic-identity.css) -->
@@ -167,6 +159,12 @@
       <p class="source-note">تُعرض المراجع المتاحة مع الأذكار. يُرجى مراجعة المصادر العلمية عند اعتماد المحتوى للنشر الموسع.</p>
     </section>
 
+    <section id="hadith" class="container app-section">
+      <div class="section-heading"><div><span class="eyebrow">السنة النبوية</span><h2>مكتبة الحديث</h2><p>اختر كتاب الحديث ثم الباب لقراءة الأحاديث العربية.</p></div><span class="section-symbol">۞</span></div>
+      <div class="reader-toolbar"><label for="hadithBook">الكتاب</label><select id="hadithBook"></select><label for="hadithChapter">الباب</label><select id="hadithChapter" disabled></select></div>
+      <div class="reader-status" id="hadithStatus" role="status">جارٍ تحميل فهرس كتب الحديث…</div><div class="adhkar-list" id="hadithList"></div>
+      <p class="source-note">المصدر: Hadith-JSON عبر Al Furqan API. تُعرض بيانات الكتاب والباب مع النص العربي المتاح.</p>
+    </section>
     <section id="audio" class="container app-section">
       <div class="section-heading"><div><span class="eyebrow">استمع</span><h2>مكتبة الأذان</h2><p>تلاوات القرآن والأذان في مشغلين منفصلين. اختر القارئ والسورة من قسم القرآن، أو استمع إلى أحد نماذج الأذان هنا.</p></div><span class="section-symbol">♫</span></div>
       <div class="audio-list">
