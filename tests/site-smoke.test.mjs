@@ -69,9 +69,10 @@ test("prayer city catalog includes Baghdad and valid calculation methods", () =>
 test("standalone Mushaf uses the page-curl engine with ascending Arabic page order", () => {
   assert.ok(reader.includes('src="./mushaf-reader.js?v=14"'));
   assert.ok(reader.includes('id="mushafBook"'));
-  assert.ok(mushaf.includes('https://esm.sh/@gullabs/flipbook-core@3.2.2'));
-  assert.ok(mushaf.includes('https://cdn.jsdelivr.net/npm/@gullabs/flipbook-core@3.2.2/+esm'));
+  assert.ok(mushaf.includes('import("./vendor/flipbook-core/index.js")'));
+  assert.doesNotMatch(mushaf, /esm\\.sh|cdn\\.jsdelivr\\.net/);
   assert.ok(mushaf.includes("loadPageFlipModule()"));
+  assert.match(reader, /vendor\\/flipbook-core\\/style\\.css/);
   assert.ok(mushaf.includes('readingDirection:isMobile?"ltr":"rtl"'));
   assert.ok(mushaf.includes("loadFromHTML(pageElements)"));
   assert.ok(mushaf.includes("pageFlip.flipNext()"));
@@ -106,7 +107,7 @@ test("third-party source and license notices remain included", () => {
   assert.ok(upstreamLicense.startsWith("MIT License"));
 });
 test("service worker refreshes the new tabbed homepage and standalone Mushaf", () => {
-  assert.match(sw, /dhker-web-v23/);
+  assert.match(sw, /dhker-web-v24/);
   assert.match(sw, /quran-reader\.html/);
   assert.match(sw, /mushaf-reader\.js/);
   assert.match(sw, /MUSHAF_CACHE/);
