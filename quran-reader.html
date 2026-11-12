@@ -20,7 +20,7 @@ body.mushaf-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at
 .reader-toolbar{display:flex;justify-content:center;align-items:center;gap:9px;flex-wrap:wrap;margin:4px auto 14px}
 .reader-toolbar button,.reader-toolbar input{font:inherit;border:1px solid #b18a45;border-radius:8px;padding:8px 13px}
 .reader-toolbar button{background:#173b2e;color:#f6e9ca;cursor:pointer}.reader-toolbar button:hover{background:#b18a45;color:#101b14}
-.reader-toolbar button:focus-visible,.reader-toolbar input:focus-visible{outline:3px solid #e4c77e;outline-offset:2px}
+.reader-toolbar button:focus-visible,.reader-toolbar input:focus-visible{outline:3px solid #e4c77e;outline-offset:2px}\n.reader-toolbar button:disabled{opacity:.38;cursor:not-allowed;transform:none;box-shadow:none}
 .reader-toolbar input{width:82px;background:#fffaf0;color:#102c22;text-align:center}
 .reader-toolbar label{color:#e8d8b5}
 .reader-status{text-align:center;min-height:28px;color:#d6c49b;margin:6px 0 14px}
@@ -113,6 +113,9 @@ async function render(){
  const token=++renderToken;
  current=Math.max(1,Math.min(MAX_PAGE,Math.floor(Number(current)||1)));
  $("pageNumber").value=current;
+ const step=isMobile()?1:2;
+ $("previous").disabled=current<=(isMobile()?1:2);
+ $("next").disabled=current>=(MAX_PAGE-1);
  setStatus("جارٍ تحميل صفحة "+current+"…");
  let ok;
  if(isMobile()){
