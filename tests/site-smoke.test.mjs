@@ -72,7 +72,7 @@ test("standalone Mushaf uses the page-curl engine with ascending Arabic page ord
   assert.ok(mushaf.includes('import("./vendor/flipbook-core/index.js")'));
   assert.doesNotMatch(mushaf, /esm\\.sh|cdn\\.jsdelivr\\.net/);
   assert.ok(mushaf.includes("loadPageFlipModule()"));
-  assert.match(reader, /vendor\\/flipbook-core\\/style\\.css/);
+  assert.ok(reader.includes("./vendor/flipbook-core/style.css?v=1"));
   assert.ok(mushaf.includes('readingDirection:isMobile?"ltr":"rtl"'));
   assert.ok(mushaf.includes("loadFromHTML(pageElements)"));
   assert.ok(mushaf.includes("pageFlip.flipNext()"));
