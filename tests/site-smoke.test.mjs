@@ -64,13 +64,13 @@ test("prayer city catalog includes Baghdad and valid calculation methods", () =>
   assert.ok(cities.some((city) => city.id === "baghdad"));
   for (const city of cities) assert.ok(city.city && city.country && Number.isInteger(city.method));
 });
-test("standalone Mushaf uses the real RTL page-curl engine", () => {
+test("standalone Mushaf uses the page-curl engine with ascending Arabic page order", () => {
   assert.ok(reader.includes('src="./mushaf-reader.js?v=14"'));
   assert.ok(reader.includes('id="mushafBook"'));
   assert.ok(mushaf.includes('https://esm.sh/@gullabs/flipbook-core@3.2.2'));
   assert.ok(mushaf.includes('https://cdn.jsdelivr.net/npm/@gullabs/flipbook-core@3.2.2/+esm'));
   assert.ok(mushaf.includes("loadPageFlipModule()"));
-  assert.ok(mushaf.includes('readingDirection:"rtl"'));
+  assert.ok(mushaf.includes('readingDirection:"ltr"'));
   assert.ok(mushaf.includes("loadFromHTML(pageElements)"));
   assert.ok(mushaf.includes("pageFlip.flipNext()"));
   assert.ok(mushaf.includes("pageFlip.flipPrev()"));
