@@ -661,3 +661,30 @@ ul { list-style: none; }
   .hadith-entry-actions .btn { width: 100%; }
   .hadith-book-entry,.hadith-chapter-entry { min-height: 0; }
 }
+
+
+/* Loading feedback for the single integrated hadith library */
+.hadith-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  min-height: 52px;
+  margin: .75rem 0;
+  color: var(--turquoise);
+  font-size: .9rem;
+}
+.hadith-loader[hidden] { display: none !important; }
+.hadith-spinner {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  border: 3px solid rgba(66,198,165,.18);
+  border-top-color: var(--turquoise);
+  border-radius: 50%;
+  animation: hadith-spinner-rotate .85s linear infinite;
+}
+@keyframes hadith-spinner-rotate { to { transform: rotate(360deg); } }
+@media(prefers-reduced-motion:reduce) {
+  .hadith-spinner { animation-duration: 2s; }
+}
