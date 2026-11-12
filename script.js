@@ -618,6 +618,7 @@ function setupNavigation() {
 document.addEventListener("DOMContentLoaded", async () => {
   setupNavigation();
   setupAudio();
+  setupQuranAudio();
   setupHadithLibrary();
   try { await loadCities(); } catch { $("prayerStatus").textContent = "تعذر تحميل المدن. تحقق من الاتصال ثم أعد تحميل الصفحة."; }
   try { await loadAdhkar(); } catch { $("adhkarList").textContent = "تعذر تحميل الأذكار."; }
