@@ -1,6 +1,10 @@
 name: Bundle Mushaf pages
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/bundle-mushaf-pages.yml'
+      - 'scripts/download-mushaf-pages.py'
 permissions:
   contents: write
 concurrency:
