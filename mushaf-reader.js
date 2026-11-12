@@ -1,5 +1,5 @@
 (()=>{"use strict";
-const IMAGE_BASE="https://raw.githubusercontent.com/Zizwar/mushaf-mauri/expo55/_archive/assets/pages/hafsTajweed/page";
+const IMAGE_BASE="./assets/mushaf/hafsTajweed/page";
 const TOTAL_PAGES=604;
 const $=id=>document.getElementById(id);
 const pageUrl=n=>IMAGE_BASE+n+".png";

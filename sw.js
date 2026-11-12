@@ -1,4 +1,4 @@
-const CACHE_NAME = "dhker-web-v13";
+const CACHE_NAME = "dhker-web-v14";
 const MUSHAF_CACHE = "dhker-mushaf-pages-v1";
 const CORE = [
   "./", "./index.html", "./quran-reader.html",
@@ -29,9 +29,9 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
   const url = new URL(request.url);
 
-  // Cache Quran page images on demand. Only pages already opened can be read offline.
-  if (url.origin === "https://raw.githubusercontent.com" &&
-      url.pathname.includes("/Zizwar/mushaf-mauri/") &&
+  // Cache locally hosted Quran page images on demand. Only pages already opened are stored offline.
+  if (url.origin === self.location.origin &&
+      url.pathname.includes("/assets/mushaf/hafsTajweed/") &&
       /\/page\d+\.png$/.test(url.pathname)) {
     event.respondWith((async () => {
       const cache = await caches.open(MUSHAF_CACHE);
