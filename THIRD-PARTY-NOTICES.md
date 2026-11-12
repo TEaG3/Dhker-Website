@@ -22,11 +22,15 @@ The maintained fork preserves upstream notices for StPageFlip:
 
 ## Quran page images
 
-The standalone Mushaf page images are loaded from the Hafs/Tajweed page scans in:
+The 604 Hafs/Tajweed page PNG files are bundled locally under `assets/mushaf/hafsTajweed/` and served from this website, rather than fetched from the upstream host at reading time.
 
-- https://github.com/Zizwar/mushaf-mauri
+- Upstream project: https://github.com/Zizwar/mushaf-mauri
+- Upstream source ref: `expo55`
+- Upstream path: `_archive/assets/pages/hafsTajweed/`
+- Upstream license: MIT
+- Copyright: (c) 2021 Ibrahim BIDI
 
-Consult that repository's current license and asset notices before separately redistributing or re-hosting the images.
+The upstream MIT license text is reproduced in `licenses/mushaf-mauri-MIT.txt`. The website caches locally served page images on demand in a dedicated browser cache; it does not precache all 604 pages during installation.
 
 ## Hadith library data and takhrij
 
