@@ -38,8 +38,16 @@ The website requests book indexes, chapter indexes, and chapter hadiths at runti
 
 The upstream Hadith-JSON README states that its dataset was collected from Sunnah.com. Sunnah.com currently prohibits scraping and mass reproduction of entire collections on other websites and describes its own API as requiring an API key. Accordingly, this project does not copy those JSON collections into this repository. Before independently re-hosting the dataset, confirm redistribution permission with the relevant source owners.
 
-Hadith grading/takhrij lookup is a separate user-triggered search using the official Dorar API's documented JSONP interface:
+Hadith takhrij lookup currently opens the official Dorar Hadith Encyclopedia search page in a new tab:
+
+- https://dorar.net/hadith/search
+
+The Dorar legacy JSONP guide is documented here:
 
 - https://dorar.net/article/389
 
-A grading is shown only when it is returned by a Dorar search result. Search results are not automatically treated as a verified match; users should compare the wording, narrator, and reference.
+Dorar's current electronic-services terms require an individually approved access request, a private token, server-side calls (not a client-side token), visible attribution and a clickable source URL, and unmodified hadith grading. This static GitHub Pages site does not store a Dorar token or call the authenticated service directly. It therefore links users to the official search page instead of displaying unverified or unauthorised API results:
+
+- Current access request and terms: https://dorar.net/index.php/api-services/request
+
+If an authorised server-side integration is added later, it must show the source's returned reference URL and complete grading without alteration.

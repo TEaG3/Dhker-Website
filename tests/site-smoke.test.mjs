@@ -92,7 +92,7 @@ test("third-party source and license notices remain included", () => {
   assert.ok(upstreamLicense.startsWith("MIT License"));
 });
 test("service worker refreshes the new tabbed homepage and standalone Mushaf", () => {
-  assert.match(sw, /dhker-web-v12/);
+  assert.match(sw, /dhker-web-v13/);
   assert.match(sw, /quran-reader\.html/);
   assert.match(sw, /mushaf-reader\.js/);
   assert.match(sw, /MUSHAF_CACHE/);
@@ -135,14 +135,13 @@ test("hadith library uses the documented 17-book API with book, chapter and hadi
   assert.ok(script.includes("hadith.english"));
   assert.ok(script.includes("PAGE_SIZE = 20"));
 });
-test("hadith takhrij search uses Dorar's documented JSONP API and renders results as text", () => {
-  assert.match(html, /dorar\.net/);
-  assert.ok(script.includes('const DORAR_API = "https://dorar.net/dorar_api.json"'));
-  assert.ok(script.includes('"&callback=" + encodeURIComponent(callbackName)'));
-  assert.ok(script.includes('data?.ahadith || data?.results || []'));
-  assert.ok(script.includes("item.th"));
-  assert.ok(script.includes("item.grade || item.hukm"));
-  assert.ok(script.includes("textContent = item.th"));
+test("hadith takhrij opens official Dorar search in a new tab without client-side API tokens or JSONP", () => {
+  assert.match(html, /https:\/\/dorar\.net\/hadith/);
+  assert.ok(script.includes('"https://dorar.net/hadith/search?q=" + encodeURIComponent(originalText.slice(0, 160))'));
+  assert.ok(script.includes('takhrijLink.target = "_blank"'));
+  assert.ok(script.includes('takhrijLink.rel = "noopener noreferrer"'));
+  assert.ok(script.includes("ابحث عن التخريج والدرجة في الدرر السنية"));
+  assert.doesNotMatch(script, /dorar_api\.json|DORAR_API|callbackName|searchDorar/);
 });
 test("hadith data and grading sources are attributed separately", () => {
   assert.match(html, /Al Furqan Hadith API/);
@@ -150,7 +149,7 @@ test("hadith data and grading sources are attributed separately", () => {
   assert.match(html, /الموسوعة الحديثية للدرر السنية/);
 });
 test("service worker refreshes the hadith library interface", () => {
-  assert.match(sw, /dhker-web-v12/);
+  assert.match(sw, /dhker-web-v13/);
 });
 
 test("supplied hadith code is integrated without duplicate screens, globals, or inline handlers", () => {
