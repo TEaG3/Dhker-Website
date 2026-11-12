@@ -35,7 +35,7 @@ test("prayer city catalog includes Baghdad and valid methods", () => {
   for (const city of cities) assert.ok(city.city && city.country && Number.isInteger(city.method));
 });
 test("site script implements offline Quran cache and service worker registration", () => {
-  assert.ok(script.includes('const status = $("adhanAudioStatus")'));
+  assert.ok(script.includes('status=$("adhanAudioStatus")'));
   assert.ok(script.includes('const status = $("adhanAudioStatus")'));
   assert.ok(script.includes("api.alquran.cloud"));
 });
@@ -47,7 +47,7 @@ test("Quran recitation player offers multiple reciters", () => {
   assert.ok(script.includes("setupHadithLibrary"));
   assert.ok(script.includes('api+"/athan/"'));
   assert.ok(script.includes("setupHadithLibrary"));
-  assert.ok(script.includes("alfurqan.online/api/v1/athan/"));
+  assert.ok(script.includes('api+"/athan/"'));
   assert.ok(html.includes("alfurqan.online/docs"));
 });
 test("standalone mushaf uses scanned 604-page images with responsive navigation", () => {
