@@ -23,6 +23,7 @@
   
   <!-- ملف الأنماط الأساسي الخاص بك -->
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./mobile-app.css?v=1">
   <!-- ملف الهوية الإسلامية المتقدم (3D Architecture Engine) -->
   <link rel="stylesheet" href="./islamic-identity.css?v=6">
 </head>
@@ -267,6 +268,14 @@
     </div>
     <div class="footer-bottom">© 2026 ذِكر — تخضع الموارد الخارجية لشروط أصحابها.</div>
   </footer>
+
+  <nav class="mobile-app-nav" aria-label="التنقل السريع">
+    <a href="#home" aria-label="الرئيسية"><span class="nav-icon" aria-hidden="true">⌂</span><span>الرئيسية</span></a>
+    <a href="#prayer" aria-label="مواقيت الصلاة"><span class="nav-icon" aria-hidden="true">◷</span><span>الصلاة</span></a>
+    <a href="#adhkar" aria-label="الأذكار"><span class="nav-icon" aria-hidden="true">✧</span><span>الأذكار</span></a>
+    <a href="#hadith" aria-label="مكتبة الحديث"><span class="nav-icon" aria-hidden="true">۞</span><span>المكتبة</span></a>
+    <a class="nav-quran" href="./quran-reader.html" aria-label="المصحف الشريف"><span class="nav-icon" aria-hidden="true">▤</span><span>المصحف</span></a>
+  </nav>
 
   <!-- ملف الجافاسكربت الخاص بك (يعمل كما هو لجلب الآيات والمواقيت) -->
   <script src="./script.js" defer></script>
