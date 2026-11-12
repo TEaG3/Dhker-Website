@@ -122,15 +122,22 @@
         <button class="btn btn-outline btn-small nav-next" id="nextPage">التالي</button>
       </div>
       <div class="reader-toolbar recitation-toolbar" aria-label="مشغل تلاوة القرآن">
+        <label for="quranAudioSource">مكتبة الصوتيات</label>
+        <select id="quranAudioSource">
+          <option value="alfurqan">Al Furqan — تلاوات الآيات</option>
+          <option value="alqurancloud">AlQuran Cloud — بث الآيات</option>
+          <option value="mp3quran">MP3Quran.net — السور والروايات</option>
+        </select>
         <label for="quranSurah">السورة</label>
         <input id="quranSurah" type="number" min="1" max="114" value="1" inputmode="numeric">
-        <label for="quranReciter">القارئ</label>
+        <label for="quranReciter">القارئ / الرواية</label>
         <select id="quranReciter"><option>جارٍ تحميل القراء…</option></select>
         <button class="btn btn-primary btn-small" id="playQuranRecitation">استمع للسورة</button>
       </div>
       <audio id="quranPlayer" controls preload="none" aria-label="مشغل تلاوة القرآن"></audio>
-      <p class="source-note" id="quranAudioStatus" role="status">اختر السورة والقارئ لتشغيل التلاوة عبر مكتبة Al Furqan الصوتية.</p>
-      <p class="source-note">مصدر التلاوات: <a href="https://alfurqan.online/docs" target="_blank" rel="noopener">Al Furqan API</a> — 44 قارئاً وتلاوات آيات تُبث عند الطلب دون تضمين الملفات في الموقع.</p>
+      <p class="source-note" id="quranAudioStatus" role="status">جارٍ تحميل فهارس مكتبات الصوتيات…</p>
+      <p class="source-note" id="quranAudioComparison">مقارنة المصادر: Al Furqan يوفّر 44 قارئاً وبثاً آية بآية؛ AlQuran Cloud يوفّر فهارس إصدارات صوتية وبثاً عبر CDN؛ MP3Quran.net يوفّر القراء والمصاحف الصوتية بحسب الرواية وقائمة السور المتاحة. اختر المصدر من القائمة لمقارنة القراء والتشغيل.</p>
+      <p class="source-note">مصادر الصوت: <a href="https://alfurqan.online/docs" target="_blank" rel="noopener">Al Furqan API</a> · <a href="https://alquran.cloud/cdn" target="_blank" rel="noopener">AlQuran Cloud CDN</a> · <a href="https://www.mp3quran.net/ar/api" target="_blank" rel="noopener">MP3Quran API v3</a>. تُبث الملفات عند الطلب ولا تُضمّن في ملفات الموقع.</p>
       <div class="reader-status" id="quranStatus" role="status">اختر صفحة لبدء القراءة. تُحفظ الصفحات التي تفتحها محلياً لهذا المتصفح.</div>
       
       <!-- حاوية القرآن (سيتم تحويلها لورق مصحف 3D عبر islamic-identity.css) -->
