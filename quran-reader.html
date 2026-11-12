@@ -70,10 +70,10 @@ body.mushaf-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at
 </header>
 <main class="reader-shell">
  <div class="reader-toolbar" aria-label="أدوات المصحف">
-  <button id="previous" type="button">السابق</button>
+  <button id="previous" type="button" aria-label="الصفحة السابقة" aria-keyshortcuts="ArrowRight" title="السابق — مفتاح السهم الأيمن">→ السابق</button>
   <label for="pageNumber">رقم الصفحة</label><input id="pageNumber" type="number" min="1" max="604" value="1" inputmode="numeric">
   <button id="goPage" type="button">انتقال</button>
-  <button id="next" type="button">التالي</button>
+  <button id="next" type="button" aria-label="الصفحة التالية" aria-keyshortcuts="ArrowLeft" title="التالي — مفتاح السهم الأيسر">التالي ←</button>
   <button id="bookmark" type="button">حفظ الموضع</button>
  </div>
  <p id="readerStatus" class="reader-status" role="status" aria-live="polite">جارٍ تجهيز المصحف…</p>
@@ -84,7 +84,7 @@ body.mushaf-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at
   </div>
   <div class="mushaf-mobile-page"><img id="mobilePageImage" alt="صفحة المصحف" decoding="async"></div>
  </section>
- <p class="reader-help">على الكمبيوتر تظهر صفحتان متقابلتان. على الهاتف تظهر صفحة واحدة. استخدم الأزرار أو مفاتيح الأسهم للتنقل.</p>
+ <p class="reader-help">على الكمبيوتر تظهر صفحتان متقابلتان. على الهاتف تظهر صفحة واحدة. استخدم زر «التالي ←» أو مفتاح ← للانتقال، وزر «→ السابق» أو مفتاح → للعودة. على الهاتف يمكنك السحب يميناً ويساراً.</p>
  <p class="source-credit">صور الصفحات من مشروع <a href="https://github.com/Zizwar/mushaf-mauri" target="_blank" rel="noopener">Mushaf Mauri</a> — رواية حفص مع التجويد. تُحمّل الصفحات عند الطلب وتُخزّن مؤقتاً على جهازك بعد فتحها، حسب مساحة المتصفح.</p>
 </main>
 <script>
@@ -95,6 +95,7 @@ const $=id=>document.getElementById(id);
 const MAX_PAGE=604;
 let current=Number(localStorage.getItem("dhker-mushaf-mauri-bookmark")||1);
 let busy=false;
+let navigationBusy=false;
 let renderToken=0;
 const isMobile=()=>matchMedia("(max-width:767px)").matches;
 const pageUrl=n=>IMAGE_BASE+n+".png";
@@ -130,23 +131,22 @@ async function render(){
  busy=false;
 }
 async function go(n,direction){
+ if(navigationBusy)return;
  const next=Math.max(1,Math.min(MAX_PAGE,Math.floor(Number(n)||1)));
- if(next===current){await render();return;}
+ if(next===current){$("pageNumber").value=current;return;}
+ navigationBusy=true;
  const book=$("mushafBook");
- book.classList.remove("turn-next","turn-prev");
- void book.offsetWidth;
- book.classList.add(direction==="prev"?"turn-prev":"turn-next");
- current=next;
- await new Promise(resolve=>setTimeout(resolve,180));
- await render();
- setTimeout(()=>book.classList.remove("turn-next","turn-prev"),280);
+ if(!isMobile()){book.classList.remove("turn-next","turn-prev");void book.offsetWidth;book.classList.add(direction==="prev"?"turn-prev":"turn-next");}
+ current=next;$("pageNumber").value=current;
+ try{await new Promise(resolve=>setTimeout(resolve,220));await render();}
+ finally{setTimeout(()=>book.classList.remove("turn-next","turn-prev"),320);navigationBusy=false;}
 }
 $("previous").addEventListener("click",()=>go(current-(isMobile()?1:2),"prev"));
 $("next").addEventListener("click",()=>go(current+(isMobile()?1:2),"next"));
 $("goPage").addEventListener("click",()=>go($("pageNumber").value,"next"));
 $("pageNumber").addEventListener("keydown",e=>{if(e.key==="Enter")go($("pageNumber").value,"next");});
 $("bookmark").addEventListener("click",()=>{localStorage.setItem("dhker-mushaf-mauri-bookmark",String(current));setStatus("تم حفظ موضع القراءة عند الصفحة "+current);});
-document.addEventListener("keydown",e=>{if(e.target.matches("input,button,a"))return;if(e.key==="ArrowLeft")go(current+(isMobile()?1:2),"next");if(e.key==="ArrowRight")go(current-(isMobile()?1:2),"prev");});
+document.addEventListener("keydown",e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.target.closest("input,button,a,select,textarea,[contenteditable=true]"))return;const step=isMobile()?1:2;if(e.key==="ArrowLeft"){e.preventDefault();go(current+step,"next");}else if(e.key==="ArrowRight"){e.preventDefault();go(current-step,"prev");}});
 let touchX=0;
 $("mushafBook").addEventListener("touchstart",e=>{touchX=e.changedTouches[0].clientX;},{passive:true});
 $("mushafBook").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45)go(current+(dx<0?2:-2),dx<0?"next":"prev");},{passive:true});
