@@ -97,20 +97,22 @@ async function startFlipbook(){
    minHeight:isMobile?360:420,maxHeight:isMobile?820:900,
    usePortrait:true,initialPage:currentPage-1,
    // Page DOM is ordered 1..604; leftward swipes must advance this ascending page sequence.
-   readingDirection:"ltr",flippingTime:isMobile?620:850,
+   readingDirection:"rtl",flippingTime:isMobile?620:850,
    pageBackground:"#fffaf0",drawShadow:true,maxShadowOpacity:isMobile?.28:.68,
    allowTouchScroll:false,respectInteractiveContent:true,
    respectReducedMotion:true,foldCornerOnHover:true,
    flipOnClick:"corners"
   });
   pageFlip.on("loaded",updateControls);
+  pageFlip.on("ready",updateControls);
   pageFlip.on("flip",updateControls);
   pageFlip.on("changeOrientation",updateControls);
   pageFlip.on("changeState",()=>preloadAround(currentPage,isMobile?3:10));
   pageFlip.on("turnRejected",event=>{
    updateControls();
    const reason=event.data?.reason;
-   if(reason)setStatus("تعذر تنفيذ التقليب: "+reason,true);
+   const target=event.data?.targetPage;
+   if(reason)setStatus("تعذر تنفيذ التقليب: "+reason+(Number.isInteger(target)?" (الصفحة "+(target+1)+")":""),true);
   });
   pageFlip.loadFromHTML(pageElements);
   updateControls();
