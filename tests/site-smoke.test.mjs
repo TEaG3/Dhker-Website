@@ -20,7 +20,7 @@ test("site links to official Android releases without exposing an unverified APK
 });
 test("adhan playback errors have a valid status target", () => {
   assert.match(html, /id="adhanAudioStatus"/);
-  assert.ok(script.includes('const status = $("adhanAudioStatus")'));
+  assert.ok(script.includes('status=$("adhanAudioStatus")'));
 });
 test("offline adhkar data is populated and references resolve", () => {
   const ids = new Set(refs.references.map((ref) => ref.id));
@@ -43,7 +43,9 @@ test("Quran recitation player offers multiple reciters", () => {
   assert.ok(html.includes('id="quranPlayer"'));
   assert.ok(html.includes('id="quranReciter"'));
   assert.ok(html.includes('id="quranSurah"'));
-  assert.ok(script.includes("alfurqan.online/api/v1/audio/"));
+  assert.ok(script.includes('api+"/audio/"'));
+  assert.ok(script.includes("setupHadithLibrary"));
+  assert.ok(script.includes('api+"/athan/"'));
   assert.ok(script.includes("setupHadithLibrary"));
   assert.ok(script.includes("alfurqan.online/api/v1/athan/"));
   assert.ok(html.includes("alfurqan.online/docs"));
