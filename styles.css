@@ -586,3 +586,39 @@ ul { list-style: none; }
 .recitation-toolbar select { min-width:190px; }
 #quranPlayer { display:block; width:100%; margin-top:.8rem; }
 @media(max-width:480px) { .recitation-toolbar select { width:100%; max-width:none; } }
+
+
+/* Single-view service navigation and drill-down libraries */
+.tab-panel[hidden],
+.adhan-tab-panel[hidden],
+#hadithChaptersWrap[hidden],
+#hadithBooks[hidden] { display: none !important; }
+.tab-panel { animation: dhker-tab-in .22s ease-out; }
+@keyframes dhker-tab-in {
+  from { opacity: .55; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.nav-list a[aria-current="page"] { color: var(--gold-light); border-bottom: 1px solid var(--gold-primary); }
+.nav-quran-link { color: var(--turquoise) !important; }
+.library-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(210px,1fr)); gap: .8rem; }
+.library-entry {
+  display: flex; flex-direction: column; gap: .4rem; text-align: right;
+  padding: 1.15rem; border: 1px solid var(--gold-border); border-radius: 15px;
+  background: var(--bg-card); color: var(--gold-light); cursor: pointer; font: inherit;
+  transition: var(--transition);
+}
+.library-entry:hover, .library-entry:focus-visible {
+  border-color: var(--gold-primary); background: var(--bg-card-hover); transform: translateY(-2px);
+}
+.library-entry b { font-weight: 700; }
+.library-entry small { color: var(--text-muted); }
+.library-subheading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 1.2rem 0 .8rem; }
+.library-subheading h3 { color: var(--gold-light); font: 700 1.2rem var(--font-serif); }
+.adhan-player-controls { display: flex; justify-content: flex-start; margin-top: 1rem; }
+#stopAdhan:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.adhan-tab-panel { margin-top: .5rem; }
+@media(max-width:480px) {
+  .library-subheading { align-items: stretch; flex-direction: column; }
+  .library-grid { grid-template-columns: 1fr; }
+  .adhan-player-controls .btn { width: 100%; }
+}

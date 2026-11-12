@@ -208,14 +208,120 @@ async function loadAdhkar() {
   render();
 }
 
-async function setupAudio(){
- const player=$("adhanPlayer"),status=$("adhanAudioStatus"),list=document.querySelector(".audio-list");if(!player||!status||!list)return;const api="https://alfurqan.online/api/v1";
- try{const r=await fetch(api+"/athan/list");if(!r.ok)throw Error();const d=await r.json(),items=d.athans||d.items||d.data||[];if(!items.length)throw Error();list.replaceChildren();
-  for(const item of items){const id=item.id||item.slug;if(!id)continue;const card=document.createElement("div");card.className="audio-card dhk-illuminated-card";const info=document.createElement("div"),title=document.createElement("b"),meta=document.createElement("small"),button=document.createElement("button");title.textContent=item.name_ar||item.arabicName||item.name||"تسجيل أذان";meta.textContent=[item.muezzin,item.location].filter(Boolean).join(" • ")||"تسجيل أذان";info.append(title,meta);button.className="btn btn-outline btn-small audio-play";button.textContent="استمع";
-   button.addEventListener("click",async()=>{if(player.dataset.current===id&&!player.paused){player.pause();button.textContent="استمع";return;}list.querySelectorAll(".audio-play").forEach(b=>b.textContent="استمع");player.pause();player.src=api+"/athan/"+encodeURIComponent(id);player.dataset.current=id;try{await player.play();button.textContent="إيقاف";status.textContent="يُبث التسجيل من مكتبة الأذان.";}catch{button.textContent="استمع";status.textContent="تعذر تشغيل التسجيل. اختر تسجيلاً آخر.";}});card.append(info,button);list.append(card);}
-  if(!list.children.length)throw Error();status.textContent="مكتبة الأذان جاهزة — "+list.children.length+" تسجيلاً.";
- }catch{status.textContent="تعذر تحميل مكتبة الأذان الآن. تحقق من الاتصال ثم أعد المحاولة.";}
- player.addEventListener("ended",()=>list.querySelectorAll(".audio-play").forEach(b=>b.textContent="استمع"));
+async function setupAudio() {
+  const player = $("adhanPlayer");
+  const status = $("adhanAudioStatus");
+  const list = $("adhanLibraryList");
+  const stopButton = $("stopAdhan");
+  const tabs = $("adhanCategories");
+  if (!player || !status || !list || !stopButton || !tabs) return;
+
+  const api = "https://alfurqan.online/api/v1";
+  let activeButton = null;
+
+  function resetPlayback(message = "") {
+    player.pause();
+    player.removeAttribute("src");
+    player.load();
+    if (activeButton) {
+      activeButton.textContent = "استمع";
+      activeButton.setAttribute("aria-pressed", "false");
+    }
+    activeButton = null;
+    stopButton.disabled = true;
+    if (message) status.textContent = message;
+  }
+
+  async function playFrom(button, url, key) {
+    if (activeButton === button && !player.paused) {
+      resetPlayback("تم إيقاف صوت الأذان.");
+      return;
+    }
+    resetPlayback();
+    player.src = url;
+    player.dataset.current = key;
+    activeButton = button;
+    button.textContent = "إيقاف";
+    button.setAttribute("aria-pressed", "true");
+    stopButton.disabled = false;
+    try {
+      await player.play();
+      status.textContent = "يُشغّل تسجيل الأذان الآن.";
+    } catch {
+      resetPlayback("تعذر تشغيل التسجيل. تحقق من الاتصال ثم حاول مجدداً.");
+    }
+  }
+
+  function showAdhanTab(name) {
+    tabs.querySelectorAll("[data-adhan-tab]").forEach((tab) => {
+      const selected = tab.dataset.adhanTab === name;
+      tab.classList.toggle("active", selected);
+      tab.setAttribute("aria-selected", String(selected));
+    });
+    document.querySelectorAll(".adhan-tab-panel").forEach((panel) => {
+      panel.hidden = panel.id !== "adhanPanel-" + name;
+    });
+  }
+
+  tabs.querySelectorAll("[data-adhan-tab]").forEach((tab) => {
+    tab.addEventListener("click", () => showAdhanTab(tab.dataset.adhanTab));
+  });
+
+  document.querySelectorAll(".adhan-play[data-audio]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const key = button.dataset.audio;
+      const url = ADHAN_AUDIO[key];
+      if (url) playFrom(button, url, key);
+    });
+  });
+
+  stopButton.addEventListener("click", () => {
+    resetPlayback("تم إيقاف صوت الأذان.");
+  });
+
+  player.addEventListener("ended", () => resetPlayback("انتهى تسجيل الأذان."));
+  player.addEventListener("error", () => resetPlayback("تعذر تحميل التسجيل. اختر تسجيلاً آخر."));
+
+  try {
+    const response = await fetch(api + "/athan/list");
+    if (!response.ok) throw new Error("Audio catalog request failed");
+    const data = await response.json();
+    const items = data.athans || data.items || data.data || [];
+    if (!items.length) throw new Error("Empty audio catalog");
+
+    list.replaceChildren();
+    for (const item of items) {
+      const id = item.id || item.slug;
+      if (!id) continue;
+      const card = document.createElement("div");
+      card.className = "audio-card dhk-illuminated-card";
+      const info = document.createElement("div");
+      const title = document.createElement("b");
+      const meta = document.createElement("small");
+      const button = document.createElement("button");
+      title.textContent = item.name_ar || item.arabicName || item.name || "تسجيل أذان";
+      meta.textContent = [item.muezzin, item.location].filter(Boolean).join(" • ") || "تسجيل أذان";
+      button.className = "btn btn-outline btn-small adhan-play";
+      button.type = "button";
+      button.textContent = "استمع";
+      button.setAttribute("aria-pressed", "false");
+      button.addEventListener("click", () => {
+        playFrom(button, api + "/athan/" + encodeURIComponent(id), "library:" + id);
+      });
+      info.append(title, meta);
+      card.append(info, button);
+      list.append(card);
+    }
+    if (!list.children.length) throw new Error("No usable audio entries");
+    status.textContent = "مكتبة الأذان جاهزة — " + list.children.length + " تسجيلاً.";
+  } catch {
+    list.replaceChildren();
+    const message = document.createElement("p");
+    message.className = "source-note";
+    message.textContent = "تعذر تحميل مكتبة التسجيلات الآن. يمكنك استخدام الأذان الأساسي أو أذان الفجر، ثم المحاولة مجدداً.";
+    list.append(message);
+    status.textContent = "تعذر تحميل المكتبة الخارجية. التسجيلان الأساسي والفجر متاحان عند الاتصال.";
+  }
 }
 async function setupQuranAudio() {
   const player = $("quranPlayer"), button = $("playQuranRecitation"), status = $("quranAudioStatus");
@@ -352,49 +458,167 @@ async function setupQuranAudio() {
   });
   await refreshCatalog();
 }
-async function setupHadithLibrary(){
- const booksEl=$("hadithBook"),chaptersEl=$("hadithChapter"),list=$("hadithList"),status=$("hadithStatus");if(!booksEl||!chaptersEl||!list||!status)return;
- const api="https://alfurqan.online/api/v1/hadith";
- try{const r=await fetch(api+"/list");if(!r.ok)throw Error();const d=await r.json(),books=d.books||d.items||d.data||[];if(!books.length)throw Error();booksEl.replaceChildren();
-  for(const b of books){const o=document.createElement("option");o.value=b.id;o.textContent=b.name_ar||b.name||b.name_en||b.id;booksEl.append(o);}
-  async function loadBook(){status.textContent="جارٍ تحميل أبواب الكتاب…";list.replaceChildren();chaptersEl.disabled=true;try{const r=await fetch(api+"/"+encodeURIComponent(booksEl.value));if(!r.ok)throw Error();const d=await r.json(),chapters=d.chapters||d.book?.chapters||[];chaptersEl.replaceChildren();for(const c of chapters){const o=document.createElement("option");o.value=c.id??c.chapterId;o.textContent=c.name_ar||c.name||c.title||("الباب "+o.value);chaptersEl.append(o);}chaptersEl.disabled=!chapters.length;if(chapters.length)await loadChapter();else status.textContent="لا توجد أبواب متاحة.";}catch{status.textContent="تعذر تحميل أبواب الكتاب.";}}
-  async function loadChapter(){if(!chaptersEl.value)return;status.textContent="جارٍ تحميل الأحاديث…";list.replaceChildren();try{const r=await fetch(api+"/"+encodeURIComponent(booksEl.value)+"/chapter/"+encodeURIComponent(chaptersEl.value));if(!r.ok)throw Error();const d=await r.json(),items=d.hadiths||d.chapter?.hadiths||[];for(const item of items){const card=document.createElement("article");card.className="dhikr-card";const n=document.createElement("small");n.className="source-note";n.textContent="حديث رقم "+(item.idInBook||item.id||"");const p=document.createElement("p");p.className="dhikr-text";p.textContent=item.arabic||item.text_ar||item.text||"النص العربي غير متاح";card.append(n,p);list.append(card);}status.textContent="الأحاديث المعروضة: "+items.length;}catch{status.textContent="تعذر تحميل أحاديث هذا الباب.";}}
-  booksEl.addEventListener("change",loadBook);chaptersEl.addEventListener("change",loadChapter);await loadBook();
- }catch{status.textContent="تعذر تحميل فهرس كتب الحديث حالياً. تحقق من الاتصال.";}
+async function setupHadithLibrary() {
+  const booksEl = $("hadithBooks");
+  const chaptersWrap = $("hadithChaptersWrap");
+  const chaptersEl = $("hadithChapters");
+  const selectedBookEl = $("hadithSelectedBook");
+  const backButton = $("backHadithBooks");
+  const list = $("hadithList");
+  const status = $("hadithStatus");
+  if (!booksEl || !chaptersWrap || !chaptersEl || !selectedBookEl || !backButton || !list || !status) return;
+
+  const api = "https://alfurqan.online/api/v1/hadith";
+
+  function showBooks() {
+    booksEl.hidden = false;
+    chaptersWrap.hidden = true;
+    list.replaceChildren();
+    status.textContent = "اختر كتاباً لعرض أبوابه وأحاديثه.";
+  }
+
+  async function loadChapter(bookId, chapterId, activeTab) {
+    chaptersEl.querySelectorAll(".category-tab").forEach((tab) => {
+      const selected = tab === activeTab;
+      tab.classList.toggle("active", selected);
+      tab.setAttribute("aria-selected", String(selected));
+    });
+    status.textContent = "جارٍ تحميل الأحاديث…";
+    list.replaceChildren();
+    try {
+      const response = await fetch(api + "/" + encodeURIComponent(bookId) + "/chapter/" + encodeURIComponent(chapterId));
+      if (!response.ok) throw new Error("Hadith chapter request failed");
+      const data = await response.json();
+      const items = data.hadiths || data.chapter?.hadiths || [];
+      for (const item of items) {
+        const card = document.createElement("article");
+        card.className = "dhikr-card";
+        const number = document.createElement("small");
+        number.className = "source-note";
+        number.textContent = "حديث رقم " + (item.idInBook || item.id || "");
+        const text = document.createElement("p");
+        text.className = "dhikr-text";
+        text.textContent = item.arabic || item.text_ar || item.text || "النص العربي غير متاح";
+        card.append(number, text);
+        list.append(card);
+      }
+      status.textContent = items.length ? "الأحاديث المعروضة: " + items.length : "لا توجد أحاديث متاحة في هذا الباب.";
+    } catch {
+      status.textContent = "تعذر تحميل أحاديث هذا الباب. حاول اختيار باب آخر.";
+    }
+  }
+
+  async function loadBook(book) {
+    status.textContent = "جارٍ تحميل أبواب " + (book.name_ar || book.name || "الكتاب") + "…";
+    list.replaceChildren();
+    chaptersEl.replaceChildren();
+    booksEl.hidden = true;
+    chaptersWrap.hidden = false;
+    selectedBookEl.textContent = book.name_ar || book.name || book.name_en || "أبواب الكتاب";
+    try {
+      const response = await fetch(api + "/" + encodeURIComponent(book.id));
+      if (!response.ok) throw new Error("Hadith book request failed");
+      const data = await response.json();
+      const chapters = data.chapters || data.book?.chapters || [];
+      if (!chapters.length) {
+        status.textContent = "لا توجد أبواب متاحة لهذا الكتاب.";
+        return;
+      }
+      for (const chapter of chapters) {
+        const chapterId = chapter.id ?? chapter.chapterId;
+        if (chapterId === undefined || chapterId === null) continue;
+        const tab = document.createElement("button");
+        tab.type = "button";
+        tab.className = "category-tab";
+        tab.setAttribute("role", "tab");
+        tab.setAttribute("aria-selected", "false");
+        tab.textContent = chapter.name_ar || chapter.name || chapter.title || ("الباب " + chapterId);
+        tab.addEventListener("click", () => loadChapter(book.id, chapterId, tab));
+        chaptersEl.append(tab);
+      }
+      const firstTab = chaptersEl.querySelector(".category-tab");
+      if (firstTab) firstTab.click();
+      else status.textContent = "لم يتم العثور على أبواب قابلة للعرض.";
+    } catch {
+      status.textContent = "تعذر تحميل أبواب الكتاب. تحقق من الاتصال.";
+    }
+  }
+
+  backButton.addEventListener("click", showBooks);
+
+  try {
+    const response = await fetch(api + "/list");
+    if (!response.ok) throw new Error("Hadith books request failed");
+    const data = await response.json();
+    const books = data.books || data.items || data.data || [];
+    if (!books.length) throw new Error("Empty hadith catalog");
+    booksEl.replaceChildren();
+    for (const book of books) {
+      if (!book.id) continue;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "library-entry";
+      const title = document.createElement("b");
+      const detail = document.createElement("small");
+      title.textContent = book.name_ar || book.name || book.name_en || book.id;
+      detail.textContent = book.name_en || "اضغط لعرض الأبواب والأحاديث";
+      button.append(title, detail);
+      button.addEventListener("click", () => loadBook(book));
+      booksEl.append(button);
+    }
+    if (!booksEl.children.length) throw new Error("No usable books");
+    status.textContent = "اختر كتاباً لعرض أبوابه وأحاديثه.";
+  } catch {
+    booksEl.replaceChildren();
+    status.textContent = "تعذر تحميل فهرس كتب الحديث حالياً. تحقق من الاتصال.";
+  }
 }
 function setupNavigation() {
   const toggle = $("menuToggle");
   const nav = $("navList");
+
+  function showTab(id, updateHistory = true) {
+    const panels = Array.from(document.querySelectorAll(".tab-panel"));
+    if (!panels.some((panel) => panel.id === id)) id = "home";
+    panels.forEach((panel) => {
+      const active = panel.id === id;
+      panel.hidden = !active;
+      panel.classList.toggle("active", active);
+    });
+    nav.querySelectorAll('a[href^="#"]').forEach((link) => {
+      if (link.getAttribute("href") === "#" + id) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+    if (updateHistory) history.pushState({ tab: id }, "", "#" + id);
+    if (id !== "home") window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const id = link.getAttribute("href").slice(1);
+      if (!document.getElementById(id)?.classList.contains("tab-panel")) return;
+      event.preventDefault();
+      showTab(id);
+      nav.classList.remove("active");
+      toggle.setAttribute("aria-expanded", "false");
+    });
+  });
+
   toggle.addEventListener("click", () => {
     const open = nav.classList.toggle("active");
     toggle.setAttribute("aria-expanded", String(open));
   });
-  nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => {
-    nav.classList.remove("active");
-    toggle.setAttribute("aria-expanded", "false");
-  }));
+
+  window.addEventListener("popstate", () => {
+    showTab(location.hash.slice(1) || "home", false);
+  });
+  showTab(location.hash.slice(1) || "home", false);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
   setupNavigation();
   setupAudio();
   setupHadithLibrary();
-  setupQuranAudio();
-  $("loadPage").addEventListener("click", () => loadQuranPage($("quranPage").value));
-  $("prevPage").addEventListener("click", () => loadQuranPage(Number($("quranPage").value) - 1));
-  $("nextPage").addEventListener("click", () => loadQuranPage(Number($("quranPage").value) + 1));
-  $("quranPage").addEventListener("keydown", (event) => {
-    if (event.key === "Enter") loadQuranPage($("quranPage").value);
-  });
-  document.addEventListener("keydown", (event) => {
-    if (event.altKey || event.ctrlKey || event.metaKey || event.target.closest("input,select,textarea,button,a,[contenteditable=true]")) return;
-    const section = $("quran");
-    const bounds = section?.getBoundingClientRect();
-    if (!bounds || bounds.bottom <= 0 || bounds.top >= window.innerHeight) return;
-    if (event.key === "ArrowLeft") { event.preventDefault(); loadQuranPage(Number($("quranPage").value) + 1); }
-    else if (event.key === "ArrowRight") { event.preventDefault(); loadQuranPage(Number($("quranPage").value) - 1); }
-  });
-  loadQuranPage(Number(localStorage.getItem("dhker-last-quran-page") || 1));
   try { await loadCities(); } catch { $("prayerStatus").textContent = "تعذر تحميل المدن. تحقق من الاتصال ثم أعد تحميل الصفحة."; }
   try { await loadAdhkar(); } catch { $("adhkarList").textContent = "تعذر تحميل الأذكار."; }
   if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
