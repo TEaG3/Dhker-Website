@@ -27,3 +27,19 @@ The standalone Mushaf page images are loaded from the Hafs/Tajweed page scans in
 - https://github.com/Zizwar/mushaf-mauri
 
 Consult that repository's current license and asset notices before separately redistributing or re-hosting the images.
+
+## Hadith library data and takhrij
+
+The website requests book indexes, chapter indexes, and chapter hadiths at runtime from the documented Al Furqan Hadith API:
+
+- API documentation: https://alfurqan.online/docs
+- API source credits identify Hadith-JSON as the upstream collection data: https://github.com/AhmedBaset/hadith-json/tree/v1.2.0
+- This website does not bundle or mirror the full hadith database; requests are made to the provider's documented endpoints.
+
+The upstream Hadith-JSON README states that its dataset was collected from Sunnah.com. Sunnah.com currently prohibits scraping and mass reproduction of entire collections on other websites and describes its own API as requiring an API key. Accordingly, this project does not copy those JSON collections into this repository. Before independently re-hosting the dataset, confirm redistribution permission with the relevant source owners.
+
+Hadith grading/takhrij lookup is a separate user-triggered search using the official Dorar API's documented JSONP interface:
+
+- https://dorar.net/article/389
+
+A grading is shown only when it is returned by a Dorar search result. Search results are not automatically treated as a verified match; users should compare the wording, narrator, and reference.
