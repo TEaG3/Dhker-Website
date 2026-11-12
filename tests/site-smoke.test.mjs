@@ -71,7 +71,7 @@ test("standalone Mushaf uses the page-curl engine with ascending Arabic page ord
   assert.ok(mushaf.includes('https://esm.sh/@gullabs/flipbook-core@3.2.2'));
   assert.ok(mushaf.includes('https://cdn.jsdelivr.net/npm/@gullabs/flipbook-core@3.2.2/+esm'));
   assert.ok(mushaf.includes("loadPageFlipModule()"));
-  assert.ok(mushaf.includes('readingDirection:"ltr"'));
+  assert.ok(mushaf.includes('readingDirection:"rtl"'));
   assert.ok(mushaf.includes("loadFromHTML(pageElements)"));
   assert.ok(mushaf.includes("pageFlip.flipNext()"));
   assert.ok(mushaf.includes("pageFlip.flipPrev()"));
@@ -105,7 +105,7 @@ test("third-party source and license notices remain included", () => {
   assert.ok(upstreamLicense.startsWith("MIT License"));
 });
 test("service worker refreshes the new tabbed homepage and standalone Mushaf", () => {
-  assert.match(sw, /dhker-web-v22/);
+  assert.match(sw, /dhker-web-v23/);
   assert.match(sw, /quran-reader\.html/);
   assert.match(sw, /mushaf-reader\.js/);
   assert.match(sw, /MUSHAF_CACHE/);
@@ -161,7 +161,7 @@ test("hadith data and grading sources are attributed separately", () => {
   assert.ok(script.includes("https://dorar.net/hadith/search?q="));
 });
 test("service worker refreshes the hadith library interface", () => {
-  assert.match(sw, /dhker-web-v22/);
+  assert.match(sw, /dhker-web-v23/);
 });
 
 test("supplied hadith code is integrated without duplicate screens, globals, or inline handlers", () => {
@@ -206,15 +206,15 @@ test("mobile-first app shell provides bottom navigation without replacing servic
   assert.match(html, /href="\.\/quran-reader\.html"/);
   assert.match(mobileCss, /mobile-app-nav/);
   assert.ok(script.includes('.mobile-app-nav a[href^="#"]'));
-  assert.match(sw, /dhker-web-v22/);
+  assert.match(sw, /dhker-web-v23/);
   assert.match(sw, /mobile-app\.css/);
 });
 
 test("Mushaf leftward swipe advances the ascending Quran page sequence", () => {
-  assert.match(mushaf, /readingDirection:"ltr"/);
+  assert.match(mushaf, /readingDirection:"rtl"/);
   assert.match(mushaf, /for\(let n=1;n<=TOTAL_PAGES;n\+\+\)/);
   assert.match(reader, /mushaf-reader\.js\?v=14/);
-  assert.match(sw, /dhker-web-v22/);
+  assert.match(sw, /dhker-web-v23/);
 });
 
 test("Hadith page uses a concise verification action and project design credit", () => {
@@ -222,7 +222,7 @@ test("Hadith page uses a concise verification action and project design credit",
   assert.ok(html.includes("© 2026 ذِكر  | تصميم أبو عبّد المهيمن العراقي"));
   assert.match(script, /التحقق من صحة الحديث والتخريج/);
   assert.doesNotMatch(script, /يفتح البحث في موقع الدرر السنية الرسمي/);
-  assert.match(sw, /dhker-web-v22/);
+  assert.match(sw, /dhker-web-v23/);
 });
 
 
@@ -230,4 +230,24 @@ test("service navigation hides fixed decorative lanterns from content panels", (
   assert.ok(script.includes('document.body.classList.toggle("dhker-service-view", id !== "home")'));
   assert.match(identityCss, /\.dhker-service-view \.dhk-3d-lantern-stage/);
   assert.match(identityCss, /visibility: hidden !important/);
+});
+
+
+test("PWA metadata supports standalone installation on mobile browsers", () => {
+  assert.match(html, /apple-mobile-web-app-capable/);
+  assert.match(html, /mobile-app-capable/);
+  assert.match(html, /apple-touch-icon/);
+  assert.match(manifest, /"display_override":\["standalone","minimal-ui"\]/);
+});
+
+test("service worker uses network-first navigation and versioned cache for app shell", () => {
+  assert.match(sw, /request\.mode === "navigate"/);
+  assert.match(sw, /await fetch\(request\)/);
+  assert.match(sw, /dhker-web-v23/);
+});
+
+test("mobile service panels remove decorative header strips and reserve space for bottom navigation", () => {
+  assert.match(mobileCss, /dhker-service-view #dhker-identity-bar/);
+  assert.match(mobileCss, /dhker-service-view \.ayah-ribbon/);
+  assert.match(mobileCss, /padding-bottom:calc\(var\(--dhker-nav-height\) \+ 20px\)/);
 });
