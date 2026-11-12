@@ -157,7 +157,7 @@ test("hadith takhrij opens official Dorar search in a new tab without client-sid
   assert.doesNotMatch(script, /dorar_api\.json|DORAR_API|callbackName|searchDorar/);
 });
 test("hadith data and grading sources are attributed separately", () => {
-  assert.doesNotMatch(html, /Al Furqan Hadith API|Hadith-JSON|الموسوعة الحديثية للدرر السنية/);
+  assert.doesNotMatch(html, /Al Furqan Hadith API|Hadith-JSON|class="hadith-attribution"/);
   assert.ok(script.includes("https://dorar.net/hadith/search?q="));
 });
 test("service worker refreshes the hadith library interface", () => {
