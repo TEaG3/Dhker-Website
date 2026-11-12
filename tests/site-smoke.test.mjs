@@ -216,3 +216,11 @@ test("Mushaf leftward swipe advances the ascending Quran page sequence", () => {
   assert.match(html, /mushaf-reader\.js\?v=14/);
   assert.match(sw, /dhker-web-v20/);
 });
+
+test("Hadith page uses a concise verification action and project design credit", () => {
+  assert.doesNotMatch(html, /مصدر النصوص والفهارس|Hadith-JSON/);
+  assert.match(html, /سنة الإنشاء 2026 \| تصميم أبو عبّد المهيمن العراقي/);
+  assert.match(script, /التحقق من صحة الحديث والتخريج/);
+  assert.doesNotMatch(script, /يفتح البحث في موقع الدرر السنية الرسمي/);
+  assert.match(sw, /dhker-web-v21/);
+});
