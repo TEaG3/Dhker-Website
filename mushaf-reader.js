@@ -97,7 +97,7 @@ async function startFlipbook(){
    minHeight:isMobile?360:420,maxHeight:isMobile?820:900,
    usePortrait:true,initialPage:currentPage-1,
    // Page DOM is ordered 1..604; leftward swipes must advance this ascending page sequence.
-   readingDirection:"rtl",flippingTime:isMobile?620:850,
+   readingDirection:isMobile?"ltr":"rtl",flippingTime:isMobile?620:850,
    pageBackground:"#fffaf0",drawShadow:true,maxShadowOpacity:isMobile?.28:.68,
    allowTouchScroll:false,respectInteractiveContent:true,
    respectReducedMotion:true,foldCornerOnHover:true,
