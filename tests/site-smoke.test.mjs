@@ -79,6 +79,11 @@ test("standalone Mushaf uses the real RTL page-curl engine", () => {
   assert.ok(mushaf.includes('if(dx<0)nextPage()'));
   assert.ok(mushaf.includes('else previousPage()'));
   assert.ok(mushaf.includes('fallback.style.touchAction="pan-y pinch-zoom"'));
+  assert.ok(mushaf.includes('const isMobile=window.matchMedia("(max-width: 767px)").matches;'));
+  assert.ok(mushaf.includes("preloadRadius=isMobile?2:8"));
+  assert.ok(mushaf.includes("flippingTime:isMobile?620:850"));
+  assert.ok(mushaf.includes("maxShadowOpacity:isMobile?.28:.68"));
+  assert.doesNotMatch(mushaf, /if\(window\.matchMedia\("\(max-width: 767px\)"\)\.matches\)\{\s*fallbackRender/);
 });
 test("standalone Mushaf controls use the RTL keyboard mapping", () => {
   assert.match(reader, /aria-keyshortcuts="ArrowRight"/);
