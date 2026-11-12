@@ -180,8 +180,8 @@ test("hadith loader styles are scoped and respect reduced motion", () => {
 });
 
 test("Mushaf uses locally bundled page images and caches them on demand", () => {
-  assert.ok(mushafScript.includes('const IMAGE_BASE="./assets/mushaf/hafsTajweed/page";'));
-  assert.doesNotMatch(mushafScript, /raw\.githubusercontent\.com\/Zizwar\/mushaf-mauri/);
+  assert.ok(mushaf.includes('const IMAGE_BASE="./assets/mushaf/hafsTajweed/page";'));
+  assert.doesNotMatch(mushaf, /raw\.githubusercontent\.com\/Zizwar\/mushaf-mauri/);
   assert.match(sw, /url\.pathname\.includes\("\/assets\/mushaf\/hafsTajweed\/"\)/);
   assert.match(sw, /const MUSHAF_CACHE = "dhker-mushaf-pages-v1"/);
   assert.match(sw, /url\.origin === self\.location\.origin/);
