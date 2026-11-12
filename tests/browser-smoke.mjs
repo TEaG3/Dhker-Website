@@ -21,7 +21,8 @@ try {
     } else {
       assert.equal(await page.locator(".mobile-app-nav").isVisible(), false);
     }
-    await page.locator('.mobile-app-nav a[href="#adhkar"], .nav-list a[href="#adhkar"]').first().click();
+    const sectionLink = mobile ? page.locator('.mobile-app-nav a[href="#adhkar"]') : page.locator('.nav-list a[href="#adhkar"]');
+    await sectionLink.click();
     await page.waitForFunction(() => document.body.classList.contains("dhker-service-view"));
     assert.equal(await page.locator("#adhkar").isVisible(), true);
     assert.equal(await page.locator("#home").isVisible(), false);
@@ -49,7 +50,7 @@ try {
     await page.waitForFunction(() => {
       const status = document.querySelector("#readerStatus")?.textContent || "";
       return status.includes("المصحف جاهز") || status.includes("تعذر تشغيل محرك تقليب الورق");
-    }, { timeout: 45000 });
+    }, null, { timeout: 45000 });
     const status = await page.locator("#readerStatus").innerText();
     assert.match(status, /المصحف جاهز/, `flipbook engine failed at ${viewport.width}px: ${status}`);
     await page.waitForFunction(() => {
@@ -57,10 +58,10 @@ try {
       return img && img.complete && img.naturalWidth > 0;
     }, { timeout: 30000 });
     await page.locator("#next").click();
-    await page.waitForFunction(() => document.querySelector("#pageNumber")?.value === "2", { timeout: 10000 });
+    await page.waitForFunction(() => document.querySelector("#pageNumber")?.value === "2", null, { timeout: 10000 });
     assert.equal(await page.locator("#pageNumber").inputValue(), "2");
     await page.locator("#previous").click();
-    await page.waitForFunction(() => document.querySelector("#pageNumber")?.value === "1", { timeout: 10000 });
+    await page.waitForFunction(() => document.querySelector("#pageNumber")?.value === "1", null, { timeout: 10000 });
     assert.equal(await page.locator("#pageNumber").inputValue(), "1");
     await context.close();
   }
