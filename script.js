@@ -667,13 +667,10 @@ async function setupHadithLibrary() {
       takhrijLink.href = "https://dorar.net/hadith/search?q=" + encodeURIComponent(originalText.slice(0, 160));
       takhrijLink.target = "_blank";
       takhrijLink.rel = "noopener noreferrer";
-      takhrijLink.textContent = "ابحث عن التخريج والدرجة في الدرر السنية";
+      takhrijLink.textContent = "التحقق من صحة الحديث والتخريج";
       actions.append(takhrijLink);
     }
-    const sourceNote = document.createElement("small");
-    sourceNote.className = "hadith-takhrij-note";
-    sourceNote.textContent = "يفتح البحث في موقع الدرر السنية الرسمي في تبويب جديد. راجع مطابقة نص الحديث والراوي والمرجع قبل اعتماد الحكم.";
-    card.append(actions, sourceNote);
+    card.append(actions);
     return card;
   }
 
