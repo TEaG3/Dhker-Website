@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const css = await readFile(new URL("../styles.css", import.meta.url), "utf8");
+const mobileCss = await readFile(new URL("../mobile-app.css", import.meta.url), "utf8");
 const script = await readFile(new URL("../script.js", import.meta.url), "utf8");
 const reader = await readFile(new URL("../quran-reader.html", import.meta.url), "utf8");
 const mushaf = await readFile(new URL("../mushaf-reader.js", import.meta.url), "utf8");
@@ -203,7 +204,7 @@ test("mobile-first app shell provides bottom navigation without replacing servic
   assert.match(html, /class="mobile-app-nav"/);
   for (const id of ["home", "prayer", "adhkar", "hadith"]) assert.match(html, new RegExp('href="#' + id + '"'));
   assert.match(html, /href="\.\/quran-reader\.html"/);
-  assert.match(css, /mobile-app-nav/);
+  assert.match(mobileCss, /mobile-app-nav/);
   assert.match(script, /\.mobile-app-nav a\[href\^="# "\]/);
   assert.match(sw, /dhker-web-v19/);
   assert.match(sw, /mobile-app\.css/);
