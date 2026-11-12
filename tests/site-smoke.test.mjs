@@ -96,7 +96,7 @@ test("service worker refreshes the new tabbed homepage and standalone Mushaf", (
   assert.match(sw, /quran-reader\.html/);
   assert.match(sw, /mushaf-reader\.js/);
   assert.match(sw, /MUSHAF_CACHE/);
-  assert.match(sw, /raw\.githubusercontent\.com/);
+  assert.match(sw, /assets\/mushaf\/hafsTajweed/);
 });
 
 test("recitation player remains available in its own tab without embedded Quran pages", () => {
