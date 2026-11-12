@@ -48,7 +48,7 @@ function updateControls(){
 function fallbackRender(page){
  fallbackMode=true;currentPage=clampPage(page);
  $("mushafBook").style.display="none";$("mushafFallback").style.display="block";
- const img=$("fallbackPageImage");img.alt="صفحة المصحف رقم "+currentPage;img.src=pageUrl(currentPage);
+ const img=$("fallbackPageImage");img.alt="صفحة المصحف رقم "+currentPage;img.src=pageUrl(currentPage);img.draggable=false;
  $("pageNumber").value=String(currentPage);$("previous").disabled=currentPage<=1;$("next").disabled=currentPage>=TOTAL_PAGES;
  setStatus("تعذّر تحميل محرك التقليب. وضع العرض البديل مفعل — الصفحة "+currentPage,true);
  img.onerror=()=>setStatus("تعذر تحميل صورة الصفحة. تحقق من اتصال الإنترنت.",true);
@@ -63,6 +63,12 @@ function buildPages(){
  $("mushafBook").append(fragment);
 }
 async function startFlipbook(){
+ // Phones use a lightweight one-page reader: avoid building 604 DOM pages and
+ // loading a third-party flip engine on constrained/mobile browsers.
+ if(window.matchMedia("(max-width: 767px)").matches){
+  fallbackRender(currentPage);
+  return;
+ }
  buildPages();
  preloadAround(currentPage,8);
  try{
@@ -124,6 +130,21 @@ document.addEventListener("keydown",event=>{
  if(event.key==="ArrowLeft"){event.preventDefault();nextPage();}
  else if(event.key==="ArrowRight"){event.preventDefault();previousPage();}
 });
+let touchStartX=null,touchStartY=null;
+const fallback=$("mushafFallback");
+fallback.addEventListener("touchstart",event=>{
+ if(event.touches.length!==1)return;
+ touchStartX=event.touches[0].clientX;touchStartY=event.touches[0].clientY;
+},{passive:true});
+fallback.addEventListener("touchend",event=>{
+ if(touchStartX===null||!event.changedTouches.length)return;
+ const dx=event.changedTouches[0].clientX-touchStartX;
+ const dy=event.changedTouches[0].clientY-touchStartY;
+ touchStartX=null;touchStartY=null;
+ if(Math.abs(dx)>48&&Math.abs(dx)>Math.abs(dy)*1.2){
+  if(dx<0)nextPage();else previousPage();
+ }
+},{passive:true});
 window.addEventListener("online",()=>{if(fallbackMode)fallbackRender(currentPage);else preloadAround(currentPage,10);});
 startFlipbook();
 if("serviceWorker"in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
