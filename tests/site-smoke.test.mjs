@@ -205,7 +205,7 @@ test("mobile-first app shell provides bottom navigation without replacing servic
   for (const id of ["home", "prayer", "adhkar", "hadith"]) assert.match(html, new RegExp('href="#' + id + '"'));
   assert.match(html, /href="\.\/quran-reader\.html"/);
   assert.match(mobileCss, /mobile-app-nav/);
-  assert.match(script, /\.mobile-app-nav a\[href\^="# "\]/);
+  assert.ok(script.includes('.mobile-app-nav a[href^="#"]'));
   assert.match(sw, /dhker-web-v19/);
   assert.match(sw, /mobile-app\.css/);
 });
