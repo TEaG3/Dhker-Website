@@ -1,0 +1,50 @@
+name: Vendor Mushaf flipbook engine
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/vendor-flipbook-engine.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vendor-flipbook-engine
+  cancel-in-progress: false
+
+jobs:
+  vendor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Download the pinned upstream package and verify version
+        run: |
+          set -euo pipefail
+          PACK=$(npm pack @gullabs/flipbook-core@3.2.2 --silent)
+          mkdir -p /tmp/flipbook-package
+          tar -xzf "$PACK" -C /tmp/flipbook-package
+          test -s /tmp/flipbook-package/package/dist/index.js
+          test -s /tmp/flipbook-package/package/dist/style.css
+          node -e "const p=require('/tmp/flipbook-package/package/package.json'); if(p.name!=='@gullabs/flipbook-core'||p.version!=='3.2.2'||p.license!=='MPL-2.0') process.exit(1)"
+          mkdir -p vendor/flipbook-core
+          cp /tmp/flipbook-package/package/dist/index.js vendor/flipbook-core/index.js
+          cp /tmp/flipbook-package/package/dist/style.css vendor/flipbook-core/style.css
+          cp /tmp/flipbook-package/package/LICENSE licenses/flipbook-core-MPL-2.0.txt
+      - name: Commit the local engine files
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add vendor/flipbook-core/index.js vendor/flipbook-core/style.css licenses/flipbook-core-MPL-2.0.txt
+          git diff --cached --quiet && exit 0
+          git commit -m "Vendor flipbook core 3.2.2 for local Mushaf reader"
+          git pull --rebase origin main
+          git push origin HEAD:main
