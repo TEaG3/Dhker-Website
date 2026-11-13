@@ -1,18 +1,13 @@
-(function(){
-  function loadText(url){
-    return fetch(url, {cache:"no-cache"}).then(function(r){
-      if(!r.ok) throw new Error("HTTP "+r.status+" "+url);
-      return r.text();
-    });
-  }
-  Promise.all([
-    loadText("./script-part1.js"),
-    loadText("./script-part2.js")
-  ]).then(function(parts){
-    var s = document.createElement("script");
-    s.textContent = parts[0] + "\n" + parts[1];
-    document.head.appendChild(s);
-  }).catch(function(err){
-    console.error("Dhker: failed to load script parts", err);
-  });
+/* Dhker script bootstrap
+ * Loads the last known-good full script from the main branch.
+ * Keeps the app functional while perf branch ships index + landing improvements.
+ */
+(function () {
+  var s = document.createElement("script");
+  s.src = "https://cdn.jsdelivr.net/gh/TEaG3/Dhker-Website@main/script.js";
+  s.defer = true;
+  s.onerror = function () {
+    console.error("Dhker: failed to load script from CDN; try a hard refresh.");
+  };
+  document.head.appendChild(s);
 })();
