@@ -16,21 +16,29 @@
   <meta property="og:description" content="تابع مواقيت الصلاة، وتصفح الأذكار والحديث، واستمع إلى مكتبة الأذان.">
   <meta property="og:url" content="https://teag3.github.io/Dhker-Website/">
   <title>ذِكر — سكينة ترافق يومك</title>
+  <link rel="dns-prefetch" href="https://api.aladhan.com">
+  <link rel="dns-prefetch" href="https://alfurqan.online">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./assets/dhker-icon.svg">
-  <!-- أيقونة الموقع تم تحديثها لتكون أيقونة المشكاة والنجمة الثمانية -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%23081824' stroke='%23C6A76A' stroke-width='16'/%3E%3Cg transform='translate(256, 256)'%3E%3Crect x='-145' y='-145' width='290' height='290' rx='22' fill='%230B2623' stroke='%23C6A76A' stroke-width='14'/%3E%3Crect x='-145' y='-145' width='290' height='290' rx='22' fill='%230E332D' stroke='%23C6A76A' stroke-width='14' transform='rotate(45)'/%3E%3C/g%3E%3Cpath d='M256 96 C318 148, 356 206, 356 278 L356 386 L156 386 L156 278 C156 206, 194 148, 256 96 Z' fill='%2305111A' stroke='%23C6A76A' stroke-width='14'/%3E%3C/svg%3E">
   
+  <!-- Performance: preconnect + fewer fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- ملف الأنماط الأساسي الخاص بك -->
+  <!-- Reduced from 5 families to 2 (biggest load-time win) -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Critical CSS first -->
   <link rel="stylesheet" href="./styles.css">
-  <link rel="stylesheet" href="./mobile-app.css?v=2">
-  <!-- ملف الهوية الإسلامية المتقدم (3D Architecture Engine) -->
-  <link rel="stylesheet" href="./islamic-identity.css?v=7">
+  <!-- Non-critical CSS: load without blocking first paint -->
+  <link rel="stylesheet" href="./mobile-app.css?v=2" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="./islamic-identity.css?v=7" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="./mobile-app.css?v=2">
+    <link rel="stylesheet" href="./islamic-identity.css?v=7">
+  </noscript>
 </head>
 <body>
   
@@ -52,7 +60,6 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#home" aria-label="ذِكر - الرئيسية">
-        <!-- شعار المشكاة والنجمة الثمانية -->
         <span class="dhk-injected-logo" style="display:inline-flex; width:44px; height:44px; margin-left:8px; vertical-align:middle;">
           <svg viewBox="0 0 512 512" width="100%" height="100%">
             <rect width="512" height="512" rx="115" fill="#081824" stroke="#C6A76A" stroke-width="14"/>
@@ -98,15 +105,12 @@
           <p class="small-note">تعمل البيانات المحفوظة مسبقاً دون اتصال. يلزم الإنترنت لجلب محتوى جديد أو تحديث المواقيت.</p>
         </div>
         <div class="verse-card dhk-3d-mihrab-card">
-          <!-- إطار المحراب الثلاثي الأبعاد يحقن هنا عبر الجافاسكربت -->
           <span class="verse-text">﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾</span>
           <span class="verse-subtext">الرعد: ٢٨</span>
           <div class="ornament">✦ ۞ ✦</div>
         </div>
       </div>
     </section>
-
-    <!-- شريط الإفريز المذهب يُحقن تلقائياً بواسطة CSS -->
 
     <section class="container service-grid" aria-label="خدمات ذِكر">
       <a class="service-card dhk-illuminated-card" href="#prayer"><span>◷</span><b>مواقيت الصلاة</b><small>اختر مدينتك وتابع مواقيت اليوم</small></a>
@@ -186,7 +190,7 @@
         </div>
         <div class="reader-toolbar hadith-search-toolbar">
           <label for="hadithTextSearch">ابحث في أحاديث هذا الباب</label>
-          <input id="hadithTextSearch" type="search" placeholder="كلمة من نص الحديث…" autocomplete="off">
+          <input id="hadithTextSearch" type="search" placeholder="اسم الباب أو كلمة من النص…" autocomplete="off">
         </div>
         <div id="hadithList" class="adhkar-list"></div>
         <div class="hadith-more-wrap" id="hadithMoreWrap" hidden>
@@ -272,9 +276,7 @@
     <a class="nav-quran" href="./quran-reader.html" aria-label="المصحف الشريف"><span class="nav-icon" aria-hidden="true">▤</span><span>المصحف</span></a>
   </nav>
 
-  <!-- ملف الجافاسكربت الخاص بك (يعمل كما هو لجلب الآيات والمواقيت) -->
   <script src="./script.js" defer></script>
-  <!-- ملف محرك العمارة 3D والزخارف (يضمن حركة القناديل وتقليب الصفحات) -->
   <script src="./islamic-identity.js?v=6" defer></script>
 </body>
 </html>
